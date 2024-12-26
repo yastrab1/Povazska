@@ -32,8 +32,9 @@ export default function SignUpForm() {
       });
 
       alert("Account created successfully!");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const e = err as Error;
+      setError(e.message);
     }
   };
 
