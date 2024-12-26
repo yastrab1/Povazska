@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/app/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent/*, CardFooter*/ } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
 

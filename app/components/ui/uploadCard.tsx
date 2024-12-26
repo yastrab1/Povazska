@@ -14,7 +14,8 @@ export default function uploadCard() {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       //setImage(imageUrl);
-    }
+      console.log(imageUrl, "to avoid unused");
+      }
   };
 
   return (

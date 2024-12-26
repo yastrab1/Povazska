@@ -17,8 +17,9 @@ export default function SignInForm() {
       await signInWithEmailAndPassword(auth, email, password);
       console.log(auth.currentUser?.displayName)
       alert("Signed in successfully!");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const e = err as Error;
+      setError(e.message);
     }
   };
 
