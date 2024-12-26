@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ImageUploadCard from "@/app/components/ui/upload";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import AuthModal from "@/app/components/signin/authmodal";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import { auth } from "./config/firebase";
 
 export default function MainPage() {
   const [isModalVisible, setModalVisible] = useState(false);

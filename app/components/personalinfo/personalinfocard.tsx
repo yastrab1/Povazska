@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { auth } from "@/app/config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function PersonalInfoCard() {
   const [name, setName] = useState("");
@@ -9,16 +10,13 @@ export default function PersonalInfoCard() {
 
   useEffect(() => {
     // Fetch user data from Firebase Auth if logged in
-    console.log(auth.currentUser?.displayName)
-    const user = auth.currentUser;
-    console.log(user)
-    if (user) {
-      setName(user.displayName || "");
-      setEmail(user.email || "");
-    }
-  }, []);
-
-
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName || "");
+        setEmail(user.email || "");
+      }
+    })
+  });
 
   return (
     <div className="max-w-md mx-auto mt-8 p-4 shadow-lg rounded-lg bg-white">
@@ -52,7 +50,6 @@ export default function PersonalInfoCard() {
             required
           />
         </div>
-       
       </form>
     </div>
   );
