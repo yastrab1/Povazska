@@ -1,12 +1,11 @@
 "use client";
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/app/components/ui/card";
 import { Button } from "@/app/components/ui/button";
 
-export default function ImageUploadCard() {
-  const [image, setImage] = useState('');
+const ImageUploadCard: React.FC = () => {
+  const [image, setImage] = useState("");
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -79,7 +78,6 @@ export default function ImageUploadCard() {
             id="galleryInput"
           />
 
-          {/* Buttons */}
           {!isMobile ? (
             <Button
               variant="outline"
@@ -107,11 +105,13 @@ export default function ImageUploadCard() {
       </CardContent>
       <CardFooter>
         {image && (
-          <Button variant="destructive" onClick={() => setImage('')}>
+          <Button variant="destructive" onClick={() => setImage("")}>
             Remove Image
           </Button>
         )}
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default ImageUploadCard;
