@@ -3,12 +3,14 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import { GoogleMap, useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
 import { Button } from "@/app/components/ui/button";
 
+export type Library = "core" | "maps" | "places" | "geocoding" | "routes" | "marker" | "geometry" | "elevation" | "streetView" | "journeySharing" | "drawing" | "visualization";
+
 interface MapPickerModalProps {
   onClose: () => void;
   onCoordinatesSelect: (coordinates: { lat: number; lng: number }) => void;
 }
 
-const libraries: ("places" | "drawing" | "geometry" | "localContext" | "visualization")[] = [
+const libraries: Library[] = [
   "places",
 ];
 
