@@ -10,7 +10,7 @@ const ImageUploadCard: React.FC = () => {
 
   useEffect(() => {
     // Detect if the device is mobile
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const userAgent = navigator.userAgent || navigator.vendor;
     setIsMobile(/android|iphone|ipad|ipod|mobile/i.test(userAgent));
   }, []);
 
