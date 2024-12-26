@@ -16,11 +16,12 @@ export async function getResponse(data: string, schema: Schema = default_schema)
                     role: 'user',
                     content: [
                         { type: 'text', text: 'Describe the following image' },
-                        { type: 'image', image: data }
+                        // { type: 'image', image: data }
                     ],
                 },
             ],
     });
 
+    console.log(object)
     return object;
 }
