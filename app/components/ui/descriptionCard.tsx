@@ -11,7 +11,6 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -23,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import {Textarea} from "@/components/ui/textarea";
 
 interface Data {
   title: string;
@@ -76,7 +76,7 @@ useEffect(() => {
               <FormItem>
                 <FormLabel>Popis</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Textarea {...field} />
                 </FormControl>
                 <FormDescription>Zadaj popis k podnetu.</FormDescription>
                 <FormMessage />
