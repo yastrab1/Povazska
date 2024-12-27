@@ -5,7 +5,13 @@ import ImageUploadCard from "@/app/components/ui/uploadCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import AuthModal from "@/app/components/signin/authmodal";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import DescriptionCard from "@/app/components/ui/descriptionCard"
+import DescriptionCard from "@/app/components/ui/descriptionCard";
+
+interface Data {
+  title: string;
+  description: string;
+  tags: string[];
+}
 
 type State =
   | "logged out"
@@ -18,6 +24,11 @@ type State =
 export default function MainPage() {
   const [isModalVisible, setModalVisible] = useState(false);
   const [state, setState] = useState<State>("image upload");
+  const [data, setData] = useState<Data>({
+    title: "",
+    description: "",
+    tags: [],
+  });
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -32,15 +43,15 @@ export default function MainPage() {
     }
 
     if (activeState === "image upload") {
-      return <ImageUploadCard stateSet={setState}/>;
+      return <ImageUploadCard stateSet={setState} dataSet={setData}/>;
     }
 
     if (activeState === "map selection") {
-      return <MapPickerCard stateSet={setState}/>;
+      return <MapPickerCard stateSet={setState} />;
     }
 
     if (activeState === "finalization") {
-      return <DescriptionCard loading={true}></DescriptionCard>
+      return <DescriptionCard data={data}></DescriptionCard>;
     }
 
     return <p>Bad active state!</p>;
@@ -65,9 +76,9 @@ export default function MainPage() {
       </div>
 
       {/* Existing components */}
-      <PersonalInfoCard />
-      <ImageUploadCard stateSet={setState}/>
-      <MapPickerCard />
+      {/*<PersonalInfoCard />
+      <ImageUploadCard stateSet={setState} />
+      <MapPickerCard />*/}
 
       {/* Auth Modal */}
       {isModalVisible && <AuthModal onClose={closeModal} />}

@@ -4,6 +4,7 @@ import { Schema, z } from 'zod';
 
 const model = openai('gpt-4o-2024-08-06');
 const default_schema = z.object({
+  title: z.string(),
   decription: z.string()
 });
 
@@ -22,6 +23,6 @@ export async function getResponse(data: string, schema: Schema = default_schema)
     ],
   });
 
-  console.log(object)
+  console.log(object);
   return object;
 }

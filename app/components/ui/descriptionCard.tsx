@@ -16,11 +16,17 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 
+interface Data {
+    title: string;
+    description: string;
+    tags: string[];
+  }
+
 interface Props {
-    loading: boolean;
+    data: Data;
 }
 
-export default function PersonalInfoCard({ loading }: Props) {
+export default function PersonalInfoCard({ data }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -37,11 +43,11 @@ export default function PersonalInfoCard({ loading }: Props) {
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
-        <CardTitle>{loading ? "Načítavam nadpis...": "Vyplň popis"}</CardTitle>
+        <CardTitle>{data.title ? data.title : "Načítavam nadpis..." }</CardTitle>
         <CardDescription>{name + " --- " + email}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Form action={(data: FormData) => {}}>
+        <Form>
             <Input></Input>
         </Form>
       </CardContent>

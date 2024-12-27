@@ -1,8 +1,20 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+
+interface FormFill {
+  title: string;
+  description: string;
+  tags: string[];
+}
 
 type State =
   | "logged out"
@@ -13,10 +25,11 @@ type State =
   | undefined;
 
 interface Props {
-  stateSet: ( state:State ) => void;
+  stateSet: (state: State) => void;
+  dataSet: (data: FormFill) => void;
 }
 
-export default function ImageUploadCard( { stateSet }: Props ) {
+export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   const [image, setImage] = useState("");
   const [isMobile, setIsMobile] = useState(false);
 
@@ -32,6 +45,29 @@ export default function ImageUploadCard( { stateSet }: Props ) {
       const imageUrl = URL.createObjectURL(file);
       setImage(imageUrl);
     }
+  };
+
+  const convertToBase64 = async (fileUrl: string): Promise<string> => {
+    const file = await (await fetch(fileUrl)).blob();
+    const reader = new FileReader();
+  
+    return new Promise((resolve, reject) => {
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleUpload = async () => {
+    stateSet("map selection");
+    const imageData = await convertToBase64(image);
+    const response: Response = await fetch("/api/podnety", {
+      method: "POST",
+      body: JSON.stringify({ image: imageData }),
+    });
+    const data: FormFill = (await response.json()).message;
+    dataSet(data);
+    console.log(data, "handle data set");
   };
 
   return (
@@ -121,10 +157,8 @@ export default function ImageUploadCard( { stateSet }: Props ) {
             Remove Image
           </Button>
         )}
-        <Button onClick={() => {stateSet("map selection")}}>
-          Upload Images!
-        </Button>
+        <Button onClick={handleUpload}>Upload Images!</Button>
       </CardFooter>
     </Card>
   );
-};
+}
