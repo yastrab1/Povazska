@@ -1,10 +1,7 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 
 type State =
-  | "logged out"
-  | "guest upload"
+  "guest upload"
   | "image upload"
   | "map selection"
   | "finalization"
