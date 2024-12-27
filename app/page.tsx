@@ -5,7 +5,11 @@ import ImageUploadCard from "@/app/components/ui/uploadCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import AuthModal from "@/app/components/signin/authmodal";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import DescriptionCard from "@/app/components/ui/descriptionCard";
+import DescriptionCard from "@/app/components/ui/descriptionCard"
+
+import isLoggedIn from "@/lib/isLoggedIn";
+import { useEffect } from "react";
+import useIsLoggedIn from "@/lib/isLoggedIn";
 
 interface Data {
   title: string;
@@ -14,6 +18,7 @@ interface Data {
 }
 
 type State =
+  | "logged in"
   | "logged out"
   | "guest upload"
   | "image upload"
@@ -23,23 +28,28 @@ type State =
 
 export default function MainPage() {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [state, setState] = useState<State>("image upload");
+  const [state, setState] = useState<State>('logged out');
   const [data, setData] = useState<Data>({
     title: "",
     description: "",
     tags: [],
   });
+  const { loggedIn, name, email } = useIsLoggedIn();
+
+  if (loggedIn){
+    setState('logged in')
+  }
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
   const activeCard = (activeState: State) => {
     if (activeState === "logged out") {
-      return <PersonalInfoCard />;
+      return <AuthModal onClose={closeModal}/>;
     }
 
     if (activeState === "guest upload") {
-      return <PersonalInfoCard />;
+      return <PersonalInfoCard logname={name} logemail={email} stateSet={setState}/>;
     }
 
     if (activeState === "image upload") {
