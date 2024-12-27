@@ -13,13 +13,14 @@ type State =
 
 interface Props {
     stateSet: (state: State) => void;
-    logname: string
+    nameSet: (state: string) => void;
+    emailSet: (state: string) => void;
+    logname: string; 
     logemail: string
   }
 
-export default function PersonalInfoCard({stateSet, logname, logemail}: Props) {
-  const [name, setName] = useState(logname);
-  const [email, setEmail] = useState(logemail);
+export default function PersonalInfoCard({stateSet, nameSet, emailSet, logname, logemail}: Props) {
+
 
   return (
     <div className="max-w-md mx-auto mt-8 p-4 shadow-lg rounded-lg bg-white relative">
@@ -33,8 +34,8 @@ export default function PersonalInfoCard({stateSet, logname, logemail}: Props) {
         type="text"
         id="name"
         className="w-full p-2 border rounded-md"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={logname}
+        onChange={(e) => (nameSet(e.target.value))}
         placeholder="Enter your name"
         required
       />
@@ -47,8 +48,8 @@ export default function PersonalInfoCard({stateSet, logname, logemail}: Props) {
         type="email"
         id="email"
         className="w-full p-2 border rounded-md"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={logemail}
+        onChange={(e) => emailSet(e.target.value)}
         placeholder="Enter your email"
         required
       />
