@@ -22,8 +22,9 @@ export default function SignInForm( { onClose }: AuthModalProps) {
       alert("Signed in successfully!");
       onClose()
       
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const e = err as Error;
+      setError(e.message);
     }
   };
 

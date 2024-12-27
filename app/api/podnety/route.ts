@@ -4,7 +4,7 @@ import { getResponse } from '@/lib/completion';
 export async function POST(req: NextRequest) {
     try {
         const stream = await req.json();
-        const data = stream.image;
+        const data = stream.images[0];
 
         if (data === undefined) {
             return NextResponse.json({ message: "Failed to read image A" }, { status: 500 });

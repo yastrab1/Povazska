@@ -41,14 +41,18 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("handle file change", images.length, images, index);
     const file: File | undefined = event.target.files?.[0];
     if (file) {
+      console.log("handle file change 1", images.length, images, index);
       const imageUrl = URL.createObjectURL(file);
-      const imagesCopy = images;
+      const imagesCopy = images.slice();
       imagesCopy.push(imageUrl);
+      console.log("handle file change", images.length, images, imagesCopy, index);
       setIndex(imagesCopy.length === 1 ? index : index + 1);
       setImages(imagesCopy);
     }
+    console.log("handle file change 2", images.length, images, index);
   };
 
   const convertToBase64 = async (fileUrl: string): Promise<string> => {
@@ -75,13 +79,11 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   };
 
   const handleImageRemove = () => {
-    const imageCopy = images;
+    const imageCopy = images.slice();
     imageCopy.splice(index, 1);
     setIndex(index === 0 ? index : index - 1);
     setImages(imageCopy);
   };
-
-  console.log(images);
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
@@ -90,7 +92,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center">
-          {images.length ? (
+          {images.length !== 0 ? (
             <div className="relative w-48 h-48 mb-4">
               <Image
                 src={images[index]}
