@@ -6,7 +6,7 @@ const model = openai('gpt-4o-2024-08-06');
 const default_schema = z.object({
   title: z.string(),
   description: z.string(),
-  tags: z.array(z.enum(["doprava","zdravie","neporiadok","odvoz_odpadu"])),
+  tags: z.array(z.enum(["doprava", "zdravie", "neporiadok", "odvoz_odpadu"])),
 });
 
 export async function getResponse(data: string, schema: Schema = default_schema) {
