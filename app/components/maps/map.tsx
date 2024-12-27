@@ -1,23 +1,40 @@
 "use client";
 import React, { useState, useRef, useCallback, useEffect } from "react";
-import { GoogleMap, useLoadScript, StandaloneSearchBox } from "@react-google-maps/api";
-import { Button } from "@/app/components/ui/button";
+import {
+  GoogleMap,
+  useLoadScript,
+  StandaloneSearchBox,
+} from "@react-google-maps/api";
+import { Button } from "@/components/ui/button";
 
-export type Library = "core" | "maps" | "places" | "geocoding" | "routes" | "marker" | "geometry" | "elevation" | "streetView" | "journeySharing" | "drawing" | "visualization";
+export type Library =
+  | "core"
+  | "maps"
+  | "places"
+  | "geocoding"
+  | "routes"
+  | "marker"
+  | "geometry"
+  | "elevation"
+  | "streetView"
+  | "journeySharing"
+  | "drawing"
+  | "visualization";
 
-interface MapPickerModalProps {
+interface Props {
   onClose: () => void;
   onCoordinatesSelect: (coordinates: { lat: number; lng: number }) => void;
 }
 
-const libraries: Library[] = [
-  "places",
-];
+const libraries: Library[] = ["places"];
 
-const MapPickerModal: React.FC<MapPickerModalProps> = ({ onClose, onCoordinatesSelect }) => {
+export default function MapPickerModal({
+  onClose,
+  onCoordinatesSelect,
+}: Props) {
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number }>({
     lat: 48.1221, // Petržalka's latitude
-    lng: 17.1050, // Petržalka's longitude
+    lng: 17.105, // Petržalka's longitude
   });
 
   const [error, setError] = useState<string | null>(null);
@@ -141,11 +158,7 @@ const MapPickerModal: React.FC<MapPickerModalProps> = ({ onClose, onCoordinatesS
               pointerEvents: "none",
             }}
           >
-            <img
-              src="/marker.png"
-              alt="Pointer"
-              style={{  height: "40px" }}
-            />
+            <img src="/marker.png" alt="Pointer" style={{ height: "40px" }} />
           </div>
         </GoogleMap>
         <div className="mt-4 text-center">
@@ -162,6 +175,4 @@ const MapPickerModal: React.FC<MapPickerModalProps> = ({ onClose, onCoordinatesS
       </div>
     </div>
   );
-};
-
-export default MapPickerModal;
+}

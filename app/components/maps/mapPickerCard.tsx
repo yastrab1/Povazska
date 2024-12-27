@@ -1,10 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent/*, CardFooter*/ } from "@/app/components/ui/card";
-import { Button } from "@/app/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent/*, CardFooter*/ } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
 
-const MapPickerCard: React.FC = () => {
+type State =
+  | "logged out"
+  | "guest upload"
+  | "image upload"
+  | "map selection"
+  | "finalization"
+  | undefined;
+
+interface Props {
+  stateSet: (state: State) => void;
+}
+
+export default function MapPickerCard({ stateSet }: Props) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -64,6 +76,9 @@ const MapPickerCard: React.FC = () => {
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
+        <Button onClick={() => {stateSet("finalization")}}>
+          Upload Position!
+        </Button>
       </CardContent>
       {isMapOpen && (
         <MapPickerModal
@@ -74,5 +89,3 @@ const MapPickerCard: React.FC = () => {
     </Card>
   );
 };
-
-export default MapPickerCard;
