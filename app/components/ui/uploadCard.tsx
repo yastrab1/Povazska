@@ -30,8 +30,9 @@ interface Props {
 }
 
 export default function ImageUploadCard({ stateSet, dataSet }: Props) {
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     // Detect if the device is mobile
@@ -43,7 +44,10 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     const file: File | undefined = event.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
+      const imagesCopy = images;
+      imagesCopy.push(imageUrl);
+      setIndex(imagesCopy.length === 1 ? index : index + 1);
+      setImages(imagesCopy);
     }
   };
 
@@ -60,15 +64,24 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
 
   const handleUpload = async () => {
     stateSet("map selection");
-    const imageData = await convertToBase64(image);
+    const imageData = await Promise.all(images.map(convertToBase64));
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
-      body: JSON.stringify({ image: imageData }),
+      body: JSON.stringify({ images: imageData }),
     });
     const resJson = await response.json();
     const data = resJson.message;
     dataSet(data);
   };
+
+  const handleImageRemove = () => {
+    const imageCopy = images;
+    imageCopy.splice(index, 1);
+    setIndex(index === 0 ? index : index - 1);
+    setImages(imageCopy);
+  };
+
+  console.log(images);
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
@@ -77,10 +90,10 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center">
-          {image ? (
+          {images.length ? (
             <div className="relative w-48 h-48 mb-4">
               <Image
-                src={image}
+                src={images[index]}
                 alt="Uploaded Preview"
                 layout="fill"
                 objectFit="cover"
@@ -152,11 +165,11 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
         </div>
       </CardContent>
       <CardFooter>
-        {image && (
-          <Button variant="destructive" onClick={() => setImage("")}>
+        {images.length ? (
+          <Button variant="destructive" onClick={handleImageRemove}>
             Remove Image
           </Button>
-        )}
+        ) : null}
         <Button onClick={handleUpload}>Upload Images!</Button>
       </CardFooter>
     </Card>

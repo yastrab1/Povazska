@@ -54,8 +54,6 @@ export default function MainPage() {
     return () => unsubscribe();
   }, []);
 
-  console.log(loggedIn);
-
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
