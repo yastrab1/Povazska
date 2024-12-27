@@ -1,6 +1,7 @@
-"use client";
+'use client'
+//adding missing incompe file
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ImageUploadCard from "@/app/components/ui/uploadCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import AuthModal from "@/app/components/signin/authmodal";
@@ -63,7 +64,7 @@ export default function MainPage() {
       return <DescriptionCard data={data}></DescriptionCard>;
     }
 
-    return <p>Bad active state!</p>;
+    return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured
   };
 
   return <div className="p-4 relative">{activeCard(state)}</div>;

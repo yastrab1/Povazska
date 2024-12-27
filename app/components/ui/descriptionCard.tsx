@@ -38,6 +38,8 @@ export default function PersonalInfoCard({ data }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+
+
   useEffect(() => {
     // Fetch user data from Firebase Auth if logged in
     onAuthStateChanged(auth, (user) => {
@@ -49,10 +51,15 @@ export default function PersonalInfoCard({ data }: Props) {
   });
 
   const form = useForm({
-    defaultValues: {
-      popis: data.description || "",
-    },
-  });
+  defaultValues: {
+    popis: data.description || "", // Default popis to data.description
+  },
+});
+useEffect(() => {
+    form.reset({ popis: data.description || "" }); // Reset form values when data.description updates
+  }, [data.description, form]);
+
+
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
@@ -69,7 +76,7 @@ export default function PersonalInfoCard({ data }: Props) {
               <FormItem>
                 <FormLabel>Popis</FormLabel>
                 <FormControl>
-                  <Input placeholder={data.description} {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormDescription>Zadaj popis k podnetu.</FormDescription>
                 <FormMessage />
