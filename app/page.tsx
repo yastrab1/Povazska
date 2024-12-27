@@ -1,14 +1,12 @@
 'use client'
 //adding missing incompe file
 
-import { useState, useEffect } from "react";
+import { useState/*, useEffect*/ } from "react";
 import ImageUploadCard from "@/app/components/ui/uploadCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import AuthModal from "@/app/components/signin/authmodal";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import DescriptionCard from "@/app/components/ui/descriptionCard"
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/app/config/firebase";
+import DescriptionCard from "@/app/components/ui/descriptionCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 
 interface Data {
@@ -38,7 +36,7 @@ export default function MainPage() {
   const {name, loggedIn, email, setEmail, setLoggedIn, setName} = useIsLoggedIn()
   console.log(name, email, loggedIn)
 
-  // console.log(loggedIn);
+  console.log(setLoggedIn);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
