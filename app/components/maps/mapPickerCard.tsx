@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
 
 type State =
-  | "logged out"
   | "guest upload"
   | "image upload"
   | "map selection"
