@@ -37,6 +37,7 @@ export default function SignUpForm({ onClose }: AuthModalProps) {
       });
 
       alert("Account created successfully!");
+      onClose()
     } catch (err) {
       const e = err as Error;
       setError(e.message);
