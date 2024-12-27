@@ -34,9 +34,7 @@ export default function MainPage() {
   });
 
   const {name, loggedIn, email, setEmail, setLoggedIn, setName} = useIsLoggedIn()
-  console.log(name, email, loggedIn)
 
-  console.log(setLoggedIn);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
