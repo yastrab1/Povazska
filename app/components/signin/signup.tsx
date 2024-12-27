@@ -7,14 +7,19 @@ import {
   updateProfile,
 } from "firebase/auth";
 
-export default function SignUpForm() {
+interface AuthModalProps {
+  onClose: () => void;
+}
+
+
+export default function SignUpForm({ onClose }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent, ) => {
     e.preventDefault();
     setError(null);
 

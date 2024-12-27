@@ -8,6 +8,7 @@ import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
 import DescriptionCard from "@/app/components/ui/descriptionCard"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/app/config/firebase";
+import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 
 interface Data {
   title: string;
@@ -32,29 +33,11 @@ export default function MainPage() {
     description: "",
     tags: [],
   });
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    // Set up the authentication state listener
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setLoggedIn(true);
-        setName(user.displayName || "");
-        setEmail(user.email || "");
-      } else {
-        setLoggedIn(false);
-        setName("");
-        setEmail("");
-      }
-    });
+  const {name, loggedIn, email, setEmail, setLoggedIn, setName} = useIsLoggedIn()
+  console.log(name, email, loggedIn)
 
-    // Clean up the listener on component unmount
-    return () => unsubscribe();
-  }, []);
-
-  console.log(loggedIn);
+  // console.log(loggedIn);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -65,7 +48,7 @@ export default function MainPage() {
     }
 
     if (activeState === "guest upload") {
-      return <PersonalInfoCard logname={name} logemail={email} stateSet={setState}/>;
+      return <PersonalInfoCard nameSet={setName} emailSet={setEmail} stateSet={setState} logname={name} logemail={email}/>;
     }
 
     if (activeState === "image upload") {
