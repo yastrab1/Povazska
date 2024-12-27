@@ -3,27 +3,35 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "@/app/config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { Card, CardHeader, CardDescription, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
+  Card,
+  CardHeader,
+  CardDescription,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 
 interface Data {
-    title: string;
-    description: string;
-    tags: string[];
-  }
+  title: string;
+  description: string;
+  tags: string[];
+}
 
 interface Props {
-    data: Data;
+  data: Data;
 }
 
 export default function PersonalInfoCard({ data }: Props) {
@@ -37,22 +45,41 @@ export default function PersonalInfoCard({ data }: Props) {
         setName(user.displayName || "");
         setEmail(user.email || "");
       }
-    })
+    });
+  });
+
+  const form = useForm({
+    defaultValues: {
+      popis: data.description || "",
+    },
   });
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
-        <CardTitle>{data.title ? data.title : "Načítavam nadpis..." }</CardTitle>
+        <CardTitle>{data.title ? data.title : "Načítavam nadpis..."}</CardTitle>
         <CardDescription>{name + " --- " + email}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Form>
-            <Input></Input>
+        <Form {...form}>
+          <FormField
+            control={form.control}
+            name="popis"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Popis</FormLabel>
+                <FormControl>
+                  <Input placeholder={data.description} {...field} />
+                </FormControl>
+                <FormDescription>Zadaj popis k podnetu.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </Form>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => {}}>
+        <Button onClick={() => console.log(form.getValues())}>
           Upload Images!
         </Button>
       </CardFooter>

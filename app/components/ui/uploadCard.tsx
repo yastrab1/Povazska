@@ -65,9 +65,9 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       method: "POST",
       body: JSON.stringify({ image: imageData }),
     });
-    const data: FormFill = (await response.json()).message;
+    const resJson = await response.json();
+    const data = resJson.message;
     dataSet(data);
-    console.log(data, "handle data set");
   };
 
   return (

@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageUploadCard from "@/app/components/ui/uploadCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import AuthModal from "@/app/components/signin/authmodal";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
 import DescriptionCard from "@/app/components/ui/descriptionCard"
-
-import isLoggedIn from "@/lib/isLoggedIn";
-import { useEffect } from "react";
-import useIsLoggedIn from "@/lib/isLoggedIn";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/app/config/firebase";
 
 interface Data {
   title: string;
@@ -28,17 +26,35 @@ type State =
 
 export default function MainPage() {
   const [isModalVisible, setModalVisible] = useState(false);
-  const [state, setState] = useState<State>('logged out');
+  const [state, setState] = useState<State>('guest upload');
   const [data, setData] = useState<Data>({
     title: "",
     description: "",
     tags: [],
   });
-  const { loggedIn, name, email } = useIsLoggedIn();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  if (loggedIn){
-    setState('logged in')
-  }
+  useEffect(() => {
+    // Set up the authentication state listener
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true);
+        setName(user.displayName || "");
+        setEmail(user.email || "");
+      } else {
+        setLoggedIn(false);
+        setName("");
+        setEmail("");
+      }
+    });
+
+    // Clean up the listener on component unmount
+    return () => unsubscribe();
+  }, []);
+
+  console.log(loggedIn);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);

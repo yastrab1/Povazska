@@ -23,7 +23,7 @@ export default function useIsLoggedIn() {
 
     // Clean up the listener on component unmount
     return () => unsubscribe();
-  }, [loggedIn, name,email]); // Empty dependency array ensures this runs only once
+  }, []); // Empty dependency array ensures this runs only once
 
   return { loggedIn, name, email };
 }

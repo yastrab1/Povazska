@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { auth } from "@/app/config/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import React, { useState } from "react";
 
 type State =
   | "logged out"
@@ -22,9 +20,6 @@ interface Props {
 export default function PersonalInfoCard({stateSet, logname, logemail}: Props) {
   const [name, setName] = useState(logname);
   const [email, setEmail] = useState(logemail);
-
-
-
 
   return (
     <div className="max-w-md mx-auto mt-8 p-4 shadow-lg rounded-lg bg-white relative">

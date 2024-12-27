@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Failed to read image A" }, { status: 500 });
         }
 
-        const response = getResponse(data);
+        const response = await getResponse(data);
         return NextResponse.json({ message: response }, { status: 200 });
     } catch (error) {
         console.log(error);
