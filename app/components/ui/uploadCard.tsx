@@ -75,7 +75,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       promise.then((file) => imageFiles.push(file));
       imageDownloadPromises.push(promise);
     });
-    await Promise.all(imageDownloadPromises).then((res) =>
+    await Promise.all(imageDownloadPromises).then(() =>
       uploadImages(imageFiles).then((res) => (links = res))
     );
 
