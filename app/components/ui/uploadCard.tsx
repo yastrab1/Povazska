@@ -73,24 +73,23 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
 
   const handleUpload = async () => {
     stateSet("map selection");
-    const imageData = await Promise.all(images.map(convertToBase64));
-    let imageFiles:File[] = [];
+
     let imageDownloadPromises:Promise<File>[] = [];
-    let links:string[] = [""];
+    let imageLinks:string[] = [""];
 
     images.forEach(image => {
       const imageName = image.slice(image.lastIndexOf("/"))
-      const promise = fetch(image).then(res => res.blob()).then(blob => new File([blob], imageName, {type: "image/jpg"}));
-      promise.then(file => imageFiles.push(file));
-      imageDownloadPromises.push(promise);
+      const downloadPromise = fetch(image).then(res => res.blob()).then(blob => new File([blob], imageName, {type: "image/jpg"}));
+
+      imageDownloadPromises.push(downloadPromise);
     })
-    await Promise.all(imageDownloadPromises).then(res=>uploadImages(imageFiles).then(res=>links = res));
+    await Promise.all(imageDownloadPromises).then(images=>uploadImages(images).then(uploadedLinks=>imageLinks = uploadedLinks));
 
 
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ images: links }),
+      body: JSON.stringify({ images: imageLinks }),
     });
     const resJson = await response.json();
     const data = resJson.message;
