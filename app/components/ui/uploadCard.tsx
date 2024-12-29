@@ -52,14 +52,13 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           imagesCopy.push(imageUrl);
           validImagesCount++;
         }
-      }
-      setIndex(
-        images.length === 0 ? validImagesCount - 1 : index + validImagesCount
-      );
+      };
+      setIndex(images.length === 0 ? validImagesCount - 1 : index + validImagesCount);
       setImages(imagesCopy);
       }
     }
-  };
+
+
 
   const convertToBase64 = async (fileUrl: string): Promise<string> => {
     const file = await (await fetch(fileUrl)).blob();
