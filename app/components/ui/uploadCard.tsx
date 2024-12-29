@@ -60,17 +60,6 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     }
   };
 
-  const convertToBase64 = async (fileUrl: string): Promise<string> => {
-    const file = await (await fetch(fileUrl)).blob();
-    const reader = new FileReader();
-
-    return new Promise((resolve, reject) => {
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleUpload = async () => {
     console.time("upload timer");
     stateSet("map selection");
@@ -90,6 +79,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       uploadImages(imageFiles).then((res) => (links = res))
     );
 
+    console.timeEnd("upload timer");
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -98,7 +88,6 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     const resJson = await response.json();
     const data = resJson.message;
     dataSet(data);
-    console.timeEnd("upload timer");
   };
 
   const handleImageRemove = () => {
