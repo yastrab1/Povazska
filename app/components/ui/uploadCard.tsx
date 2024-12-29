@@ -60,17 +60,6 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
 
 
 
-  const convertToBase64 = async (fileUrl: string): Promise<string> => {
-    const file = await (await fetch(fileUrl)).blob();
-    const reader = new FileReader();
-
-    return new Promise((resolve, reject) => {
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleUpload = async () => {
     stateSet("map selection");
     const imageData = await Promise.all(images.map(convertToBase64));
@@ -87,6 +76,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     await Promise.all(imageDownloadPromises).then(res=>uploadImages(imageFiles).then(res=>links = res));
 
 
+    console.timeEnd("upload timer");
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
