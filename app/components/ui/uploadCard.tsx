@@ -41,7 +41,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
+    if (event.target.files){
       const fileArray = event.target.files;
       const imagesCopy = images.slice();
       let validImagesCount = 0;
@@ -53,33 +53,28 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           validImagesCount++;
         }
       }
-      setIndex(
-        images.length === 0 ? validImagesCount - 1 : index + validImagesCount
-      );
+      setIndex(images.length === 0 ? validImagesCount - 1 : index + validImagesCount);
       setImages(imagesCopy);
+      }
     }
-  };
+
+
 
   const handleUpload = async () => {
-    console.time("upload timer");
     stateSet("map selection");
-    const imageFiles: File[] = [];
-    const imageDownloadPromises: Promise<File>[] = [];
-    let links: string[] = [""];
+    console.time("upload timer");
+    const imageDownloadPromises:Promise<File>[] = [];
+    let links:string[] = [""];
 
-    images.forEach((image) => {
-      const imageName = image.slice(image.lastIndexOf("/"));
-      const promise = fetch(image)
-        .then((res) => res.blob())
-        .then((blob) => new File([blob], imageName, { type: "image/jpg" }));
-      promise.then((file) => imageFiles.push(file));
+    images.forEach(image => {
+      const imageName = image.slice(image.lastIndexOf("/"))
+      const promise = fetch(image).then(res => res.blob()).then(blob => new File([blob], imageName, {type: "image/jpg"}));
       imageDownloadPromises.push(promise);
-    });
-    await Promise.all(imageDownloadPromises).then(() =>
-      uploadImages(imageFiles).then((res) => (links = res))
-    );
+    })
+    await Promise.all(imageDownloadPromises).then(res=>uploadImages(res).then(res=>links = res));
 
-    console.timeEnd("upload timer");
+
+
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -88,6 +83,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     const resJson = await response.json();
     const data = resJson.message;
     dataSet(data);
+    console.timeEnd("upload timer");
   };
 
   const handleImageRemove = () => {
@@ -98,11 +94,11 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   };
 
   const handlePrevImage = () => {
-    setIndex(index === 0 ? images.length - 1 : index - 1);
+    setIndex(index === 0 ? images.length - 1 : index - 1 )
   };
 
   const handleNextImage = () => {
-    setIndex(index + 1 === images.length ? 0 : index + 1);
+    setIndex(index + 1 === images.length ? 0 : index + 1)
   };
 
   return (
