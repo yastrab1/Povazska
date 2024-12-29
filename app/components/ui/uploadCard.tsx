@@ -52,7 +52,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           imagesCopy.push(imageUrl);
           validImagesCount++;
         }
-      };
+      }
       setIndex(images.length === 0 ? validImagesCount - 1 : index + validImagesCount);
       setImages(imagesCopy);
       }
@@ -62,21 +62,19 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
 
   const handleUpload = async () => {
     stateSet("map selection");
-    const imageData = await Promise.all(images.map(convertToBase64));
-    let imageFiles:File[] = [];
-    let imageDownloadPromises:Promise<File>[] = [];
+    console.time("upload timer");
+    const imageDownloadPromises:Promise<File>[] = [];
     let links:string[] = [""];
 
     images.forEach(image => {
       const imageName = image.slice(image.lastIndexOf("/"))
       const promise = fetch(image).then(res => res.blob()).then(blob => new File([blob], imageName, {type: "image/jpg"}));
-      promise.then(file => imageFiles.push(file));
       imageDownloadPromises.push(promise);
     })
-    await Promise.all(imageDownloadPromises).then(res=>uploadImages(imageFiles).then(res=>links = res));
+    await Promise.all(imageDownloadPromises).then(res=>uploadImages(res).then(res=>links = res));
 
 
-    console.timeEnd("upload timer");
+
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -85,6 +83,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     const resJson = await response.json();
     const data = resJson.message;
     dataSet(data);
+    console.timeEnd("upload timer");
   };
 
   const handleImageRemove = () => {
