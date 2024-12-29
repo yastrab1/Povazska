@@ -41,7 +41,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files){
+    if (event.target.files) {
       const fileArray = event.target.files;
       const imagesCopy = images.slice();
       let validImagesCount = 0;
@@ -52,13 +52,13 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           imagesCopy.push(imageUrl);
           validImagesCount++;
         }
-      };
-      setIndex(images.length === 0 ? validImagesCount - 1 : index + validImagesCount);
-      setImages(imagesCopy);
       }
+      setIndex(
+        images.length === 0 ? validImagesCount - 1 : index + validImagesCount
+      );
+      setImages(imagesCopy);
     }
-    
-    
+  };
 
   const convertToBase64 = async (fileUrl: string): Promise<string> => {
     const file = await (await fetch(fileUrl)).blob();
@@ -72,20 +72,23 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   };
 
   const handleUpload = async () => {
+    console.time("upload timer");
     stateSet("map selection");
-    const imageData = await Promise.all(images.map(convertToBase64));
-    let imageFiles:File[] = [];
-    let imageDownloadPromises:Promise<File>[] = [];
-    let links:string[] = [""];
+    const imageFiles: File[] = [];
+    const imageDownloadPromises: Promise<File>[] = [];
+    let links: string[] = [""];
 
-    images.forEach(image => {
-      const imageName = image.slice(image.lastIndexOf("/"))
-      const promise = fetch(image).then(res => res.blob()).then(blob => new File([blob], imageName, {type: "image/jpg"}));
-      promise.then(file => imageFiles.push(file));
+    images.forEach((image) => {
+      const imageName = image.slice(image.lastIndexOf("/"));
+      const promise = fetch(image)
+        .then((res) => res.blob())
+        .then((blob) => new File([blob], imageName, { type: "image/jpg" }));
+      promise.then((file) => imageFiles.push(file));
       imageDownloadPromises.push(promise);
-    })
-    await Promise.all(imageDownloadPromises).then(res=>uploadImages(imageFiles).then(res=>links = res));
-
+    });
+    await Promise.all(imageDownloadPromises).then((res) =>
+      uploadImages(imageFiles).then((res) => (links = res))
+    );
 
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
@@ -95,6 +98,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     const resJson = await response.json();
     const data = resJson.message;
     dataSet(data);
+    console.timeEnd("upload timer");
   };
 
   const handleImageRemove = () => {
@@ -105,11 +109,11 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   };
 
   const handlePrevImage = () => {
-    setIndex(index === 0 ? images.length - 1 : index - 1 )
+    setIndex(index === 0 ? images.length - 1 : index - 1);
   };
 
   const handleNextImage = () => {
-    setIndex(index + 1 === images.length ? 0 : index + 1)
+    setIndex(index + 1 === images.length ? 0 : index + 1);
   };
 
   return (
