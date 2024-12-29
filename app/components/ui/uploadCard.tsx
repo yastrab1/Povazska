@@ -9,6 +9,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import uploadImages from "@/lib/imageUpload";
 
 interface FormFill {
   title: string;
@@ -69,9 +70,23 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   const handleUpload = async () => {
     stateSet("map selection");
     const imageData = await Promise.all(images.map(convertToBase64));
+    let imageFiles:File[] = [];
+    let imageDownloadPromises:Promise<File>[] = [];
+    let links:string[] = [""];
+
+    images.forEach(image => {
+      const imageName = image.slice(image.lastIndexOf("/"))
+      const promise = fetch(image).then(res => res.blob()).then(blob => new File([blob], imageName, {type: "image/jpg"}));
+      promise.then(file => imageFiles.push(file));
+      imageDownloadPromises.push(promise);
+    })
+    await Promise.all(imageDownloadPromises).then(res=>uploadImages(imageFiles).then(res=>links = res));
+
+
     const response: Response = await fetch("/api/podnety", {
       method: "POST",
-      body: JSON.stringify({ images: imageData }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ images: links }),
     });
     const resJson = await response.json();
     const data = resJson.message;
