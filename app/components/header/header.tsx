@@ -7,7 +7,7 @@ import AuthModal from "@/app/components/signin/authmodal";
 import { Button } from "@/components/ui/button";
 
 export default function Header() {
-  const { loggedIn, name, email } = useIsLoggedIn(); // Custom hook to get auth state
+  const { loggedIn, name } = useIsLoggedIn(); // Custom hook to get auth state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSignOut = async () => {

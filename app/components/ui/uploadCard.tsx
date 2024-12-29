@@ -18,7 +18,6 @@ interface FormFill {
 }
 
 type State =
-  | "logged out"
   | "guest upload"
   | "image upload"
   | "map selection"
@@ -42,24 +41,29 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("handle file change", images.length, images, index);
-    const file: File | undefined = event.target.files?.[0];
-    if (file) {
-      console.log("handle file change 1", images.length, images, index);
-      const imageUrl = URL.createObjectURL(file);
+    if (event.target.files){
+      const fileArray = event.target.files;
       const imagesCopy = images.slice();
-      imagesCopy.push(imageUrl);
-      console.log("handle file change", images.length, images, imagesCopy, index);
-      setIndex(imagesCopy.length === 1 ? index : index + 1);
+      let validImagesCount = 0;
+      for (let fileIndex = 0; fileIndex < fileArray.length; fileIndex++) {
+        const file = fileArray[fileIndex];
+        if (file) {
+          const imageUrl = URL.createObjectURL(file);
+          imagesCopy.push(imageUrl);
+          validImagesCount++;
+        }
+      };
+      setIndex(images.length === 0 ? validImagesCount - 1 : index + validImagesCount);
       setImages(imagesCopy);
+      }
     }
-    console.log("handle file change 2", images.length, images, index);
-  };
+    
+    
 
   const convertToBase64 = async (fileUrl: string): Promise<string> => {
     const file = await (await fetch(fileUrl)).blob();
     const reader = new FileReader();
-  
+
     return new Promise((resolve, reject) => {
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = (error) => reject(error);
@@ -100,6 +104,14 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     setImages(imageCopy);
   };
 
+  const handlePrevImage = () => {
+    setIndex(index === 0 ? images.length - 1 : index - 1 )
+  };
+
+  const handleNextImage = () => {
+    setIndex(index + 1 === images.length ? 0 : index + 1)
+  };
+
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
@@ -108,7 +120,13 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       <CardContent>
         <div className="flex flex-col items-center">
           {images.length !== 0 ? (
-            <div className="relative w-48 h-48 mb-4">
+            <div className="relative w-48 h-48 mb-4 flex items-center justify-center">
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-0 p-2 z-10"
+              >
+                ◀
+              </button>
               <Image
                 src={images[index]}
                 alt="Uploaded Preview"
@@ -116,6 +134,12 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
                 objectFit="cover"
                 className="rounded-md"
               />
+              <button
+                onClick={handleNextImage}
+                className="absolute right-0 p-2 z-10"
+              >
+                ▶
+              </button>
             </div>
           ) : (
             <div
@@ -134,6 +158,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleFileChange}
             className="hidden"
             id="imageUpload"
@@ -143,6 +168,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           <input
             type="file"
             accept="image/*"
+            multiple
             capture="environment"
             onChange={handleFileChange}
             className="hidden"
@@ -151,6 +177,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
           <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleFileChange}
             className="hidden"
             id="galleryInput"
