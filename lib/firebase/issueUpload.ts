@@ -51,14 +51,6 @@ export async function addIssue(issueData:Data) {
     }
     console.log(issue);
     console.log(collection(db, "/podnety"))
-    try {
-        const querySnapshot = await getDocs(collection(db, "podnety"));
-        querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} =>`, doc.data());
-        });
-    } catch (error) {
-        console.error("Error fetching documents: ", error);
-    }
     const docRef = await addDoc(collection(db, "/podnety"), issue);
     return docRef.id;
 }

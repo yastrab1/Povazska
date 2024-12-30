@@ -17,6 +17,8 @@ interface Props {
   dataSet: Dispatch<SetStateAction<Data>>
 }
 
+
+
 export default function MapPickerCard({ stateSet,dataSet }: Props) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
@@ -33,7 +35,16 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
   const handleCoordinatesSelect = (coords: { lat: number; lng: number }) => {
     setCoordinates(coords);
   };
+  function setCoordinateData (){
 
+    dataSet((data) => {
+      if (!coordinates?.lat && !coordinates?.lng) return data;
+      data.lat = coordinates?.lat | 0;
+      data.lng = coordinates.lng | 0;
+      return data
+    })
+
+  }
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
@@ -77,14 +88,9 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
-        <Button onClick={() => {
-          dataSet((data)=>{
-            if (!coordinates?.lat && !coordinates?.lng) return data;
-            data.lat = coordinates?.lat | 0;
-            data.lng = coordinates.lng | 0;
-            return data
-          })
+        <Button onClick={()=>{
           stateSet("finalization")
+          setCoordinateData()
         }}>
           Upload Position!
         </Button>
