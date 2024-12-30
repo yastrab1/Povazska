@@ -1,10 +1,8 @@
 import { openai } from '@ai-sdk/openai';
 import { FilePart, generateObject, ImagePart, TextPart } from 'ai';
-import { Schema, z } from 'zod';
+import { z } from 'zod';
 
-
-const model = openai('gpt-4o-2024-11-20');
-// const default_schema = ;
+const model = openai('gpt-4o-mini');
 
 export async function getResponse(data: string[]) {
   const prompt: (TextPart | ImagePart | FilePart)[] = [{ type: 'text', text: 'These images are a report of a problem in town summarize them in title of the problem (10 words max) and description of the problem (around 50 words max) and add tags, answer in slovak. ' }];
