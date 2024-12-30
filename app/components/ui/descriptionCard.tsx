@@ -23,12 +23,8 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import {Textarea} from "@/components/ui/textarea";
-
-interface Data {
-  title: string;
-  description: string;
-  tags: string[];
-}
+import {addIssue} from "@/lib/firebase/issueUpload";
+import {Data} from "@/app/page";
 
 interface Props {
   data: Data;
@@ -86,7 +82,7 @@ useEffect(() => {
         </Form>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => console.log(form.getValues())}>
+        <Button onClick={() => addIssue(data)}>
           Upload Images!
         </Button>
       </CardFooter>

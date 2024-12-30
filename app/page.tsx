@@ -8,10 +8,13 @@ import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
 import DescriptionCard from "@/app/components/ui/descriptionCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 
-interface Data {
+export interface Data {
   title: string;
   description: string;
   tags: string[];
+  images: string[];
+  lat: number;
+  lng: number;
 }
 
 type State =
@@ -28,6 +31,9 @@ export default function MainPage() {
     title: "",
     description: "",
     tags: [],
+    images:[],
+    lat: 0,
+    lng: 0,
   });
 
   const {name, email, setEmail, setName} = useIsLoggedIn();
@@ -42,7 +48,7 @@ export default function MainPage() {
     }
 
     if (activeState === "map selection") {
-      return <MapPickerCard stateSet={setState} />;
+      return <MapPickerCard stateSet={setState} dataSet={setData} />;
     }
 
     if (activeState === "finalization") {
