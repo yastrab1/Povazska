@@ -1,6 +1,6 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-import { storage } from "@/lib/clientApp";
+import { storage } from "@/app/config/firebase";
 
 export default async function uploadImages(images:File[]){
     for (const image of images) {

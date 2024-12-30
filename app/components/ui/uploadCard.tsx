@@ -9,13 +9,10 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import uploadImages from "@/lib/imageUpload";
+import uploadImages from "@/lib/firebase/imageUpload";
+import {Data} from "@/app/page";
 
-interface FormFill {
-  title: string;
-  description: string;
-  tags: string[];
-}
+
 
 type State =
   | "guest upload"
@@ -26,7 +23,7 @@ type State =
 
 interface Props {
   stateSet: (state: State) => void;
-  dataSet: (data: FormFill) => void;
+  dataSet: (data: Data) => void;
 }
 
 export default function ImageUploadCard({ stateSet, dataSet }: Props) {
@@ -84,6 +81,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     });
     const resJson = await response.json();
     const data = resJson.message;
+    data.images = links;
     dataSet(data);
     console.timeEnd("upload timer");
   };

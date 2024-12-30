@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import { Card, CardHeader, CardTitle, CardContent/*, CardFooter*/ } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
+import {Data} from "@/app/page";
 
 type State =
   | "guest upload"
@@ -13,9 +14,10 @@ type State =
 
 interface Props {
   stateSet: (state: State) => void;
+  dataSet: Dispatch<SetStateAction<Data>>
 }
 
-export default function MapPickerCard({ stateSet }: Props) {
+export default function MapPickerCard({ stateSet,dataSet }: Props) {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +77,15 @@ export default function MapPickerCard({ stateSet }: Props) {
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
-        <Button onClick={() => {stateSet("finalization")}}>
+        <Button onClick={() => {
+          dataSet((data)=>{
+            if (!coordinates?.lat && !coordinates?.lng) return data;
+            data.lat = coordinates?.lat | 0;
+            data.lng = coordinates.lng | 0;
+            return data
+          })
+          stateSet("finalization")
+        }}>
           Upload Position!
         </Button>
       </CardContent>
