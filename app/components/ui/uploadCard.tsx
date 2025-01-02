@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
 import Image from "next/image";
 import {
   Card,
@@ -23,7 +23,7 @@ type State =
 
 interface Props {
   stateSet: (state: State) => void;
-  dataSet: (data: Data) => void;
+  dataSet: Dispatch<SetStateAction<Data>>
 }
 
 export default function ImageUploadCard({ stateSet, dataSet }: Props) {
@@ -80,9 +80,15 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       body: JSON.stringify({ images: links }),
     });
     const resJson = await response.json();
-    const data = resJson.message;
-    data.images = links;
-    dataSet(data);
+    const responseData = resJson.message;
+    responseData.images = links;
+    dataSet((data) => ({
+      ...data,
+      images: responseData.images,
+      title: responseData.title,
+      description: responseData.description,
+      tags: responseData.tags
+    }));
     console.timeEnd("upload timer");
   };
 

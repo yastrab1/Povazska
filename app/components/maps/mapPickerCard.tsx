@@ -38,8 +38,9 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
   function setCoordinateData (){
 
     dataSet((data) => {
-      if (!coordinates?.lat && !coordinates?.lng) return data;
-      data.lat = coordinates?.lat | 0;
+      if (!coordinates) return data;
+      console.log("setting coords",coordinates)
+      data.lat = coordinates.lat | 0;
       data.lng = coordinates.lng | 0;
       return data
     })
