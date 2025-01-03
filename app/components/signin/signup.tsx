@@ -2,15 +2,11 @@
 
 import React, { useState } from "react";
 import { auth } from "@/app/config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 interface AuthModalProps {
   onClose: () => void;
 }
-
 
 export default function SignUpForm({ onClose }: AuthModalProps) {
   const [email, setEmail] = useState("");
@@ -19,7 +15,7 @@ export default function SignUpForm({ onClose }: AuthModalProps) {
   const [surname, setSurname] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const handleSignUp = async (e: React.FormEvent, ) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
@@ -37,7 +33,7 @@ export default function SignUpForm({ onClose }: AuthModalProps) {
       });
 
       alert("Account created successfully!");
-      onClose()
+      onClose();
     } catch (err) {
       const e = err as Error;
       setError(e.message);

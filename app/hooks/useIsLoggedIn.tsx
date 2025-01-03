@@ -9,7 +9,7 @@ export default function useIsLoggedIn() {
 
   useEffect(() => {
     // Set up the authentication state listener
-   onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
         setName(user.displayName || "");
@@ -22,8 +22,7 @@ export default function useIsLoggedIn() {
     });
 
     // Clean up the listener on component unmount
-   ;
   }, []); // Empty dependency array ensures this runs only once
 
-  return { loggedIn,  name,  email, setName, setEmail, setLoggedIn };
+  return { loggedIn, name, email, setName, setEmail, setLoggedIn };
 }

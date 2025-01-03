@@ -1,5 +1,5 @@
 "use client";
-import React, {useState, useEffect, Dispatch, SetStateAction} from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import {
   Card,
@@ -10,9 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import uploadImages from "@/lib/firebase/imageUpload";
-import {Data} from "@/app/page";
-
-
+import { Data } from "@/app/page";
 
 type State =
   | "guest upload"
@@ -23,7 +21,7 @@ type State =
 
 interface Props {
   stateSet: (state: State) => void;
-  dataSet: Dispatch<SetStateAction<Data>>
+  dataSet: Dispatch<SetStateAction<Data>>;
 }
 
 export default function ImageUploadCard({ stateSet, dataSet }: Props) {
@@ -87,7 +85,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
       images: responseData.images,
       title: responseData.title,
       description: responseData.description,
-      tags: responseData.tags
+      tags: responseData.tags,
     }));
     console.timeEnd("upload timer");
   };
