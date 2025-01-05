@@ -11,6 +11,14 @@ import {
 import { Button } from "@/components/ui/button";
 import uploadImages from "@/lib/firebase/imageUpload";
 import {Data} from "@/app/page";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 
 
 
@@ -116,25 +124,29 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
         <div className="flex flex-col items-center">
           {images.length !== 0 ? (
             <div className="relative w-48 h-48 mb-4 flex items-center justify-center">
-              <button
-                onClick={handlePrevImage}
-                className="absolute left-0 p-2 z-10"
-              >
-                ◀
-              </button>
-              <Image
-                src={images[index]}
-                alt="Uploaded Preview"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-md"
-              />
-              <button
-                onClick={handleNextImage}
-                className="absolute right-0 p-2 z-10"
-              >
-                ▶
-              </button>
+
+              <Carousel>
+                <CarouselContent>
+
+                  {images.map((image, imageIndex) => (
+                      <CarouselItem key={imageIndex} className={"w-[100%] h-[100%] align-content: center; flex"}>
+                      <Image
+                          src={images[imageIndex]}
+                          alt="Uploaded Preview"
+
+                          objectFit="cover"
+                          className="rounded-md"
+                          height={100}
+                          width={200}
+
+                      />
+                      </CarouselItem>
+                  ))}
+
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
             </div>
           ) : (
             <div
