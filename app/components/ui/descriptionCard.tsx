@@ -22,9 +22,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import {Textarea} from "@/components/ui/textarea";
-import {addIssue} from "@/lib/firebase/issueUpload";
-import {Data} from "@/app/page";
+import { Textarea } from "@/components/ui/textarea";
+import { addIssue } from "@/lib/firebase/issueUpload";
+import { Data } from "@/app/page";
 
 interface Props {
   data: Data;
@@ -33,8 +33,6 @@ interface Props {
 export default function PersonalInfoCard({ data }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-
-
 
   useEffect(() => {
     // Fetch user data from Firebase Auth if logged in
@@ -47,15 +45,13 @@ export default function PersonalInfoCard({ data }: Props) {
   });
 
   const form = useForm({
-  defaultValues: {
-    popis: data.description || "", // Default popis to data.description
-  },
-});
-useEffect(() => {
+    defaultValues: {
+      popis: data.description || "", // Default popis to data.description
+    },
+  });
+  useEffect(() => {
     form.reset({ popis: data.description || "" }); // Reset form values when data.description updates
   }, [data.description, form]);
-
-
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
@@ -82,9 +78,7 @@ useEffect(() => {
         </Form>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => addIssue(data)}>
-          Upload Images!
-        </Button>
+        <Button onClick={() => addIssue(data)}>Upload Images!</Button>
       </CardFooter>
     </Card>
   );

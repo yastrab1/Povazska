@@ -1,34 +1,34 @@
 import {
     collection,
-    onSnapshot,
-    query,
-    getDocs,
-    doc,
-    getDoc,
-    updateDoc,
-    orderBy,
+    // onSnapshot,
+    // query,
+    // getDocs,
+    // doc,
+    // getDoc,
+    // updateDoc,
+    // orderBy,
     Timestamp,
-    runTransaction,
-    where,
+    // runTransaction,
+    // where,
     addDoc,
-    getFirestore,
+    // getFirestore,
 } from "firebase/firestore";
 
 import { db } from "@/app/config/firebase";
-import {Data} from "@/app/page";
+import { Data } from "@/app/page";
 
 type Issue = {
-    title:string,
-    description:string,
-    tags:string[],
-    images:string[]
-    timestamp:Timestamp,
-    lat:number,
-    lng:number,
-    status:string,
+    title: string,
+    description: string,
+    tags: string[],
+    images: string[]
+    timestamp: Timestamp,
+    lat: number,
+    lng: number,
+    status: string,
 }
 
-export async function addIssue(issueData:Data) {
+export async function addIssue(issueData: Data) {
     if (!issueData.title) {
         throw new Error("No issue title provided.");
     }
@@ -39,14 +39,14 @@ export async function addIssue(issueData:Data) {
     if (!issueData.tags) {
         throw new Error("No issue tags provided.");
     }
-    const issue:Issue = {
+    const issue: Issue = {
         title: issueData.title,
         description: issueData.description,
         tags: issueData.tags,
         timestamp: Timestamp.now(),
         images: issueData.images,
-        lat:issueData.lat,
-        lng:issueData.lng,
+        lat: issueData.lat,
+        lng: issueData.lng,
         status: "open",
     }
     console.log(issue);

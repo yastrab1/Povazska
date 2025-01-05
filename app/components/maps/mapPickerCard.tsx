@@ -1,9 +1,14 @@
 "use client";
-import React, {Dispatch, SetStateAction, useState} from "react";
-import { Card, CardHeader, CardTitle, CardContent/*, CardFooter*/ } from "@/components/ui/card";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent /*, CardFooter*/,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
-import {Data} from "@/app/page";
+import { Data } from "@/app/page";
 
 type State =
   | "guest upload"
@@ -14,14 +19,15 @@ type State =
 
 interface Props {
   stateSet: (state: State) => void;
-  dataSet: Dispatch<SetStateAction<Data>>
+  dataSet: Dispatch<SetStateAction<Data>>;
 }
 
-
-
-export default function MapPickerCard({ stateSet,dataSet }: Props) {
+export default function MapPickerCard({ stateSet, dataSet }: Props) {
   const [isMapOpen, setIsMapOpen] = useState(false);
-  const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
+  const [coordinates, setCoordinates] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleOpenMap = () => {
@@ -35,16 +41,14 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
   const handleCoordinatesSelect = (coords: { lat: number; lng: number }) => {
     setCoordinates(coords);
   };
-  function setCoordinateData (){
-
+  function setCoordinateData() {
     dataSet((data) => {
       if (!coordinates) return data;
-      console.log("setting coords",coordinates)
+      console.log("setting coords", coordinates);
       data.lat = coordinates.lat | 0;
       data.lng = coordinates.lng | 0;
-      return data
-    })
-
+      return data;
+    });
   }
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -77,7 +81,9 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
               <p>Longitude: {coordinates.lng.toFixed(6)}</p>
             </div>
           ) : (
-            <p className="text-gray-500 text-center mb-4">No location selected.</p>
+            <p className="text-gray-500 text-center mb-4">
+              No location selected.
+            </p>
           )}
           <div className="flex flex-col gap-2 w-full">
             <Button variant="outline" onClick={handleOpenMap}>
@@ -89,10 +95,12 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
           </div>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
-        <Button onClick={()=>{
-          stateSet("finalization")
-          setCoordinateData()
-        }}>
+        <Button
+          onClick={() => {
+            stateSet("finalization");
+            setCoordinateData();
+          }}
+        >
           Upload Position!
         </Button>
       </CardContent>
@@ -104,4 +112,4 @@ export default function MapPickerCard({ stateSet,dataSet }: Props) {
       )}
     </Card>
   );
-};
+}

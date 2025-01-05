@@ -5,10 +5,10 @@ import { auth } from "@/app/config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 interface AuthModalProps {
-    onClose: () => void;
-  }
+  onClose: () => void;
+}
 
-export default function SignInForm( { onClose }: AuthModalProps) {
+export default function SignInForm({ onClose }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -20,8 +20,7 @@ export default function SignInForm( { onClose }: AuthModalProps) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Signed in successfully!");
-      onClose()
-      
+      onClose();
     } catch (err: unknown) {
       const e = err as Error;
       setError(e.message);
