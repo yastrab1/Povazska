@@ -26,6 +26,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { addIssue } from "@/lib/firebase/issueUpload";
 import { Data } from "@/app/page";
 import {Input} from "@/components/ui/input";
+import {useRouter} from "next/navigation";
+import ImageCarousel from "@/app/components/ui/imagesCarousel";
 
 interface Props {
   data: Data;
@@ -35,6 +37,8 @@ export default function PersonalInfoCard({ data }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch user data from Firebase Auth if logged in
@@ -80,6 +84,7 @@ export default function PersonalInfoCard({ data }: Props) {
             )}
           />
         </Form>
+          <ImageCarousel images={data.images}/>
       </CardContent>
       <CardFooter>
         <Button onClick={() => {
@@ -87,7 +92,7 @@ export default function PersonalInfoCard({ data }: Props) {
                 data.title = title;
             }
             data.description = form.getValues().popis;
-            addIssue(data)
+            addIssue(data).then(id=>router.push(`/issues/${id}`));
         }}>Upload Images!</Button>
       </CardFooter>
     </Card>

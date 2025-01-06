@@ -2,10 +2,10 @@
 //adding missing incompe file
 
 import { useState /*, useEffect*/ } from "react";
-import ImageUploadCard from "@/app/components/ui/uploadCard";
+import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import DescriptionCard from "@/app/components/ui/descriptionCard";
+import DescriptionCard from "@/app/components/ui/uploadIssueCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 
 export interface Data {
