@@ -97,6 +97,10 @@ export default function MapPickerCard({ stateSet, dataSet }: Props) {
         </div>
         <Button
           onClick={() => {
+            if (!coordinates) {
+              setError("No location selected.")
+              return
+            }
             stateSet("finalization");
             setCoordinateData();
           }}

@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { addIssue } from "@/lib/firebase/issueUpload";
 import { Data } from "@/app/page";
+import {Input} from "@/components/ui/input";
 
 interface Props {
   data: Data;
@@ -33,6 +34,7 @@ interface Props {
 export default function PersonalInfoCard({ data }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     // Fetch user data from Firebase Auth if logged in
@@ -56,7 +58,9 @@ export default function PersonalInfoCard({ data }: Props) {
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
-        <CardTitle>{data.title ? data.title : "Načítavam nadpis..."}</CardTitle>
+          {data.images.length == 0 ?<Input alt={"Zadaj krátky popis tvojho problému"} value={title} onChange={event => setTitle(event.target.value)}></Input>
+              : <CardTitle>{data.title ? data.title : "Načítavam nadpis..."}</CardTitle>}
+
         <CardDescription>{name + " --- " + email}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -78,7 +82,13 @@ export default function PersonalInfoCard({ data }: Props) {
         </Form>
       </CardContent>
       <CardFooter>
-        <Button onClick={() => addIssue(data)}>Upload Images!</Button>
+        <Button onClick={() => {
+            if (data.images.length == 0) {
+                data.title = title;
+            }
+            data.description = form.getValues().popis;
+            addIssue(data)
+        }}>Upload Images!</Button>
       </CardFooter>
     </Card>
   );

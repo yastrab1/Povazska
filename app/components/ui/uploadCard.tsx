@@ -18,6 +18,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import {Warning} from "postcss";
+import WarningModal from "@/app/components/ui/warningModal";
 
 
 
@@ -38,6 +40,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   const [images, setImages] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [index, setIndex] = useState(0);
+  const [warningModalOpen, setWarningModalOpen] = useState(false);
 
   useEffect(() => {
     // Detect if the device is mobile
@@ -66,6 +69,11 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   };
 
   const handleUpload = async () => {
+    if (images.length == 0) {
+      setWarningModalOpen(true)
+      return
+    }
+
     stateSet("map selection");
     console.time("upload timer");
     const imageDownloadPromises: Promise<File>[] = [];
@@ -116,6 +124,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
   };
 
   return (
+      <>
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
         <CardTitle>Upload Image</CardTitle>
@@ -224,5 +233,12 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
         <Button onClick={handleUpload}>Upload Images!</Button>
       </CardFooter>
     </Card>
+      <WarningModal open={warningModalOpen} onClose={pass => {
+        if (pass) {
+          stateSet("map selection");
+        }else{
+          setWarningModalOpen(false);
+        }
+      }}></WarningModal></>
   );
 }
