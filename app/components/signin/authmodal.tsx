@@ -43,7 +43,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
         </div>
 
         {/* Content */}
-        {isSignUp ? <SignUpForm /> : <SignInForm />}
+        {isSignUp ? <SignUpForm onClose={onClose}/> : <SignInForm onClose={onClose} />}
       </div>
     </div>
   );

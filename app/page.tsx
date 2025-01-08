@@ -1,40 +1,70 @@
 "use client";
+//adding missing incompe file
 
-import React, { useEffect, useState } from "react";
-import ImageUploadCard from "@/app/components/ui/upload";
+import { useState /*, useEffect*/ } from "react";
+import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
-import AuthModal from "@/app/components/signin/authmodal";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import { auth } from "./config/firebase";
+import DescriptionCard from "@/app/components/ui/uploadIssueCard";
+import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
+
+export interface Data {
+  title: string;
+  description: string;
+  tags: string[];
+  images: string[];
+  lat: number;
+  lng: number;
+}
+
+type State =
+  | "logged in"
+  | "guest upload"
+  | "image upload"
+  | "map selection"
+  | "finalization"
+  | undefined;
 
 export default function MainPage() {
-  const [isModalVisible, setModalVisible] = useState(false);
-  
+  const [state, setState] = useState<State>("guest upload");
+  const [data, setData] = useState<Data>({
+    title: "",
+    description: "",
+    tags: [],
+    images: [],
+    lat: 0,
+    lng: 0,
+  });
 
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
+  const { name, email, setEmail, setName } = useIsLoggedIn();
 
-  return (
-    <div className="p-4 relative">
-      <h1 className="text-center text-2xl font-bold mb-6">Submit Your Details</h1>
+  const activeCard = (activeState: State) => {
+    if (activeState === "guest upload") {
+      return (
+        <PersonalInfoCard
+          nameSet={setName}
+          emailSet={setEmail}
+          stateSet={setState}
+          logname={name}
+          logemail={email}
+        />
+      );
+    }
 
-      {/* Top-right button */}
-      <div className="absolute top-4 right-4">
-        <button
-          onClick={openModal}
-          className="bg-blue-500 text-white px-4 py-2 md:px-6 md:py-3 text-sm md:text-base rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          Sign In / Sign Up
-        </button>
-      </div>
+    if (activeState === "image upload") {
+      return <ImageUploadCard stateSet={setState} dataSet={setData} />;
+    }
 
-      {/* Existing components */}
-      <PersonalInfoCard />
-      <ImageUploadCard />
-      <MapPickerCard />
+    if (activeState === "map selection") {
+      return <MapPickerCard stateSet={setState} dataSet={setData} />;
+    }
 
-      {/* Auth Modal */}
-      {isModalVisible && <AuthModal onClose={closeModal} />}
-    </div>
-  );
+    if (activeState === "finalization") {
+      return <DescriptionCard data={data}></DescriptionCard>;
+    }
+
+    return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured
+  };
+
+  return <div className="p-4 relative">{activeCard(state)}</div>;
 }

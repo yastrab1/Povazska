@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Header from "@/app/components/header/header";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +20,6 @@ export const metadata: Metadata = {
   description: "Ai powered podnety",
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,9 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <SpeedInsights />
+      <Analytics />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header></Header>
         {children}
       </body>
     </html>

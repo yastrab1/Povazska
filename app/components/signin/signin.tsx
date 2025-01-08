@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import { auth } from "@/app/config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-export default function SignInForm() {
+interface AuthModalProps {
+  onClose: () => void;
+}
+
+export default function SignInForm({ onClose }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -15,10 +19,11 @@ export default function SignInForm() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth.currentUser?.displayName)
       alert("Signed in successfully!");
-    } catch (err: any) {
-      setError(err.message);
+      onClose();
+    } catch (err: unknown) {
+      const e = err as Error;
+      setError(e.message);
     }
   };
 

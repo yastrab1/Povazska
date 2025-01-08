@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import { auth } from "@/app/config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-export default function SignUpForm() {
+interface AuthModalProps {
+  onClose: () => void;
+}
+
+export default function SignUpForm({ onClose }: AuthModalProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -32,8 +33,10 @@ export default function SignUpForm() {
       });
 
       alert("Account created successfully!");
-    } catch (err: any) {
-      setError(err.message);
+      onClose();
+    } catch (err) {
+      const e = err as Error;
+      setError(e.message);
     }
   };
 
