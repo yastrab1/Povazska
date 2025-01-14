@@ -2,6 +2,7 @@ import { openai } from '@ai-sdk/openai';
 import { FilePart, generateObject, ImagePart, TextPart } from 'ai';
 import { z } from 'zod';
 
+
 const model = openai('gpt-4o-mini');
 
 export async function getResponse(data: string[]) {
