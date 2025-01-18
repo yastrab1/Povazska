@@ -11,5 +11,6 @@ export default function Page() {
       <Separator />
       <MapSelectionSection onCoordinatesSelect={() => {}}/>
     </div>
+      </>
   );
 }

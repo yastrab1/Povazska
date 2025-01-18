@@ -1,21 +1,18 @@
 "use client";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {
   Card,
   CardHeader,
   CardTitle,
-  CardContent /*, CardFooter*/,
+  CardContent, /*, CardFooter*/
+  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
 import { Data } from "@/app/page";
+import {State} from "@/app/page"
 
-type State =
-  | "guest upload"
-  | "image upload"
-  | "map selection"
-  | "finalization"
-  | undefined;
+
 
 interface Props {
   stateSet: (state: State) => void;
@@ -44,7 +41,6 @@ export default function MapPickerCard({ stateSet, dataSet }: Props) {
   function setCoordinateData() {
     dataSet((data) => {
       if (!coordinates) return data;
-      console.log("setting coords", coordinates);
       data.lat = coordinates.lat | 0;
       data.lng = coordinates.lng | 0;
       return data;
@@ -68,10 +64,15 @@ export default function MapPickerCard({ stateSet, dataSet }: Props) {
     );
   };
 
+  useEffect(() => {
+    getCurrentLocation()
+  }, []);
+
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
         <CardTitle>Select Location</CardTitle>
+        <CardDescription>We are using your current location. To change that, open the map and select it</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center">
@@ -101,7 +102,7 @@ export default function MapPickerCard({ stateSet, dataSet }: Props) {
               setError("No location selected.")
               return
             }
-            stateSet("finalization");
+            stateSet("tag selection");
             setCoordinateData();
           }}
         >

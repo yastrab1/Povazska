@@ -38,6 +38,8 @@ export default function PersonalInfoCard({ data }: Props) {
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
 
+
+  const shouldLetUserWriteOwnDescription = (data.userSelectedTags.length == 0)
   const router = useRouter();
 
   useEffect(() => {
@@ -56,13 +58,16 @@ export default function PersonalInfoCard({ data }: Props) {
     },
   });
   useEffect(() => {
+      if(shouldLetUserWriteOwnDescription){
+          return;
+      }
     form.reset({ popis: data.description || "" }); // Reset form values when data.description updates
   }, [data.description, form]);
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
-          {data.images.length == 0 ?<Input alt={"Zadaj krátky popis tvojho problému"} value={title} onChange={event => setTitle(event.target.value)}></Input>
+          {shouldLetUserWriteOwnDescription ?<Input alt={"Zadaj krátky popis tvojho problému"} value={title} onChange={event => setTitle(event.target.value)}></Input>
               : <CardTitle>{data.title ? data.title : "Načítavam nadpis..."}</CardTitle>}
 
         <CardDescription>{name + " --- " + email}</CardDescription>
@@ -88,7 +93,7 @@ export default function PersonalInfoCard({ data }: Props) {
       </CardContent>
       <CardFooter>
         <Button onClick={() => {
-            if (data.images.length == 0) {
+            if (shouldLetUserWriteOwnDescription) {
                 data.title = title;
             }
             data.description = form.getValues().popis;
