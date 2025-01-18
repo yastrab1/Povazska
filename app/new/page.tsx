@@ -12,6 +12,7 @@ import {
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { LuImagePlus } from "react-icons/lu";
+import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
 
 export default function Page() {
   const [images, setImages] = useState<string[]>([]);
@@ -59,6 +60,7 @@ export default function Page() {
   };
 
   return (
+      <>
     <div className="flex justify-center px-16">
       <Carousel setApi={setApi} className="w-full max-w-xs h-full flex align-center">
         <CarouselContent className="w-[calc(100%+1rem)]">
@@ -123,6 +125,8 @@ export default function Page() {
         className="hidden"
         id="galleryInput"
       />
+
     </div>
+      </>
   );
 }

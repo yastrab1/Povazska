@@ -10,13 +10,9 @@ import {
 import { Button } from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
 import { Data } from "@/app/page";
+import {State} from "@/app/page"
 
-type State =
-  | "guest upload"
-  | "image upload"
-  | "map selection"
-  | "finalization"
-  | undefined;
+
 
 interface Props {
   stateSet: (state: State) => void;
@@ -106,7 +102,7 @@ export default function MapPickerCard({ stateSet, dataSet }: Props) {
               setError("No location selected.")
               return
             }
-            stateSet("finalization");
+            stateSet("tag selection");
             setCoordinateData();
           }}
         >

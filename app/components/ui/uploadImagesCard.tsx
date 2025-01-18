@@ -103,9 +103,7 @@ export default function ImageUploadCard({ stateSet, dataSet }: Props) {
     dataSet((data) => ({
       ...data,
       images: responseData.images,
-      title: responseData.title,
-      description: responseData.description,
-      tags: responseData.tags
+      rankings:responseData.rankings
     }));
     console.timeEnd("upload timer");
   };
