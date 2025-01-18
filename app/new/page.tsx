@@ -9,8 +9,7 @@ export default function Page() {
     <div className="flex flex-col">
       <ImageUploadSection />
       <Separator />
-      <MapSelectionSection onCoordinatesSelect={() => {}}/>
+      <MapSelectionSection />
     </div>
-      </>
   );
 }

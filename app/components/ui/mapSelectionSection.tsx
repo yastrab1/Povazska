@@ -1,6 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
-import { Button } from "@/components/ui/button";
 
 export type Library =
   | "core"
@@ -16,13 +15,9 @@ export type Library =
   | "drawing"
   | "visualization";
 
-interface Props {
-  onCoordinatesSelect: (coordinates: { lat: number; lng: number }) => void;
-}
-
 const libraries: Library[] = ["places", "geocoding"];
 
-export default function MapPickerModal({ onCoordinatesSelect }: Props) {
+export default function MapPickerModal() {
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number }>({
     lat: 48.1221,
     lng: 17.105,
@@ -30,7 +25,6 @@ export default function MapPickerModal({ onCoordinatesSelect }: Props) {
 
   const [address, setAddress] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
   const geocoder = useRef<google.maps.Geocoder | null>(null);
 
   const { isLoaded } = useLoadScript({
