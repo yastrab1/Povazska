@@ -7,44 +7,60 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { LuImagePlus } from "react-icons/lu";
 
 export default function Page() {
   const [images, setImages] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
 
+  // Detect if the device is mobile
   useEffect(() => {
-    // Detect if the device is mobile
     const userAgent = navigator.userAgent;
     setIsMobile(/android|iphone|ipad|ipod|mobile/i.test(userAgent));
   }, []);
+
+  // Update carousel
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const fileArray = event.target.files;
       const imagesCopy = images.slice();
-      //let validImagesCount = 0;
+      let validImagesCount = 0;
+
       for (let fileIndex = 0; fileIndex < fileArray.length; fileIndex++) {
         const file = fileArray[fileIndex];
         if (file) {
           const imageUrl = URL.createObjectURL(file);
           imagesCopy.push(imageUrl);
-          //validImagesCount++;
+          validImagesCount++;
         }
       }
-      /*setIndex(
-        images.length === 0 ? validImagesCount - 1 : index + validImagesCount
-      );*/
+
+      api?.scrollTo(validImagesCount ? fileArray.length + 1 : current);
       setImages(imagesCopy);
     }
   };
 
   return (
     <div className="flex justify-center px-16">
-      <Carousel className="w-full max-w-xs h-full flex align-center">
+      <Carousel setApi={setApi} className="w-full max-w-xs h-full flex align-center">
         <CarouselContent className="w-[calc(100%+1rem)]">
           {images.map((value, index) => (
             <CarouselItem key={value + index}>
