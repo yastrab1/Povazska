@@ -17,15 +17,12 @@ async function uploadImage( image:File) {
 
     const options:Options = {
         maxSizeMB: 1, // Maximum size in MB
-        maxWidthOrHeight: 800, // Maximum width or height
         useWebWorker: true,
+        fileType:"webp"
     };
 
     try {
         const compressedFile = await imageCompression(image, options);
-        console.log(image.size)
-        console.log(compressedFile.size);
-        console.log('Compressed File:', compressedFile);
         const filePath = `images//${image.name}`;
         const newImageRef = ref(storage, filePath);
         await uploadBytesResumable(newImageRef, compressedFile);
