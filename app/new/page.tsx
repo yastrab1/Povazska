@@ -45,7 +45,7 @@ export default function Page() {
   return (
     <div className="flex justify-center px-16">
       <Carousel className="w-full max-w-xs h-full flex align-center">
-        <CarouselContent className="w-full">
+        <CarouselContent className="w-[calc(100%+1rem)]">
           {images.map((value, index) => (
             <CarouselItem key={value + index}>
               <Card className="aspect-square max-w-80 overflow-hidden">
@@ -59,7 +59,7 @@ export default function Page() {
               </Card>
             </CarouselItem>
           ))}
-          <CarouselItem className="w-full -mr-4">
+          <CarouselItem className="w-full">
             <button
               className="rounded-lg border bg-card text-card-foreground shadow-sm w-full aspect-square flex items-center justify-center"
               onClick={() =>
