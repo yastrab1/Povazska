@@ -5,32 +5,34 @@ import { useState /*, useEffect*/ } from "react";
 import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
 import MapPickerCard from "@/app/components/maps/mapPickerCard";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
+import ImageUploadSection from "@/app/components/ui/imageUploadSection";
+import MapSelectionSection from "@/app/components/ui/mapSelectionSection";
 import DescriptionCard from "@/app/components/ui/uploadIssueCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
+
 type Tags =
-    | "Neporiadok a odpadky"
-    | "Cyklostojany"
-    | "Doprava a parkovanie"
-    | "Cesty a chodniky"
-    | "Údržba majetku"
-    | "Dreviny a zeleň"
-    | "Detské ihriská"
-    | "Lavičky a koše"
-    | "Stavebný úrad"
-    | "Nájomné bývanle"
-    | "Dane a poplatky"
-    | "Ľudia bez domova"
-    | "Sociálna pomoc"
-    | "Matrika a pobyty"
-    | "Kultúra a šport"
-    | "Iné podnety";
+  | "Neporiadok a odpadky"
+  | "Cyklostojany"
+  | "Doprava a parkovanie"
+  | "Cesty a chodniky"
+  | "Údržba majetku"
+  | "Dreviny a zeleň"
+  | "Detské ihriská"
+  | "Lavičky a koše"
+  | "Stavebný úrad"
+  | "Nájomné bývanle"
+  | "Dane a poplatky"
+  | "Ľudia bez domova"
+  | "Sociálna pomoc"
+  | "Matrika a pobyty"
+  | "Kultúra a šport"
+  | "Iné podnety";
 
 type RankingsMap = Map<Tags, number>;
 
-
 export interface Data {
-  rankings: string[]
+  rankings: string[];
   tags: string[];
   images: string[];
   lat: number;
@@ -45,47 +47,54 @@ export type State =
   | "map selection"
   | "tag selection"
   | "finalization"
-  | undefined;
+  | undefined
+  | number;
 
 export default function MainPage() {
-  const [state, setState] = useState<State>("guest upload");
+  const [state, setState] = useState<number>(0);
   const [data, setData] = useState<Data>({
-    rankings:[],
+    rankings: [],
     tags: [],
     images: [],
     lat: 0,
     lng: 0,
-    userSelectedTags:[]
+    userSelectedTags: [],
   });
 
   const { name, email, setEmail, setName } = useIsLoggedIn();
 
   const activeCard = (activeState: State) => {
-    if (activeState === "guest upload") {
+    if (activeState === 0) {
       return (
         <PersonalInfoCard
           nameSet={setName}
           emailSet={setEmail}
-          stateSet={setState}
+          setState={setState}
           logname={name}
           logemail={email}
         />
       );
     }
 
-    if (activeState === "image upload") {
-      return <ImageUploadCard stateSet={setState} dataSet={setData} />;
+    if (activeState === 1) {
+      return <ImageUploadSection setState={setState} setData={setData} />;
     }
 
-    if (activeState === "map selection") {
-      return <MapPickerCard stateSet={setState} dataSet={setData} />;
+    if (activeState === 2) {
+      return <MapSelectionSection setState={setState}/>
     }
 
-    if (activeState === "tag selection") {
-      return <TagSelectionCard tags={data.rankings.slice(0,5)} setState={setState} setData={setData}/>
+    if (activeState === 3) {
+      return (
+        <TagSelectionCard
+          tags={data.rankings.slice(0, 5)}
+          setState={setState}
+          setData={setData}
+        />
+      );
     }
 
-    if (activeState === "finalization") {
+    if (activeState === 4) {
       return <DescriptionCard data={data}></DescriptionCard>;
     }
 

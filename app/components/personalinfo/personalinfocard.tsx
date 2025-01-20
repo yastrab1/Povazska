@@ -1,65 +1,99 @@
-import React from "react";
-
-type State =
-  "guest upload"
-  | "image upload"
-  | "map selection"
-  | "finalization"
-  | undefined;
-
+import React, { SetStateAction, Dispatch } from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MdChevronLeft } from "react-icons/md";
+import { MdChevronRight } from "react-icons/md";
 
 interface Props {
-    stateSet: (state: State) => void;
-    nameSet: (state: string) => void;
-    emailSet: (state: string) => void;
-    logname: string; 
-    logemail: string
-  }
+  setState: Dispatch<SetStateAction<number>>;
+  nameSet: (state: string) => void;
+  emailSet: (state: string) => void;
+  logname: string;
+  logemail: string;
+}
 
-export default function PersonalInfoCard({stateSet, nameSet, emailSet, logname, logemail}: Props) {
-
-
+export default function PersonalInfoCard({
+  setState,
+  nameSet,
+  emailSet,
+  logname,
+  logemail,
+}: Props) {
   return (
-    <div className="max-w-md mx-auto mt-8 p-4 shadow-lg rounded-lg bg-white relative">
-  <h2 className="text-xl font-bold mb-4">Personal Information</h2>
-  <form className="space-y-4">
-    <div>
-      <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-        Name
-      </label>
-      <input
-        type="text"
-        id="name"
-        className="w-full p-2 border rounded-md"
-        value={logname}
-        onChange={(e) => (nameSet(e.target.value))}
-        placeholder="Enter your name"
-        required
-      />
-    </div>
-    <div>
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-        Email
-      </label>
-      <input
-        type="email"
-        id="email"
-        className="w-full p-2 border rounded-md"
-        value={logemail}
-        onChange={(e) => emailSet(e.target.value)}
-        placeholder="Enter your email"
-        required
-      />
-    </div>
-    <button
-      type="button"
-      className="absolute bottom-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-      onClick={() => stateSet('image upload')}
-    >
-      Next
-    </button>
-  </form>
-</div>
-
+    <Card>
+      <CardHeader>
+        <CardTitle>Osobné informácie</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form className="space-y-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              className="w-full p-2 border rounded-md"
+              value={logname}
+              onChange={(e) => nameSet(e.target.value)}
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="w-full p-2 border rounded-md"
+              value={logemail}
+              onChange={(e) => emailSet(e.target.value)}
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+        </form>
+      </CardContent>
+      <CardFooter>
+        <div className="w-full flex gap-4 justify-between">
+          <Button
+            className="w-24 h-10"
+            onClick={() =>
+              setState((state) => {
+                return state - 1;
+              })
+            }
+          >
+            <MdChevronLeft className="scale-[2]" />
+            Späť
+          </Button>
+          <Button
+            className="w-24 h-10"
+            onClick={() =>
+              setState((state) => {
+                return state + 1;
+              })
+            }
+          >
+            Ďalej
+            <MdChevronRight className="scale-[2]" />
+          </Button>
+        </div>
+      </CardFooter>
+    </Card>
   );
 }
