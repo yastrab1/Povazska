@@ -32,7 +32,7 @@ type Tags =
 type RankingsMap = Map<Tags, number>;
 
 export interface Data {
-  rankings: string[];
+  rankings: [string,number][]
   tags: string[];
   images: string[];
   lat: number;
@@ -87,7 +87,8 @@ export default function MainPage() {
     if (activeState === 3) {
       return (
         <TagSelectionCard
-          tags={data.rankings.slice(0, 5)}
+          tags={data.rankings.filter(ranking=>(ranking[1]>0)).
+          map(ranking=>ranking[0]).slice(0,5)}
           setState={setState}
           setData={setData}
         />
