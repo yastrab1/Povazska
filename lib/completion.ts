@@ -1,6 +1,18 @@
-import { openai } from '@ai-sdk/openai';
-import { FilePart, generateObject, ImagePart, TextPart } from 'ai';
-import {number, z, ZodEnum} from 'zod';
+import {openai} from '@ai-sdk/openai';
+import {FilePart, generateObject, ImagePart, TextPart} from 'ai';
+import {z} from 'zod';
+import {sort} from "next/dist/build/webpack/loaders/css-loader/src/utils";
+
+function sortObjectByNumber(inputObject:Object) {
+  // Convert the object to an array of key-value pairs
+  const entries = Object.entries(inputObject);
+  console.log(entries)
+  // Sort the entries by the numeric value
+  entries.sort((a, b) => b[1] - a[1]);
+
+  // Convert the sorted entries back into an object
+  return entries
+}
 
 const tags = ["Neporiadok a odpadky","Cyklostojany","Doprava a parkovanie","Cesty a chodniky","Údržba majetku","Dreviny a zeleň","Detské ihriská","Lavičky a koše",
   "Stavebný úrad","Nájomné bývanle","Dane a poplatky","Ľudia bez domova","Sociálna pomoc","Matrika a pobyty","Kultúra a šport","Iné podnety"]
@@ -35,8 +47,7 @@ export async function getResponse(data: string[]) {
     ],
 
   });
-  const sortedKeys = Object.keys(object.rankings).sort((first,second)=>object.rankings[second] - object.rankings[first]);
-  console.log(sortedKeys);
-  console.log(object.rankings)
-  return {"rankings":sortedKeys};
+  const sorted = sortObjectByNumber(object.rankings)
+  console.log(sorted)
+  return {"rankings":sorted};
 }

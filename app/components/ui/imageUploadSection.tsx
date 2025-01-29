@@ -1,5 +1,6 @@
 "use client";
 
+import React, { SetStateAction, Dispatch } from "react";
 import { useState, useEffect } from "react";
 import {
   Carousel,
@@ -9,12 +10,27 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  //CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import Image from "next/image";
 import { LuImagePlus } from "react-icons/lu";
+import { MdChevronLeft } from "react-icons/md";
+import { MdChevronRight } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { Data } from "@/app/page";
+import uploadImages from "@/lib/firebase/imageUpload";
 
-export default function ImageUploadSection() {
+interface Props {
+  setState: Dispatch<SetStateAction<number>>;
+  setData: Dispatch<SetStateAction<Data>>;
+}
+
+export default function ImageUploadSection({ setState, setData }: Props) {
   const [images, setImages] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [api, setApi] = useState<CarouselApi>();
@@ -69,46 +85,163 @@ export default function ImageUploadSection() {
     setImages(imagesCopy);
   };
 
+  const handleUpload = async () => {
+    setData((data) => {
+      return { ...data, images: images };
+    });
+    setState((state) => {
+      return state + 1;
+    });
+
+    console.time("upload timer");
+    const imageDownloadPromises: Promise<File>[] = [];
+    let links: string[] = [""];
+
+    images.forEach((image) => {
+      const imageName = image.slice(image.lastIndexOf("/"));
+      const promise = fetch(image)
+        .then((res) => res.blob())
+        .then((blob) => new File([blob], imageName, { type: "image/jpg" }));
+      imageDownloadPromises.push(promise);
+    });
+    await Promise.all(imageDownloadPromises).then((res) =>
+      uploadImages(res).then((res) => (links = res))
+    );
+
+    const response: Response = await fetch("/api/podnety", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ images: links }),
+    });
+    const resJson = await response.json();
+    const responseData = resJson.message;
+    responseData.images = links;
+    setData((data) => ({
+      ...data,
+      images: responseData.images,
+      rankings: responseData.rankings,
+    }));
+    console.timeEnd("upload timer");
+  };
+
   return (
-    <div className="p-4 flex flex-col gap-2">
-      <div className="flex justify-center px-12">
-        <Carousel
-          setApi={setApi}
-          className="w-full max-w-xs h-full flex align-center"
-        >
-          <CarouselContent className="w-[calc(100%+1rem)]">
-            {images.map((value, index) => (
-              <CarouselItem key={value + index}>
-                <Card className="aspect-square max-w-80 overflow-hidden">
-                  <Image
-                    src={value}
-                    width={320}
-                    height={320}
-                    alt="uploaded image"
-                    className="h-[320px] w-[320px]"
-                  />
-                </Card>
+    <Card className="max-w-md mx-auto mt-8 shadow-lg">
+      <CardHeader>
+        <CardTitle>Nahrať obrázok</CardTitle>
+      </CardHeader>
+      <div className="p-4 flex flex-col gap-4">
+        <div className="flex justify-center px-12">
+          <Carousel
+            setApi={setApi}
+            className="w-full max-w-xs h-full flex align-center"
+          >
+            <CarouselContent className="w-[calc(100%+1rem)]">
+              {images.map((value, index) => (
+                <CarouselItem key={value + index}>
+                  <Card className="aspect-square max-w-80 overflow-hidden flex justify-center items-center">
+                    <Image
+                      src={value}
+                      width={320}
+                      height={320}
+                      alt="uploaded image"
+                      className="h-[320px] w-[320px]"
+                    />
+                  </Card>
+                </CarouselItem>
+              ))}
+              <CarouselItem className="w-full">
+                <button
+                  className="rounded-lg border bg-card text-card-foreground shadow-sm w-full aspect-square flex items-center justify-center"
+                  onClick={() =>
+                    isMobile
+                      ? document.getElementById("galleryInput")?.click()
+                      : document.getElementById("imageUpload")?.click()
+                  }
+                >
+                  <div className="flex flex-col items-center justify-center">
+                    <LuImagePlus className="text-6xl text-gray-400" />
+                    <p className="text-2xl font-semibold">Add images</p>
+                  </div>
+                </button>
               </CarouselItem>
-            ))}
-            <CarouselItem className="w-full">
-              <button
-                className="rounded-lg border bg-card text-card-foreground shadow-sm w-full aspect-square flex items-center justify-center"
-                onClick={() =>
-                  isMobile
-                    ? document.getElementById("galleryInput")?.click()
-                    : document.getElementById("imageUpload")?.click()
-                }
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+        <div className="w-full px-2 flex gap-4 justify-center">
+          {images.length ? (
+            <Button
+              variant="destructive"
+              className="w-full h-10"
+              onClick={removeImage}
+            >
+              Remove image
+            </Button>
+          ) : null}
+          {isMobile ? (
+            <>
+              <Button
+                className="w-full h-10"
+                onClick={() => document.getElementById("galleryInput")?.click()}
               >
-                <div className="flex flex-col items-center justify-center">
-                  <LuImagePlus className="text-6xl text-gray-400" />
-                  <p className="text-2xl font-semibold">Add images</p>
-                </div>
-              </button>
-            </CarouselItem>
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+                Upload from gallery
+              </Button>
+              <Button
+                className="w-full h-10"
+                onClick={() => document.getElementById("cameraInput")?.click()}
+              >
+                Take photo
+              </Button>
+            </>
+          ) : (
+            <Button
+              className="w-full h-10"
+              onClick={() => document.getElementById("imageUpload")?.click()}
+            >
+              Upload images
+            </Button>
+          )}
+        </div>
+      </div>
+      <CardFooter>
+        <div className="w-full flex gap-4 justify-between">
+          <Button
+            className="w-24 h-10"
+            onClick={() =>
+              setState((state) => {
+                return state - 1;
+              })
+            }
+          >
+            <MdChevronLeft className="scale-[2]" />
+            Späť
+          </Button>
+          <Button className="w-24 h-10" onClick={handleUpload}>
+            Ďalej
+            <MdChevronRight className="scale-[2]" />
+          </Button>
+        </div>
+      </CardFooter>
+      <>
+        {/* Hidden Inputs for Mobile */}
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          capture="environment"
+          onChange={uploadImage}
+          className="hidden"
+          id="cameraInput"
+        />
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={uploadImage}
+          className="hidden"
+          id="galleryInput"
+        />
 
         {/* File Input for PC */}
         <input
@@ -119,60 +252,7 @@ export default function ImageUploadSection() {
           className="hidden"
           id="imageUpload"
         />
-      </div>
-      <div className="flex gap-4 justify-center">
-        {images.length ? (
-          <Button
-            variant="destructive"
-            className="w-full"
-            onClick={removeImage}
-          >
-            Remove image
-          </Button>
-        ) : null}
-        {isMobile ? (
-          <>
-            <Button
-              className="w-full"
-              onClick={() => document.getElementById("galleryInput")?.click()}
-            >
-              Upload from gallery
-            </Button>
-            <Button
-              className="w-full"
-              onClick={() => document.getElementById("cameraInput")?.click()}
-            >
-              Take photo
-            </Button>
-          </>
-        ) : (
-          <Button
-            className="w-full"
-            onClick={() => document.getElementById("imageUpload")?.click()}
-          >
-            Upload images
-          </Button>
-        )}
-      </div>
-
-      {/* Hidden Inputs for Mobile */}
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        capture="environment"
-        onChange={uploadImage}
-        className="hidden"
-        id="cameraInput"
-      />
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={uploadImage}
-        className="hidden"
-        id="galleryInput"
-      />
-    </div>
-  )
+      </>
+    </Card>
+  );
 }
