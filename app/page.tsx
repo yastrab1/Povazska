@@ -29,8 +29,6 @@ type Tags =
   | "Kultúra a šport"
   | "Iné podnety";
 
-type RankingsMap = Map<Tags, number>;
-
 export interface Data {
   rankings: string[];
   tags: string[];

@@ -23,7 +23,7 @@ export default function TagSelectionCard({tags,setData,setState}:Props) {
                 ...data,
                 userSelectedTags: selected || [""],
             }})
-        setState("finalization")
+        setState(4)
     }
 
     const handleValueChange = (value: string[]) => {

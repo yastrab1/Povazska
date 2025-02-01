@@ -54,21 +54,15 @@ export default function PersonalInfoCard({ data }: Props) {
 
   const form = useForm({
     defaultValues: {
-      popis: data.description || "", // Default popis to data.description
+      popis: "", // Default popis to data.description
     },
   });
-  useEffect(() => {
-      if(shouldLetUserWriteOwnDescription){
-          return;
-      }
-    form.reset({ popis: data.description || "" }); // Reset form values when data.description updates
-  }, [data.description, form]);
 
   return (
     <Card className="max-w-md mx-auto mt-8 shadow-lg">
       <CardHeader>
           {shouldLetUserWriteOwnDescription ?<Input alt={"Zadaj krátky popis tvojho problému"} value={title} onChange={event => setTitle(event.target.value)}></Input>
-              : <CardTitle>{data.title ? data.title : "Načítavam nadpis..."}</CardTitle>}
+              : <CardTitle>{data.userSelectedTags.join(" ")}</CardTitle>}
 
         <CardDescription>{name + " --- " + email}</CardDescription>
       </CardHeader>
