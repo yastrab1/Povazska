@@ -15,6 +15,7 @@ export default async function getIssue(id: string): Promise<Issue> {
 
 export async function getAllIssues() {
     const querySnapshot = await getDocs(collection(db, 'podnety'));
+    console.log("got here")
     return querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
 
 }

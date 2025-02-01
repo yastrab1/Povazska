@@ -90,6 +90,9 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
     };
 
     const detectDuplicates = async (data: Data) => {
+        const distance = 0.1;
+        const minMatchTags = 2;
+
         const duplicates: Issue[] = [];
 
         const issues = await getAllIssues()
@@ -98,7 +101,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
             const distKM = haversineDistance(
                 {longitude: issue.lng, latitude: issue.lat},
                 {longitude: data.lng, latitude: data.lat}, false)
-            if (distKM > 0.1) {
+            if (distKM > distance) {
                 continue;
             }
             let matchingTags = 0;
@@ -109,7 +112,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
                     }
                 }
             }
-            if (matchingTags < 2) continue;
+            if (matchingTags < minMatchTags) continue;
             duplicates.push(issue);
 
         }
@@ -154,6 +157,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
         }));
         console.timeEnd("upload timer");
         const duplicates = await detectDuplicates(data);
+        console.log(duplicates);
         dataSet(data => ({...data, duplicates: duplicates}));
     };
 
