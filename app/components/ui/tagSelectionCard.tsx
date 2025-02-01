@@ -1,28 +1,26 @@
 'use client'
-import { Bold, Italic, Underline } from "lucide-react"
-
-import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import {Button} from "@/components/ui/button";
-import WarningModal from "@/app/components/ui/warningModal";
 import React, {Dispatch, SetStateAction, useState} from "react";
-import {Data, State} from "@/app/page";
-import {Card, CardContent, CardFooter, CardHeader,  CardTitle} from "@/components/ui/card";
+import {Data} from "@/app/page";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
 
-interface Props{
-    tags:string[]
-    setData:Dispatch<SetStateAction<Data>>;
-    setState:Dispatch<SetStateAction<State>>;
+interface Props {
+    tags: string[]
+    setData: Dispatch<SetStateAction<Data>>;
+    setState: Dispatch<SetStateAction<number>>;
 }
-export default function TagSelectionCard({tags,setData,setState}:Props) {
+
+export default function TagSelectionCard({tags, setData, setState}: Props) {
     const [selected, setSelected] = useState<string[]>();
 
     const onOkClick = () => {
-        setData(data=>{
+        setData(data => {
             return {
                 ...data,
                 userSelectedTags: selected || [""],
-            }})
+            }
+        })
         setState(4)
     }
 
@@ -37,24 +35,26 @@ export default function TagSelectionCard({tags,setData,setState}:Props) {
             </CardHeader>
             <CardContent>
                 <div className={"p-4"}>
-                {tags.length==0?"Načítavam...":
-                    <ToggleGroup type="multiple" value={selected} onValueChange={handleValueChange} className={"flex-wrap"}>
-                        {tags.map(category => (
-                            <ToggleGroupItem value={category} key={category}>{category}</ToggleGroupItem>
-                        ))}
-                    </ToggleGroup>}
+                    {tags.length == 0 ? "Načítavam..." :
+                        <ToggleGroup type="multiple" value={selected} onValueChange={handleValueChange}
+                                     className={"flex-wrap"}>
+                            {tags.map(category => (
+                                <ToggleGroupItem value={category} key={category}>{category}</ToggleGroupItem>
+                            ))}
+                        </ToggleGroup>}
                 </div>
                 <Button onClick={onOkClick} className={"mr-4 mb-2"}>
                     OK
                 </Button>
-                <Button variant="destructive" onClick={()=>setState("finalization")}>
+                <Button variant="destructive" onClick={() => setState(4)}>
                     Chcem viac popísať môj problém
                 </Button>
             </CardContent>
             <CardFooter>
-                Tieto kategórie budú využité na efektívnejšie spracovanie vášho problému. Ak sa rozhodnete zadať vlastné kategórie, musíte potom napísať vlastný popis.
+                Tieto kategórie budú využité na efektívnejšie spracovanie vášho problému. Ak sa rozhodnete zadať vlastné
+                kategórie, musíte potom napísať vlastný popis.
             </CardFooter>
         </Card>
 
-);
+    );
 }

@@ -9,7 +9,7 @@ export default async function Page({
 }) {
     const slug = (await params).id
     const doc = await getIssue(slug)
-    const data = doc.data() as Data
+    const data = doc as unknown as Data
 
-    return <IssueDisplayCard data={data} />
+    return <IssueDisplayCard data={data}/>
 }

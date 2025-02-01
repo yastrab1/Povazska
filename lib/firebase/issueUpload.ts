@@ -1,32 +1,8 @@
-import {
-    collection,
-    // onSnapshot,
-    // query,
-    // getDocs,
-    // doc,
-    // getDoc,
-    // updateDoc,
-    // orderBy,
-    Timestamp,
-    // runTransaction,
-    // where,
-    addDoc,
-    // getFirestore,
-} from "firebase/firestore";
+import {addDoc, collection, Timestamp,} from "firebase/firestore";
 
-import { db } from "@/app/config/firebase";
-import { Data } from "@/app/page";
+import {db} from "@/app/config/firebase";
+import {Data, Issue} from "@/app/page";
 
-type Issue = {
-    title: string,
-    description: string,
-    tags: string[],
-    images: string[]
-    timestamp: Timestamp,
-    lat: number,
-    lng: number,
-    status: string,
-}
 
 export async function addIssue(issueData: Data) {
     if (!issueData.title) {

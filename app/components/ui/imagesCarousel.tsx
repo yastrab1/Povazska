@@ -1,16 +1,8 @@
-
 import Image from "next/image";
 import React from "react";
-import {CardContent} from "@/components/ui/card";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-} from "@/components/ui/carousel"
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,} from "@/components/ui/carousel"
 
-export default function ImageCarousel({images,onClick}: { images: string[]|undefined,onClick?: () => void }) {
+export default function ImageCarousel({images, onClick}: { images: string[] | undefined, onClick?: () => void }) {
     return (
         <div className="flex flex-col items-center">
             {images?.length !== 0 ? (
@@ -20,7 +12,8 @@ export default function ImageCarousel({images,onClick}: { images: string[]|undef
                         <CarouselContent>
 
                             {images?.map((image, imageIndex) => (
-                                <CarouselItem key={imageIndex} className={"w-[100%] h-[100%] align-content: center; flex"}>
+                                <CarouselItem key={imageIndex}
+                                              className={"w-[100%] h-[100%] align-content: center; flex"}>
                                     <Image
                                         src={images[imageIndex]}
                                         alt="Uploaded Preview"
@@ -35,16 +28,17 @@ export default function ImageCarousel({images,onClick}: { images: string[]|undef
                             ))}
 
                         </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
+                        <CarouselPrevious/>
+                        <CarouselNext/>
                     </Carousel>
                 </div>
             ) : (
                 <div
                     className="w-48 h-48 bg-gray-100 flex items-center justify-center rounded-md mb-4 cursor-pointer"
-                onClick={onClick}>
+                    onClick={onClick}>
 
                     <span className="text-gray-500">No Image</span>
                 </div>)}
         </div>
-    )}
+    )
+}
