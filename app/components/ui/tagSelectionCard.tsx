@@ -38,13 +38,13 @@ export default function TagSelectionCard({tags,setData,setState}:Props) {
             <CardContent>
                 <div className={"p-4"}>
                 {tags.length==0?"Načítavam...":
-                    <ToggleGroup type="multiple" value={selected} onValueChange={handleValueChange}>
+                    <ToggleGroup type="multiple" value={selected} onValueChange={handleValueChange} className={"flex-wrap"}>
                         {tags.map(category => (
                             <ToggleGroupItem value={category} key={category}>{category}</ToggleGroupItem>
                         ))}
                     </ToggleGroup>}
                 </div>
-                <Button onClick={onOkClick}>
+                <Button onClick={onOkClick} className={"mr-4 mb-2"}>
                     OK
                 </Button>
                 <Button variant="destructive" onClick={()=>setState("finalization")}>
