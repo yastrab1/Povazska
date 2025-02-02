@@ -1,6 +1,6 @@
-import {openai} from '@ai-sdk/openai';
 import {FilePart, generateObject, ImagePart, TextPart} from 'ai';
 import {z} from 'zod';
+import {model} from "@/lib/globals";
 
 function sortObjectByNumber(inputObject: object) {
     // Convert the object to an array of key-value pairs
@@ -15,8 +15,6 @@ function sortObjectByNumber(inputObject: object) {
 
 const tags = ["Neporiadok a odpadky", "Cyklostojany", "Doprava a parkovanie", "Cesty a chodniky", "Údržba majetku", "Dreviny a zeleň", "Detské ihriská", "Lavičky a koše",
     "Stavebný úrad", "Nájomné bývanle", "Dane a poplatky", "Ľudia bez domova", "Sociálna pomoc", "Matrika a pobyty", "Kultúra a šport", "Iné podnety"]
-
-const model = openai('gpt-4o-2024-08-06');
 
 export async function getResponse(data: string[]) {
     const prompt: (TextPart | ImagePart | FilePart)[] = [{

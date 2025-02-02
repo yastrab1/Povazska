@@ -1,17 +1,17 @@
 import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
-import {Data} from "@/app/page";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
+import {Issue} from "@/lib/globals";
 
 
 interface Props {
-    data: Data | null;
+    data: Issue;
 }
 
 export default function IssueDisplayCard({data}: Props) {
     return (
         <Card className="max-w-md mx-auto mt-8 shadow-lg">
             <CardHeader>
-                <CardTitle>{data?.userSelectedTags.join(" #")}</CardTitle>
+                <CardTitle>{data.tags.join(" #")}</CardTitle>
 
             </CardHeader>
             <CardContent>

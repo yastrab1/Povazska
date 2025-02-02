@@ -3,10 +3,10 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import uploadImages from "@/lib/firebase/imageUpload";
-import {Data, Issue} from "@/app/page";
 import WarningModal from "@/app/components/ui/warningModal";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import getIssue, {getAllIssues} from "@/lib/firebase/issueGet";
+import {Data, Issue} from "@/lib/globals";
 
 
 // type State =
@@ -106,7 +106,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
             }
             let matchingTags = 0;
             for (const tag1 in issue.tags) {
-                for (const tag2 in data.tags) {
+                for (const tag2 in data.userSelectedTags) { //TODO not really thought, what if user does not select tags until the GPT api call finishes - problem
                     if (tag1 == tag2) {
                         matchingTags++;
                     }

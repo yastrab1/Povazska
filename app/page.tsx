@@ -7,59 +7,8 @@ import MapSelectionSection from "@/app/components/ui/mapSelectionSection";
 import DescriptionCard from "@/app/components/ui/uploadIssueCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
-import {Timestamp} from "firebase/firestore";
 import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
-
-type Tags =
-    | "Neporiadok a odpadky"
-    | "Cyklostojany"
-    | "Doprava a parkovanie"
-    | "Cesty a chodniky"
-    | "Údržba majetku"
-    | "Dreviny a zeleň"
-    | "Detské ihriská"
-    | "Lavičky a koše"
-    | "Stavebný úrad"
-    | "Nájomné bývanle"
-    | "Dane a poplatky"
-    | "Ľudia bez domova"
-    | "Sociálna pomoc"
-    | "Matrika a pobyty"
-    | "Kultúra a šport"
-    | "Iné podnety";
-
-export interface Data {
-    title: string | null;
-    description: string | null;
-    rankings: [Tags, number][];
-    tags: string[];
-    images: string[];
-    lat: number;
-    lng: number;
-    userSelectedTags: string[];
-    duplicates: Issue[];
-}
-
-export interface Issue {
-    title: string | null;
-    description: string | null;
-    tags: string[];
-    images: string[];
-    lat: number;
-    lng: number;
-    status: string,
-    timestamp: Timestamp;
-}
-
-export type State =
-    | "logged in"
-    | "guest upload"
-    | "image upload"
-    | "map selection"
-    | "tag selection"
-    | "finalization"
-    | undefined
-    | number;
+import {Data, State} from "@/lib/globals";
 
 export default function MainPage() {
     const [state, setState] = useState<number>(0);
@@ -67,7 +16,6 @@ export default function MainPage() {
         title: "",
         description: "",
         rankings: [],
-        tags: [],
         images: [],
         lat: 0,
         lng: 0,

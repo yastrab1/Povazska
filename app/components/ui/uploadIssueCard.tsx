@@ -8,14 +8,29 @@ import {Button} from "@/components/ui/button";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
 import {useForm} from "react-hook-form";
 import {Textarea} from "@/components/ui/textarea";
-import {addIssue} from "@/lib/firebase/issueUpload";
-import {Data} from "@/app/page";
+import {addIssue, addSuggestedResolve} from "@/lib/firebase/issueUpload";
 import {Input} from "@/components/ui/input";
 import {useRouter} from "next/navigation";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
+import {Data, Issue} from "@/lib/globals";
+import {Timestamp} from "firebase/firestore";
 
 interface Props {
     data: Data;
+}
+
+function constructIssueFromData(data: Data): Issue {
+    return {
+        title: data.title,
+        description: data.description,
+        tags: data.userSelectedTags,
+        timestamp: Timestamp.now(),
+        images: data.images,
+        lat: data.lat,
+        lng: data.lng,
+        status: "open",
+        resolve: ""
+    } as Issue
 }
 
 export default function PersonalInfoCard({data}: Props) {
@@ -77,7 +92,12 @@ export default function PersonalInfoCard({data}: Props) {
                         data.title = title;
                     }
                     data.description = form.getValues().popis;
-                    addIssue(data).then(id => router.push(`/issues/${id}`));
+                    const issue = constructIssueFromData(data);
+                    addIssue(JSON.stringify((issue))).then(async id => {
+                        await addSuggestedResolve(id, JSON.stringify(issue))
+                        router.push(`/issues/${id}`)
+                    });
+
                 }}>Upload Images!</Button>
             </CardFooter>
         </Card>

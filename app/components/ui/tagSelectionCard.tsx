@@ -1,9 +1,9 @@
 'use client'
 import {Button} from "@/components/ui/button";
 import React, {Dispatch, SetStateAction, useState} from "react";
-import {Data} from "@/app/page";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
+import {Data} from "@/lib/globals";
 
 interface Props {
     tags: string[]

@@ -2,20 +2,20 @@
 
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {
-  Carousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    type CarouselApi,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "@/components/ui/carousel";
 import {Card, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 import Image from "next/image";
 import {LuImagePlus} from "react-icons/lu";
 import {MdChevronLeft, MdChevronRight} from "react-icons/md";
 import {Button} from "@/components/ui/button";
-import {Data} from "@/app/page";
 import uploadImages from "@/lib/firebase/imageUpload";
+import {Data} from "@/lib/globals";
 
 interface Props {
     setState: Dispatch<SetStateAction<number>>;
