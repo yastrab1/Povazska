@@ -1,14 +1,15 @@
 import {
-    Dialog, DialogClose,
+    Dialog,
+    DialogClose,
     DialogContent,
-    DialogDescription, DialogFooter,
+    DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import {Button} from "@/components/ui/button";
 
-interface Props{
+interface Props {
     open: boolean;
     onClose: (shouldContinue: boolean) => void;
 }
@@ -21,7 +22,8 @@ export default function WarningModal({open, onClose}: Props) {
                 <DialogHeader>
                     <DialogTitle>Ste si istí?</DialogTitle>
                     <DialogDescription>
-                        Bez obrázku naše služby nedokážu automaticky priradiť popis problému, preto ho budete musieť vypisovať sami.
+                        Bez obrázku naše služby nedokážu automaticky priradiť popis problému, preto ho budete musieť
+                        vypisovať sami.
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="sm:justify-start">

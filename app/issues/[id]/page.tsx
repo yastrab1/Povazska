@@ -1,6 +1,6 @@
 import getIssue from "@/lib/firebase/issueGet";
-import {Data} from "@/app/page";
 import IssueDisplayCard from "@/app/components/ui/issueDisplayCard";
+import {Issue} from "@/lib/globals";
 
 export default async function Page({
                                        params,
@@ -9,7 +9,6 @@ export default async function Page({
 }) {
     const slug = (await params).id
     const doc = await getIssue(slug)
-    const data = doc.data() as Data
-
-    return <IssueDisplayCard data={data} />
+    const data = doc as Issue
+    return <IssueDisplayCard data={data}/>
 }
