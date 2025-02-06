@@ -8,7 +8,7 @@ import {Button} from "@/components/ui/button";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
 import {useForm} from "react-hook-form";
 import {Textarea} from "@/components/ui/textarea";
-import {addIssue, addSuggestedResolve} from "@/lib/firebase/issueUpload";
+import {addIssue} from "@/lib/firebase/issueUpload";
 import {Input} from "@/components/ui/input";
 import {useRouter} from "next/navigation";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
@@ -16,7 +16,6 @@ import {Data, Issue} from "@/lib/globals";
 import {Timestamp} from "firebase/firestore";
 import {Separator} from "@/components/ui/separator";
 import DuplicateCard from "@/app/components/ui/duplicateCard";
-import {Heading1} from "lucide-react";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 
 interface Props {
