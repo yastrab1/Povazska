@@ -9,7 +9,6 @@ import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, Form
 import {useForm} from "react-hook-form";
 import {Textarea} from "@/components/ui/textarea";
 import {addIssue, addSuggestedResolve} from "@/lib/firebase/issueUpload";
-import {Input} from "@/components/ui/input";
 import {useRouter} from "next/navigation";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import {Data, Issue} from "@/lib/globals";
@@ -61,9 +60,7 @@ export default function PersonalInfoCard({data}: Props) {
     return (
         <Card className="max-w-md mx-auto mt-8 shadow-lg">
             <CardHeader>
-                {shouldLetUserWriteOwnDescription ? <Input alt={"Zadaj krátky popis tvojho problému"} value={title}
-                                                           onChange={event => setTitle(event.target.value)}></Input>
-                    : <CardTitle>{"#" + data.userSelectedTags.join(" #")}</CardTitle>}
+                <CardTitle>{"#" + data.userSelectedTags.join(" #")}</CardTitle>
 
                 <CardDescription>{name + " --- " + email}</CardDescription>
             </CardHeader>
@@ -88,9 +85,6 @@ export default function PersonalInfoCard({data}: Props) {
             </CardContent>
             <CardFooter>
                 <Button onClick={() => {
-                    if (shouldLetUserWriteOwnDescription) {
-                        data.title = title;
-                    }
                     data.description = form.getValues().popis;
                     const issue = constructIssueFromData(data);
                     addIssue(JSON.stringify((issue))).then(async id => {
