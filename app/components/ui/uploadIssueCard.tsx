@@ -14,6 +14,10 @@ import {useRouter} from "next/navigation";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import {Data, Issue} from "@/lib/globals";
 import {Timestamp} from "firebase/firestore";
+import {Separator} from "@/components/ui/separator";
+import DuplicateCard from "@/app/components/ui/duplicateCard";
+import {Heading1} from "lucide-react";
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 
 interface Props {
     data: Data;
@@ -85,7 +89,15 @@ export default function PersonalInfoCard({data}: Props) {
                     />
                 </Form>
                 <ImageCarousel images={data.images}/>
-            </CardContent>
+                <Separator/>
+                <h1>Potential duplicates</h1>
+                <Carousel>
+                    <CarouselContent>
+                        {data.duplicates.map((duplicate,index)=> <CarouselItem key={index}><DuplicateCard issue={duplicate} key={index}/></CarouselItem>)}
+                    </CarouselContent>
+                    <CarouselPrevious/><CarouselNext/>
+                </Carousel>
+                </CardContent>
             <CardFooter>
                 <Button onClick={() => {
                     if (shouldLetUserWriteOwnDescription) {
@@ -94,7 +106,15 @@ export default function PersonalInfoCard({data}: Props) {
                     data.description = form.getValues().popis;
                     const issue = constructIssueFromData(data);
                     addIssue(JSON.stringify((issue))).then(async id => {
-                        await addSuggestedResolve(id, JSON.stringify(issue))
+                        const obj = {
+                            "issueID":id,
+                            "issueJSON":issue
+                        }
+                        console.log(JSON.stringify(obj));
+                        fetch("/api/resolve/",{
+                            method:"POST",
+                            body: JSON.stringify(obj)
+                        })
                         router.push(`/issues/${id}`)
                     });
 
