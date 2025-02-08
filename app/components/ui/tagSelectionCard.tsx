@@ -3,12 +3,12 @@ import {Button} from "@/components/ui/button";
 import React, {Dispatch, SetStateAction, useState} from "react";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-import {Data} from "@/lib/globals";
+import {Data, formProgress} from "@/lib/globals";
 
 interface Props {
     tags: string[]
     setData: Dispatch<SetStateAction<Data>>;
-    setState: Dispatch<SetStateAction<number>>;
+    setState: Dispatch<SetStateAction<formProgress>>;
 }
 
 export default function TagSelectionCard({tags, setData, setState}: Props) {
@@ -21,7 +21,7 @@ export default function TagSelectionCard({tags, setData, setState}: Props) {
                 userSelectedTags: selected || [""],
             }
         })
-        setState(4)
+        setState("finalization")
     }
 
     const handleValueChange = (value: string[]) => {
@@ -46,8 +46,8 @@ export default function TagSelectionCard({tags, setData, setState}: Props) {
                 <Button onClick={onOkClick} className={"mr-4 mb-2"}>
                     OK
                 </Button>
-                <Button variant="destructive" onClick={() => setState(4)}>
-                        Chcem viac popísať môj problém
+                <Button variant="destructive" onClick={() => setState("custom tag selection")}>
+                    Chcem viac popísať môj problém
                 </Button>
             </CardContent>
             <CardFooter>

@@ -4,10 +4,10 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} 
 import {Button} from "@/components/ui/button";
 import MapPickerModal from "@/app/components/maps/map";
 import {MdChevronLeft, MdChevronRight} from "react-icons/md";
-import {Data} from "@/lib/globals";
+import {Data, formProgress} from "@/lib/globals";
 
 interface Props {
-    setState: Dispatch<SetStateAction<number>>;
+    setState: Dispatch<SetStateAction<formProgress>>;
     dataSet: Dispatch<SetStateAction<Data>>;
 }
 
@@ -99,9 +99,7 @@ export default function MapPickerCard({setState, dataSet}: Props) {
                             setError("No location selected.");
                             return;
                         }
-                        setState((state) => {
-                            return state + 1;
-                        });
+                        setState("ai tag selection");
                         setCoordinateData();
                     }}
                 >
@@ -119,9 +117,7 @@ export default function MapPickerCard({setState, dataSet}: Props) {
                     <Button
                         className="w-24 h-10"
                         onClick={() =>
-                            setState((state) => {
-                                return state - 1;
-                            })
+                            setState("image upload")
                         }
                     >
                         <MdChevronLeft className="scale-[2]"/>
@@ -130,9 +126,7 @@ export default function MapPickerCard({setState, dataSet}: Props) {
                     <Button
                         className="w-24 h-10"
                         onClick={() =>
-                            setState((state) => {
-                                return state + 1;
-                            })
+                            setState("ai tag selection")
                         }
                     >
                         Ďalej

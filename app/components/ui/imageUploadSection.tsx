@@ -15,10 +15,10 @@ import {LuImagePlus} from "react-icons/lu";
 import {MdChevronLeft, MdChevronRight} from "react-icons/md";
 import {Button} from "@/components/ui/button";
 import uploadImages from "@/lib/firebase/imageUpload";
-import {Data} from "@/lib/globals";
+import {Data, formProgress} from "@/lib/globals";
 
 interface Props {
-    setState: Dispatch<SetStateAction<number>>;
+    setState: Dispatch<SetStateAction<formProgress>>;
     setData: Dispatch<SetStateAction<Data>>;
 }
 
@@ -81,9 +81,7 @@ export default function ImageUploadSection({setState, setData}: Props) {
         setData((data) => {
             return {...data, images: images};
         });
-        setState((state) => {
-            return state + 1;
-        });
+        setState("ai tag selection");
 
         console.time("upload timer");
         const imageDownloadPromises: Promise<File>[] = [];
@@ -203,9 +201,7 @@ export default function ImageUploadSection({setState, setData}: Props) {
                     <Button
                         className="w-24 h-10"
                         onClick={() =>
-                            setState((state) => {
-                                return state - 1;
-                            })
+                            setState("personal info")
                         }
                     >
                         <MdChevronLeft className="scale-[2]"/>

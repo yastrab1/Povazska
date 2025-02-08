@@ -6,7 +6,7 @@ import uploadImages from "@/lib/firebase/imageUpload";
 import WarningModal from "@/app/components/ui/warningModal";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import getIssue, {getAllIssues} from "@/lib/firebase/issueGet";
-import {Data, Issue} from "@/lib/globals";
+import {Data, formProgress, Issue} from "@/lib/globals";
 
 
 // type State =
@@ -17,7 +17,7 @@ import {Data, Issue} from "@/lib/globals";
 //     | undefined;
 
 interface Props {
-    stateSet: (state: number) => void;
+    setState: Dispatch<SetStateAction<formProgress>>;
     dataSet: Dispatch<SetStateAction<Data>>;
     data: Data;
 }
@@ -57,7 +57,7 @@ function haversineDistance(
     return radius * c;
 }
 
-export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
+export default function ImageUploadCard({setState, dataSet, data}: Props) {
     const [images, setImages] = useState<string[]>([]);
     const [isMobile, setIsMobile] = useState(false);
     const [index, setIndex] = useState(0);
@@ -126,7 +126,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
         }
         dataSet(data => ({...data, images: images}));
 
-        stateSet(2);
+        setState("map selection");
         console.time("upload timer");
         const imageDownloadPromises: Promise<File>[] = [];
         let links: string[] = [""];
@@ -245,7 +245,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
             </Card>
             <WarningModal open={warningModalOpen} onClose={pass => {
                 if (pass) {
-                    stateSet(2);
+                    setState("map selection");
                 } else {
                     setWarningModalOpen(false);
                 }
