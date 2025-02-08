@@ -9,6 +9,7 @@ import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
 import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
 import {Data, State} from "@/lib/globals";
+import CustomTagsChooser from "@/app/components/ui/chooseCustomTags";
 
 export default function MainPage() {
     const [state, setState] = useState<number>(0);
@@ -63,5 +64,6 @@ export default function MainPage() {
         return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured
     };
 
-    return <div className="p-4 relative">{activeCard(state)}</div>;
+    return <div className="p-4 relative">{activeCard(state)}
+                <CustomTagsChooser/></div>;
 }

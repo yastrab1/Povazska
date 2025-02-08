@@ -91,7 +91,7 @@ export default function ImageUploadCard({stateSet, dataSet, data}: Props) {
 
     const detectDuplicates = async (data: Data) => {
         const distance = 0.1;
-        const minMatchTags = 2;
+        const minMatchTags = 0;
 
         const duplicates: Issue[] = [];
 

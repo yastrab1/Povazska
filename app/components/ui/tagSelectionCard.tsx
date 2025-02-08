@@ -47,7 +47,7 @@ export default function TagSelectionCard({tags, setData, setState}: Props) {
                     OK
                 </Button>
                 <Button variant="destructive" onClick={() => setState(4)}>
-                    Chcem viac popísať môj problém
+                        Chcem viac popísať môj problém
                 </Button>
             </CardContent>
             <CardFooter>
