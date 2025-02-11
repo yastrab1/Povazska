@@ -2,32 +2,33 @@ import {openai} from "@ai-sdk/openai";
 import {Timestamp} from "firebase/firestore";
 
 export const model = openai('gpt-4o-2024-08-06');
-export type State =
-    | "logged in"
-    | "guest upload"
+export type formProgress =
+    | "personal info"
     | "image upload"
     | "map selection"
-    | "tag selection"
+    | "ai tag selection"
+    | "custom tag selection"
     | "finalization"
     | undefined
     | number;
-type Tags =
-    | "Neporiadok a odpadky"
-    | "Cyklostojany"
-    | "Doprava a parkovanie"
-    | "Cesty a chodniky"
-    | "Údržba majetku"
-    | "Dreviny a zeleň"
-    | "Detské ihriská"
-    | "Lavičky a koše"
-    | "Stavebný úrad"
-    | "Nájomné bývanle"
-    | "Dane a poplatky"
-    | "Ľudia bez domova"
-    | "Sociálna pomoc"
-    | "Matrika a pobyty"
-    | "Kultúra a šport"
-    | "Iné podnety";
+export const allTags: string[] = ["Neporiadok a odpadky"
+    , "Cyklostojany"
+    , "Doprava a parkovanie"
+    , "Cesty a chodniky"
+    , "Údržba majetku"
+    , "Dreviny a zeleň"
+    , "Detské ihriská"
+    , "Lavičky a koše"
+    , "Stavebný úrad"
+    , "Nájomné bývanle"
+    , "Dane a poplatky"
+    , "Ľudia bez domova"
+    , "Sociálna pomoc"
+    , "Matrika a pobyty"
+    , "Kultúra a šport"
+    , "Iné podnety"] as const;
+export type Tags = typeof allTags[number]; //Typescript hack
+
 
 export interface Data {
     title: string | null;

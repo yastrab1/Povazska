@@ -8,11 +8,11 @@ import DescriptionCard from "@/app/components/ui/uploadIssueCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
 import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
-import {Data, State} from "@/lib/globals";
-import CustomTagsChooser from "@/app/components/ui/chooseCustomTags";
+import {Data, formProgress} from "@/lib/globals";
+import CustomTagsChooseCard from "@/app/components/ui/CustomTagsChooseCard";
 
 export default function MainPage() {
-    const [state, setState] = useState<number>(0);
+    const [state, setState] = useState<formProgress>("personal info");
     const [data, setData] = useState<Data>({
         title: "",
         description: "",
@@ -26,8 +26,8 @@ export default function MainPage() {
 
     const {name, email, setEmail, setName} = useIsLoggedIn();
 
-    const activeCard = (activeState: State) => {
-        if (activeState === 0) {
+    const activeCard = (activeState: formProgress) => {
+        if (activeState === "personal info") {
             return (
                 <PersonalInfoCard
                     nameSet={setName}
@@ -39,15 +39,15 @@ export default function MainPage() {
             );
         }
 
-        if (activeState === 1) {
-            return <ImageUploadCard stateSet={setState} dataSet={setData} data={data}/>;
+        if (activeState === "image upload") {
+            return <ImageUploadCard setState={setState} dataSet={setData} data={data}/>;
         }
 
-        if (activeState === 2) {
+        if (activeState === "map selection") {
             return <MapSelectionSection setState={setState}/>
         }
 
-        if (activeState === 3) {
+        if (activeState === "ai tag selection") {
             return (
                 <TagSelectionCard
                     tags={data.rankings.filter(ranking => (ranking[1] > 0)).map(ranking => ranking[0]).slice(0, 5)}
@@ -56,14 +56,16 @@ export default function MainPage() {
                 />
             );
         }
+        if (activeState === "custom tag selection") {
+            return <CustomTagsChooseCard setState={setState} setData={setData}/>
+        }
 
-        if (activeState === 4) {
+        if (activeState === "finalization") {
             return <DescriptionCard data={data}></DescriptionCard>;
         }
 
         return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured
     };
 
-    return <div className="p-4 relative">{activeCard(state)}
-                <CustomTagsChooser/></div>;
+    return <div className="p-4 relative">{activeCard(state)}</div>;
 }

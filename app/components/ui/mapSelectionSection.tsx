@@ -5,6 +5,7 @@ import {MdChevronLeft, MdChevronRight} from "react-icons/md";
 import {Button} from "@/components/ui/button";
 import MapPopup from "@/app/components/maps/map";
 import Image from "next/image";
+import {formProgress} from "@/lib/globals";
 
 export type Library =
     | "core"
@@ -23,7 +24,7 @@ export type Library =
 const libraries: Library[] = ["places", "geocoding"];
 
 interface Props {
-    setState: Dispatch<SetStateAction<number>>;
+    setState: Dispatch<SetStateAction<formProgress>>;
 }
 
 export default function MapSelectionSection({setState}: Props) {
@@ -175,9 +176,7 @@ export default function MapSelectionSection({setState}: Props) {
                     <Button
                         className="w-24 h-10"
                         onClick={() =>
-                            setState((state) => {
-                                return state - 1;
-                            })
+                            setState("image upload")
                         }
                     >
                         <MdChevronLeft className="scale-[2]"/>
@@ -186,9 +185,7 @@ export default function MapSelectionSection({setState}: Props) {
                     <Button
                         className="w-24 h-10"
                         onClick={() =>
-                            setState((state) => {
-                                return state + 1;
-                            })
+                            setState("ai tag selection")
                         }
                     >
                         Ďalej
