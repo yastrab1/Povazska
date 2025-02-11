@@ -10,6 +10,7 @@ import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
 import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
 import {Data, formProgress} from "@/lib/globals";
 import CustomTagsChooseCard from "@/app/components/ui/CustomTagsChooseCard";
+import MapPickerModal from "@/app/components/maps/map";
 
 export default function MainPage() {
     const [state, setState] = useState<formProgress>("personal info");
@@ -44,7 +45,7 @@ export default function MainPage() {
         }
 
         if (activeState === "map selection") {
-            return <MapSelectionSection setState={setState}/>
+            return <MapPickerModal setState={setState}/>
         }
 
         if (activeState === "ai tag selection") {

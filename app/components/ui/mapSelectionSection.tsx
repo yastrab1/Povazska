@@ -49,7 +49,6 @@ export default function MapSelectionSection({setState}: Props) {
     };
 
     const fetchAddress = useCallback((lat: number, lng: number) => {
-        console.log("update - neviem preco ale stal sa");
         if (geocoder.current) {
             geocoder.current.geocode(
                 {location: {lat, lng}},

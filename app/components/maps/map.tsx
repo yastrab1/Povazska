@@ -1,8 +1,9 @@
 "use client";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
 import {GoogleMap, StandaloneSearchBox, useLoadScript,} from "@react-google-maps/api";
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
+import {formProgress,Data} from "@/lib/globals";
 
 export type Library =
     | "core"
@@ -19,16 +20,13 @@ export type Library =
     | "visualization";
 
 interface Props {
-    onClose: () => void;
-    onCoordinatesSelect: (coordinates: { lat: number; lng: number }) => void;
+    setState: Dispatch<SetStateAction<formProgress>>;
+    setData: Dispatch<SetStateAction<Data>>;
 }
 
 const libraries: Library[] = ["places"];
 
-export default function MapPickerModal({
-                                           onClose,
-                                           onCoordinatesSelect,
-                                       }: Props) {
+export default function MapPickerModal({setState,setData}: Props) {
     const [coordinates, setCoordinates] = useState<{ lat: number; lng: number }>({
         lat: 48.1221, // Petržalka's latitude
         lng: 17.105, // Petržalka's longitude
