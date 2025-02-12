@@ -45,7 +45,7 @@ export default function MainPage() {
         }
 
         if (activeState === "map selection") {
-            return <MapPickerModal setState={setState}/>
+            return <MapPickerModal setData={setData} setState={setState}/>
         }
 
         if (activeState === "ai tag selection") {

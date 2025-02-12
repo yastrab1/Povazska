@@ -42,7 +42,7 @@ export default function MapPickerModal({setState,setData}: Props) {
 
     const mapContainerStyle: React.CSSProperties = {
         width: "100%",
-        height: "300px",
+        height: "70%",
     };
 
     const mapRef = useRef<google.maps.Map | null>(null);
@@ -105,9 +105,13 @@ export default function MapPickerModal({setState,setData}: Props) {
 
     const handleConfirm = () => {
         if (coordinates) {
-            onCoordinatesSelect(coordinates);
+            setData(data=>({
+                ...data,
+                lat: coordinates.lat,
+                lng: coordinates.lng,
+            }));
+            setState("ai tag selection")
         }
-        onClose();
     };
 
     useEffect(() => {
@@ -120,10 +124,10 @@ export default function MapPickerModal({setState,setData}: Props) {
     return (
         <div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-            onClick={onClose}
+
         >
             <div
-                className="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-lg"
+                className="bg-white p-6 rounded-lg shadow-lg h-[90%] w-[90%]"
                 onClick={(e) => e.stopPropagation()}
             >
                 <StandaloneSearchBox
@@ -162,9 +166,10 @@ export default function MapPickerModal({setState,setData}: Props) {
                     {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                 </div>
                 <div className="mt-4 flex justify-between">
-                    <Button variant="outline" onClick={onClose}>
+                    <Button variant="outline">
                         Cancel
                     </Button>
+                    <Button variant={"secondary"} onClick={getUserLocation}>Get courrent location</Button>
                     <Button onClick={handleConfirm}>Confirm</Button>
                 </div>
             </div>
