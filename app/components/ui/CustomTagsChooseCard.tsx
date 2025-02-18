@@ -1,5 +1,5 @@
 import CustomTagsChooser from "@/app/components/ui/chooseCustomTags";
-import {Card} from "@/components/ui/card";
+import {Card, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import * as React from "react";
 import {Dispatch, SetStateAction} from "react";
@@ -17,6 +17,9 @@ export default function CustomTagsChooseCard({setState, setData}: Props) {
 
     return <>
         <Card className={"p-10"}>
+            <CardHeader>
+                <CardTitle>Vyberte vlastné kategórie z ponuky</CardTitle>
+            </CardHeader>
             <CustomTagsChooser className={"mb-10"} selectedTags={selectedTags} setSelectedTags={setSelectedTags}/>
             <Button variant={"default"} onClick={() => {
                 setData(data => {

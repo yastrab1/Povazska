@@ -1,6 +1,5 @@
 'use client'
 import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
-import imageCompression, {Options} from 'browser-image-compression';
 import {storage} from "@/app/config/firebase";
 
 export default async function uploadImages(images: File[]) {
@@ -13,23 +12,13 @@ export default async function uploadImages(images: File[]) {
     return Promise.all(images.map(uploadImage));
 }
 
-async function compressImage(image: File) {
-    const options: Options = {
-        maxSizeMB: 0.1, // Maximum size in MB
-        maxWidthOrHeight: 1024,
-        useWebWorker: true,
-        fileType: "image/webp"
-    };
-    return await imageCompression(image, options);
-}
 
 async function uploadImage(image: File) {
-    const compressedFile = await compressImage(image);
     try {
 
         const filePath = `images//${image.name}`;
         const newImageRef = ref(storage, filePath);
-        await uploadBytesResumable(newImageRef, compressedFile);
+        await uploadBytesResumable(newImageRef, image);
 
         return await getDownloadURL(newImageRef);
     } catch (error) {

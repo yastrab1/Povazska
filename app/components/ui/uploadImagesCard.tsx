@@ -2,11 +2,11 @@
 import React, {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import uploadImages from "@/lib/firebase/imageUpload";
 import WarningModal from "@/app/components/ui/warningModal";
 import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import getIssue, {getAllIssues} from "@/lib/firebase/issueGet";
 import {Data, formProgress, Issue} from "@/lib/globals";
+import imageCompression, {Options} from "browser-image-compression";
 
 
 // type State =
@@ -25,6 +25,16 @@ interface Props {
 interface Coordinates {
     latitude: number;
     longitude: number;
+}
+
+async function compressImage(image: File) {
+    const options: Options = {
+        maxSizeMB: 0.1, // Maximum size in MB
+        maxWidthOrHeight: 1024,
+        useWebWorker: true,
+        fileType: "image/webp"
+    };
+    return await imageCompression(image, options);
 }
 
 function degreesToRadians(degrees: number): number {
@@ -130,19 +140,20 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         console.time("upload to firebase");
         console.time("overall latency")
         const imageDownloadPromises: Promise<File>[] = [];
-        let links: string[] = [""];
+        const links: string[] = [""];
         const binaryImagePromises: Promise<ArrayBuffer>[] = [];
         images.forEach((image) => {
             const imageName = image.slice(image.lastIndexOf("/"));
             const promise = fetch(image)
                 .then((res) => res.blob())
-                .then((blob) => new File([blob], imageName, {type: "image/jpg"}));
+                .then((blob) => compressImage(new File([blob], imageName, {type: "image/jpg"})));
             imageDownloadPromises.push(promise);
         });
-        Promise.all(imageDownloadPromises).then(async (res) => {
+        await Promise.all(imageDownloadPromises).then(async (res) => {
+                console.log(res.map(r => r.size))
                 res.map((file) => binaryImagePromises.push(file.arrayBuffer()));
-                const res_1 = await uploadImages(res);
-                return (links = res_1);
+                // const res_1 = await uploadImages(res);
+                // return (links = res_1);
             }
         );
 

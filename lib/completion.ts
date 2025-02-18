@@ -17,6 +17,7 @@ const tags = ["Neporiadok a odpadky", "Cyklostojany", "Doprava a parkovanie", "C
     "Stavebný úrad", "Nájomné bývanle", "Dane a poplatky", "Ľudia bez domova", "Sociálna pomoc", "Matrika a pobyty", "Kultúra a šport", "Iné podnety"]
 
 export async function getResponse(data: string[]) {
+
     const prompt: (TextPart | ImagePart | FilePart)[] = [{
         type: 'text',
         text: 'These images are a report of a problem in town. Rank these categories on the most relevant in the format Category:number. Numbers range from 1-10'
