@@ -91,7 +91,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
 
     const detectDuplicates = async (data: Data) => {
         const distance = 0.1;
-        const minMatchTags = 2;
+        const minMatchTags = 0;
 
         const duplicates: Issue[] = [];
 
@@ -127,7 +127,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         dataSet(data => ({...data, images: images}));
 
         setState("map selection");
-        console.time("uploading to firebase");
+        console.time("upload timer");
         const imageDownloadPromises: Promise<File>[] = [];
         let links: string[] = [""];
 
@@ -141,12 +141,11 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         await Promise.all(imageDownloadPromises).then((res) =>
             uploadImages(res).then((res) => (links = res))
         );
-        console.timeEnd("uploading to firebase");
-        console.time("gpt response");
+
         const response: Response = await fetch("/api/podnety", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({images: images}),
+            body: JSON.stringify({images: links}),
         });
         const resJson = await response.json();
         const responseData = resJson.message;
@@ -156,10 +155,8 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
             images: responseData.images,
             rankings: responseData.rankings
         }));
-        console.timeEnd("gpt response");
-        console.time("marking duplicates")
+        console.timeEnd("upload timer");
         const duplicates = await detectDuplicates(data);
-        console.timeEnd("marking duplicates")
         console.log(duplicates);
         dataSet(data => ({...data, duplicates: duplicates}));
     };
