@@ -127,7 +127,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         dataSet(data => ({...data, images: images}));
 
         setState("map selection");
-        console.time("upload timer");
+        console.time("upload to firebase");
         const imageDownloadPromises: Promise<File>[] = [];
         let links: string[] = [""];
 
@@ -141,7 +141,8 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         await Promise.all(imageDownloadPromises).then((res) =>
             uploadImages(res).then((res) => (links = res))
         );
-
+        console.timeEnd("upload to firebase");
+        console.time("gpt")
         const response: Response = await fetch("/api/podnety", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -155,10 +156,12 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
             images: responseData.images,
             rankings: responseData.rankings
         }));
-        console.timeEnd("upload timer");
+        console.timeEnd("gpt")
+        console.time("detecting duplicates");
         const duplicates = await detectDuplicates(data);
         console.log(duplicates);
         dataSet(data => ({...data, duplicates: duplicates}));
+        console.timeEnd("detecting duplicates");
     };
 
     const handleImageRemove = () => {
