@@ -130,7 +130,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         console.time("uploading to firebase");
         const imageDownloadPromises: Promise<File>[] = [];
         let links: string[] = [""];
-
+        // const binaryImages: File[] = [];
         images.forEach((image) => {
             const imageName = image.slice(image.lastIndexOf("/"));
             const promise = fetch(image)
@@ -138,15 +138,17 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
                 .then((blob) => new File([blob], imageName, {type: "image/jpg"}));
             imageDownloadPromises.push(promise);
         });
-        await Promise.all(imageDownloadPromises).then((res) =>
-            uploadImages(res).then((res) => (links = res))
+        await Promise.all(imageDownloadPromises).then((res) => {
+                uploadImages(res).then((res) => (links = res))
+            }
         );
+
         console.timeEnd("uploading to firebase");
         console.time("gpt response");
         const response: Response = await fetch("/api/podnety", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({images: images}),
+            body: JSON.stringify({images: links}),
         });
         const resJson = await response.json();
         const responseData = resJson.message;
