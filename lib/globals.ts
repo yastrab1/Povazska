@@ -1,7 +1,9 @@
-import {openai} from "@ai-sdk/openai";
+import {google} from '@ai-sdk/google';
+
+
 import {Timestamp} from "firebase/firestore";
 
-export const model = openai('gpt-4o-2024-08-06');
+export const model = google('gemini-2.0-flash');
 export type formProgress =
     | "personal info"
     | "image upload"

@@ -7,6 +7,7 @@ import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import getIssue, {getAllIssues} from "@/lib/firebase/issueGet";
 import {Data, formProgress, Issue} from "@/lib/globals";
 import imageCompression, {Options} from "browser-image-compression";
+import uploadImages from "@/lib/firebase/imageUpload";
 
 
 // type State =
@@ -137,10 +138,10 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         dataSet(data => ({...data, images: images}));
 
         setState("map selection");
-        console.time("upload to firebase");
+        console.time("compressing & processing");
         console.time("overall latency")
         const imageDownloadPromises: Promise<File>[] = [];
-        const links: string[] = [""];
+        let imageFiles: File[] = [];
         const binaryImagePromises: Promise<ArrayBuffer>[] = [];
         images.forEach((image) => {
             const imageName = image.slice(image.lastIndexOf("/"));
@@ -150,16 +151,15 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
             imageDownloadPromises.push(promise);
         });
         await Promise.all(imageDownloadPromises).then(async (res) => {
+                imageFiles = res;
                 console.log(res.map(r => r.size))
                 res.map((file) => binaryImagePromises.push(file.arrayBuffer()));
-                // const res_1 = await uploadImages(res);
-                // return (links = res_1);
             }
         );
 
         const binaryImages = (await Promise.all(binaryImagePromises)).map(img => Buffer.from(img).toString('base64'));
 
-        console.timeEnd("upload to firebase");
+        console.timeEnd("compressing & processing");
         console.time("gpt")
         const response: Response = await fetch("/api/podnety", {
             method: "POST",
@@ -168,20 +168,23 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         });
         const resJson = await response.json();
         const responseData = resJson.message;
-        responseData.images = links;
         dataSet((data) => ({
             ...data,
-            images: responseData.images,
             rankings: responseData.rankings
         }));
         console.timeEnd("gpt")
         console.timeEnd("overall latency")
         console.time("detecting duplicates");
         const duplicates = await detectDuplicates(data);
-        console.log(duplicates);
         dataSet(data => ({...data, duplicates: duplicates}));
         console.timeEnd("detecting duplicates");
-
+        console.time("upload to firebase");
+        const links = await uploadImages(imageFiles)
+        dataSet((data) => ({
+            ...data,
+            images: links
+        }));
+        console.timeEnd("upload to firebase");
     };
 
     const handleImageRemove = () => {

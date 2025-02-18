@@ -49,7 +49,9 @@ export async function getResponse(data: string[]) {
         ],
 
     });
+
     const sorted = sortObjectByNumber(object.rankings)
-    console.log(sorted)
+    console.log(JSON.stringify(object))
+    console.log("DEBUG: generation length:", JSON.stringify(object).length);
     return {"rankings": sorted};
 }
