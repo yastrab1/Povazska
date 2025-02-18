@@ -22,7 +22,7 @@ export async function getResponse(data: string[]) {
         text: 'These images are a report of a problem in town. Rank these categories on the most relevant in the format Category:number. Numbers range from 1-10'
     }];
     const imagePrompt: ImagePart[] = data.map((value) => {
-        return {type: 'image', image: new URL(value)}
+        return {type: 'image', image: value}
     });
 
     const rankingsSchema = tags.reduce((acc, tag) => {

@@ -128,9 +128,10 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
 
         setState("map selection");
         console.time("upload to firebase");
+        console.time("overall latency")
         const imageDownloadPromises: Promise<File>[] = [];
         let links: string[] = [""];
-        const binaryImages: Buffer[] = [];
+        const binaryImagePromises: Promise<ArrayBuffer>[] = [];
         images.forEach((image) => {
             const imageName = image.slice(image.lastIndexOf("/"));
             const promise = fetch(image)
@@ -138,17 +139,21 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
                 .then((blob) => new File([blob], imageName, {type: "image/jpg"}));
             imageDownloadPromises.push(promise);
         });
-        await Promise.all(imageDownloadPromises).then((res) => {
-                // res.map((file) => binaryImages.push(Buffer.from(file)));
-                return uploadImages(res).then((res) => (links = res))
+        Promise.all(imageDownloadPromises).then(async (res) => {
+                res.map((file) => binaryImagePromises.push(file.arrayBuffer()));
+                const res_1 = await uploadImages(res);
+                return (links = res_1);
             }
         );
+
+        const binaryImages = (await Promise.all(binaryImagePromises)).map(img => Buffer.from(img).toString('base64'));
+
         console.timeEnd("upload to firebase");
         console.time("gpt")
         const response: Response = await fetch("/api/podnety", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({images: links}),
+            body: JSON.stringify({images: binaryImages}),
         });
         const resJson = await response.json();
         const responseData = resJson.message;
@@ -159,11 +164,13 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
             rankings: responseData.rankings
         }));
         console.timeEnd("gpt")
+        console.timeEnd("overall latency")
         console.time("detecting duplicates");
         const duplicates = await detectDuplicates(data);
         console.log(duplicates);
         dataSet(data => ({...data, duplicates: duplicates}));
         console.timeEnd("detecting duplicates");
+
     };
 
     const handleImageRemove = () => {

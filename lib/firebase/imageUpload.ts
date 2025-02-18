@@ -15,7 +15,7 @@ export default async function uploadImages(images: File[]) {
 
 async function compressImage(image: File) {
     const options: Options = {
-        maxSizeMB: 0.2, // Maximum size in MB
+        maxSizeMB: 0.1, // Maximum size in MB
         maxWidthOrHeight: 1024,
         useWebWorker: true,
         fileType: "image/webp"

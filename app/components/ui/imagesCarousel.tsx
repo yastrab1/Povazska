@@ -14,16 +14,18 @@ export default function ImageCarousel({images, onClick}: { images: string[] | un
                             {images?.map((image, imageIndex) => (
                                 <CarouselItem key={imageIndex}
                                               className={"w-[100%] h-[100%] align-content: center; flex"}>
-                                    <Image
-                                        src={images[imageIndex]}
-                                        alt="Uploaded Preview"
+                                    <a href={images[imageIndex]} target="_blank" rel="noopener noreferrer">
+                                        <Image
+                                            src={images[imageIndex]}
+                                            alt="Uploaded Preview"
 
-                                        objectFit="cover"
-                                        className="rounded-md"
-                                        height={100}
-                                        width={200}
+                                            objectFit="cover"
+                                            className="rounded-md"
+                                            height={100}
+                                            width={200}
 
-                                    />
+                                        />
+                                    </a>
                                 </CarouselItem>
                             ))}
 
