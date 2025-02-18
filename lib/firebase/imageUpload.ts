@@ -1,11 +1,11 @@
 'use client'
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import {getDownloadURL, ref, uploadBytesResumable} from "firebase/storage";
 import imageCompression, {Options} from 'browser-image-compression';
-import { storage } from "@/app/config/firebase";
+import {storage} from "@/app/config/firebase";
 
-export default async function uploadImages(images:File[]){
+export default async function uploadImages(images: File[]) {
     for (const image of images) {
-        if (!image || !image.name){
+        if (!image || !image.name) {
             throw new Error("Image is missing");
         }
 
@@ -13,16 +13,20 @@ export default async function uploadImages(images:File[]){
     return Promise.all(images.map(uploadImage));
 }
 
-async function uploadImage( image:File) {
-
-    const options:Options = {
-        maxSizeMB: 1, // Maximum size in MB
+async function compressImage(image: File) {
+    const options: Options = {
+        maxSizeMB: 0.2, // Maximum size in MB
+        maxWidthOrHeight: 1024,
         useWebWorker: true,
-        fileType:"webp"
+        fileType: "image/webp"
     };
+    return await imageCompression(image, options);
+}
 
+async function uploadImage(image: File) {
+    const compressedFile = await compressImage(image);
     try {
-        const compressedFile = await imageCompression(image, options);
+
         const filePath = `images//${image.name}`;
         const newImageRef = ref(storage, filePath);
         await uploadBytesResumable(newImageRef, compressedFile);

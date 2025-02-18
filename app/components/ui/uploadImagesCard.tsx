@@ -130,7 +130,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         console.time("upload to firebase");
         const imageDownloadPromises: Promise<File>[] = [];
         let links: string[] = [""];
-
+        const binaryImages: Buffer[] = [];
         images.forEach((image) => {
             const imageName = image.slice(image.lastIndexOf("/"));
             const promise = fetch(image)
@@ -138,8 +138,10 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
                 .then((blob) => new File([blob], imageName, {type: "image/jpg"}));
             imageDownloadPromises.push(promise);
         });
-        await Promise.all(imageDownloadPromises).then((res) =>
-            uploadImages(res).then((res) => (links = res))
+        await Promise.all(imageDownloadPromises).then((res) => {
+                // res.map((file) => binaryImages.push(Buffer.from(file)));
+                return uploadImages(res).then((res) => (links = res))
+            }
         );
         console.timeEnd("upload to firebase");
         console.time("gpt")
