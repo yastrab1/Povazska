@@ -5,10 +5,7 @@ import {db} from "@/app/config/firebase";
 import {FilePart, generateObject, ImagePart, TextPart} from "ai";
 import {z} from "zod";
 import {Issue, model} from "@/lib/globals";
-import type { NextApiRequest, NextApiResponse } from 'next'
-interface APISchema {
-    code:number
-}
+
 
 
 async function updateIssueDoc(issueID: string, resolve:string) {

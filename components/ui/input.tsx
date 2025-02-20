@@ -1,22 +1,22 @@
-import * as React from "react"
+// Full Input component update with type definitions based on the Design Manual for Bratislava-Petržalka
 
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
-    return (
-      <input
+const Input = React.forwardRef<
+    HTMLInputElement,
+    React.InputHTMLAttributes<HTMLInputElement>
+>(({ className, type, ...props }, ref) => (
+    <input
+        ref={ref}
         type={type}
         className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          className
+            "h-12 w-full rounded-md border border-black bg-white text-black px-4 py-2 font-arial placeholder-gray-500 focus:ring-2 focus:ring-[#00A84E] focus:outline-none",
+            className
         )}
-        ref={ref}
         {...props}
-      />
-    )
-  }
-)
-Input.displayName = "Input"
+    />
+));
+Input.displayName = "Input";
 
-export { Input }
+export { Input };

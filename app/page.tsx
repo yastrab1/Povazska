@@ -3,7 +3,6 @@
 
 import {useState} from "react";
 import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import MapSelectionSection from "@/app/components/ui/mapSelectionSection";
 import DescriptionCard from "@/app/components/ui/uploadIssueCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 import TagSelectionCard from "@/app/components/ui/tagSelectionCard";

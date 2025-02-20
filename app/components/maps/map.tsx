@@ -3,7 +3,7 @@ import React, {Dispatch, SetStateAction, useCallback, useEffect, useRef, useStat
 import {GoogleMap, StandaloneSearchBox, useLoadScript,} from "@react-google-maps/api";
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
-import {formProgress,Data} from "@/lib/globals";
+import {Data, formProgress} from "@/lib/globals";
 
 export type Library =
     | "core"
@@ -26,7 +26,7 @@ interface Props {
 
 const libraries: Library[] = ["places"];
 
-export default function MapPickerModal({setState,setData}: Props) {
+export default function MapPickerModal({setState, setData}: Props) {
     const [coordinates, setCoordinates] = useState<{ lat: number; lng: number }>({
         lat: 48.1221, // Petržalka's latitude
         lng: 17.105, // Petržalka's longitude
@@ -105,7 +105,7 @@ export default function MapPickerModal({setState,setData}: Props) {
 
     const handleConfirm = () => {
         if (coordinates) {
-            setData(data=>({
+            setData(data => ({
                 ...data,
                 lat: coordinates.lat,
                 lng: coordinates.lng,
@@ -119,7 +119,7 @@ export default function MapPickerModal({setState,setData}: Props) {
         getUserLocation();
     }, []);
 
-    if (!isLoaded) return <div>Loading map...</div>;
+    if (!isLoaded) return <div>LoaMapPickerModalding map...</div>;
 
     return (
         <div
