@@ -64,7 +64,7 @@ export default function MainPage() {
             return <DescriptionCard data={data}></DescriptionCard>;
         }
 
-        return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured
+        return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured --- 
     };
 
     return <div className="p-4 relative">{activeCard(state)}</div>;
