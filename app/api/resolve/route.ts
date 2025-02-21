@@ -4,7 +4,7 @@ import {doc, updateDoc,} from "firebase/firestore";
 import {db} from "@/app/config/firebase";
 import {FilePart, generateObject, ImagePart, TextPart} from "ai";
 import {z} from "zod";
-import {model} from "@/lib/globals";
+import {Issue, model} from "@/lib/globals";
 
 
 async function updateIssueDoc(issueID: string, resolve: string) {
