@@ -266,7 +266,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
                             Remove Image
                         </Button>
                     ) : null}
-                    <Button onClick={handleUpload}>Upload Issue!</Button>
+                    <Button onClick={handleUpload} variant={"default"}>Upload Issue!</Button>
                 </CardFooter>
             </Card>
             <WarningModal open={warningModalOpen} onClose={pass => {

@@ -4,7 +4,7 @@ import {google} from '@ai-sdk/google';
 import {Timestamp} from "firebase/firestore";
 import {LanguageModel} from "ai";
 
-export const model = google('gemini-2.0-flash') as LanguageModel;
+export const model = google('gemini-2.0-flash', {}) as LanguageModel;
 export type formProgress =
     | "personal info"
     | "image upload"
