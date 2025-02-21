@@ -1,8 +1,9 @@
-import React, {Dispatch, SetStateAction} from "react";
-import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {MdChevronLeft, MdChevronRight} from "react-icons/md";
-import {formProgress} from "@/lib/globals";
+import React, { Dispatch, SetStateAction } from "react";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { formProgress } from "@/lib/globals";
+import { Input } from "@/components/ui/input";
 
 interface Props {
     setState: Dispatch<SetStateAction<formProgress>>;
@@ -20,67 +21,57 @@ export default function PersonalInfoCard({
                                              logemail,
                                          }: Props) {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Osobné informácie</CardTitle>
+        <Card className="p-6 border border-black bg-[#00A84E] text-white font-petrzalka shadow-md">
+            <CardHeader className="border-b border-black pb-4">
+                <CardTitle className="text-2xl font-bold">Osobné informácie</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
                 <form className="space-y-4">
                     <div>
-                        <label
-                            htmlFor="name"
-                            className="block text-sm font-medium text-gray-700"
-                        >
-                            Name
+                        <label htmlFor="name" className="block text-lg font-semibold text-white">
+                            Meno
                         </label>
-                        <input
+                        <Input
                             type="text"
                             id="name"
-                            className="w-full p-2 border rounded-md"
+                            className="mt-2"
                             value={logname}
                             onChange={(e) => nameSet(e.target.value)}
-                            placeholder="Enter your name"
+                            placeholder="Zadajte svoje meno"
                             required
                         />
                     </div>
                     <div>
-                        <label
-                            htmlFor="email"
-                            className="block text-sm font-medium text-gray-700"
-                        >
+                        <label htmlFor="email" className="block text-lg font-semibold text-white">
                             Email
                         </label>
-                        <input
+                        <Input
                             type="email"
                             id="email"
-                            className="w-full p-2 border rounded-md"
+                            className="mt-2"
                             value={logemail}
                             onChange={(e) => emailSet(e.target.value)}
-                            placeholder="Enter your email"
+                            placeholder="Zadajte svoj email"
                             required
                         />
                     </div>
                 </form>
             </CardContent>
-            <CardFooter>
-                <div className="w-full flex gap-4 justify-between">
-                    <Button
-                        className="w-24 h-10"
-                        onClick={() =>
-                            setState("personal info")
-                        }
-                    >
-                        <MdChevronLeft className="scale-[2]"/>
-                        Späť
-                    </Button>
-                    <Button
-                        className="w-24 h-10"
-                        onClick={() => setState("image upload")}
-                    >
-                        Ďalej
-                        <MdChevronRight className="scale-[2]"/>
-                    </Button>
-                </div>
+            <CardFooter className="flex justify-between gap-4 pt-4 border-t border-black">
+                <Button
+                    className="w-28 h-12 bg-white text-black font-bold flex items-center justify-center gap-2 border border-black"
+                    onClick={() => setState("personal info")}
+                >
+                    <MdChevronLeft className="text-black text-2xl" />
+                    Späť
+                </Button>
+                <Button
+                    className="w-28 h-12 bg-white text-black font-bold flex items-center justify-center gap-2 border border-black"
+                    onClick={() => setState("image upload")}
+                >
+                    Ďalej
+                    <MdChevronRight className="text-black text-2xl" />
+                </Button>
             </CardFooter>
         </Card>
     );
