@@ -125,7 +125,7 @@ export default function PersonalInfoCard({data}: Props) {
                             };
                             console.log(data)
                             console.log(JSON.stringify(obj));
-                            fetch("/api/resolve/", {
+                            await fetch("/api/resolve/", {
                                 method: "POST",
                                 body: JSON.stringify(obj),
                             });

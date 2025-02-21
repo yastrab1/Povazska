@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/google": "^1.1.16",
+    "@ai-sdk/google": "^1.1.14",
     "@ai-sdk/openai": "^1.0.11",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-dialog": "^1.1.6",
@@ -22,7 +22,7 @@
     "@react-google-maps/api": "^2.20.6",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
-    "ai": "^4.1.45",
+    "ai": "^4.0.22",
     "browser-image-compression": "^2.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
