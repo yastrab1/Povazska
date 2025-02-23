@@ -182,7 +182,8 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
         const links = await uploadImages(imageFiles)
         dataSet((data) => ({
             ...data,
-            images: links
+            images: links,
+            readyToUpload: true,
         }));
         console.timeEnd("upload to firebase");
     };
@@ -266,7 +267,7 @@ export default function ImageUploadCard({setState, dataSet, data}: Props) {
                             Remove Image
                         </Button>
                     ) : null}
-                    <Button onClick={handleUpload} variant={"default"}>Upload Issue!</Button>
+                    <Button onClick={handleUpload} variant={"default"}>Upload Images!</Button>
                 </CardFooter>
             </Card>
             <WarningModal open={warningModalOpen} onClose={pass => {

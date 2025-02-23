@@ -21,7 +21,8 @@ export default function MainPage() {
         lat: 0,
         lng: 0,
         userSelectedTags: [],
-        duplicates: []
+        duplicates: [],
+        readyToUpload: false,
     });
 
     const {name, email, setEmail, setName} = useIsLoggedIn();
