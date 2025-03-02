@@ -27,7 +27,7 @@ export default function PersonalInfoCard({
 }: Props) {
   return (
     <div className="design-form font-petrzalka--">
-      <div className="full-overlap form-shadow">{/* Shaddow */}</div>
+      <div className="full-overlap form-shadow">{/* Blur shaddow */}</div>
       <div className="full-overlap form-fill">
         <div className="form-title">
           <p className="text-xl font-bold">Kontakt</p>
