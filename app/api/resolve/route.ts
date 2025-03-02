@@ -28,7 +28,7 @@ export async function POST(
         tags:${issue.tags.join(",")}`
     }];
     const imagePrompt: ImagePart[] = issue.images.map((value) => {
-        return {type: 'image', image: new URL(value)}
+        return {type: 'image', image: new URL(value), mimeType: 'image/webp'};
     });
 
     const schema = z.object(
@@ -36,7 +36,7 @@ export async function POST(
             "Suggested Resolve": z.string()
         }
     );
-
+    console.log("values", ...issue.images)
     prompt.push(...imagePrompt);
 
     const {object} = await generateObject({

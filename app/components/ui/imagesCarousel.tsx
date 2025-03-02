@@ -1,29 +1,30 @@
+import Image from "next/image";
 import React from "react";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,} from "@/components/ui/carousel"
 
 export default function ImageCarousel({images, onClick}: { images: string[] | undefined, onClick?: () => void }) {
-
     return (
         <div className="flex flex-col items-center">
             {images?.length !== 0 ? (
-                <div className="relative w-48 flex h-48 mb-4 items-center justify-center">
+                <div className="relative w-48 h-48 mb-4 flex items-center justify-center">
 
                     <Carousel>
                         <CarouselContent>
 
                             {images?.map((image, imageIndex) => (
                                 <CarouselItem key={imageIndex}
-                                              className={"w-[100%] h-[100%] flex flex-col items-center justify-center overflow-hidden"}>
-                                    <a href={images[imageIndex]} target="_blank" rel="noopener noreferrer"
-                                       className={"w-full h-full"}>
-                                        <img
+                                              className={"w-[100%] h-[100%] align-content: center; flex"}>
+                                    <a href={images[imageIndex]} target="_blank" rel="noopener noreferrer">
+                                        <Image
                                             src={images[imageIndex]}
                                             alt="Uploaded Preview"
-                                            className="rounded-md w-full h-full object-contain"
-                                            width={100}
-                                            height={100}
-                                        />
 
+                                            objectFit="cover"
+                                            className="rounded-md"
+                                            height={100}
+                                            width={200}
+
+                                        />
                                     </a>
                                 </CarouselItem>
                             ))}

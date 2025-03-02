@@ -13,17 +13,18 @@ import MapPickerModal from "@/app/components/maps/map";
 import DesignForm from "./components/design/form";
 
 export default function MainPage() {
-  const [state, setState] = useState<formProgress>("personal info");
-  const [data, setData] = useState<Data>({
-    title: "",
-    description: "",
-    rankings: [],
-    images: [],
-    lat: 0,
-    lng: 0,
-    userSelectedTags: [],
-    duplicates: [],
-  });
+    const [state, setState] = useState<formProgress>("personal info");
+    const [data, setData] = useState<Data>({
+        title: "",
+        description: "",
+        rankings: [],
+        images: [],
+        lat: 0,
+        lng: 0,
+        userSelectedTags: [],
+        duplicates: [],
+        readyToUpload: false,
+    });
 
   const { name, email, setEmail, setName } = useIsLoggedIn();
 

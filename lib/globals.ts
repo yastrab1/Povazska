@@ -42,6 +42,7 @@ export interface Data {
     lng: number;
     userSelectedTags: string[];
     duplicates: Issue[];
+    readyToUpload: boolean;
 }
 
 export interface Issue {

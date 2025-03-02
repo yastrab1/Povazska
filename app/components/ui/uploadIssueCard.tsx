@@ -59,6 +59,31 @@ export default function PersonalInfoCard({data}: Props) {
         },
     });
 
+    function handleIssueUpload() {
+        if (!data.readyToUpload) {
+            console.log("not finished uploading to firebase")
+            return;
+        }
+        if (shouldLetUserWriteOwnDescription) {
+            data.title = title;
+        }
+        data.description = form.getValues().popis;
+        const issue = constructIssueFromData(data);
+        addIssue(JSON.stringify(issue)).then(async (id) => {
+            const obj = {
+                issueID: id,
+                issueJSON: issue,
+            };
+            console.log(data)
+            console.log(JSON.stringify(obj));
+            await fetch("/api/resolve/", {
+                method: "POST",
+                body: JSON.stringify(obj),
+            });
+            router.push(`/issues/${id}`);
+        });
+    }
+
     return (
         <Card className="max-w-md mx-auto mt-8 shadow-lg border border-black bg-[#00A84E] text-white font-petrzalka">
             <CardHeader>
@@ -112,27 +137,9 @@ export default function PersonalInfoCard({data}: Props) {
             </CardContent>
             <CardFooter>
                 <Button
-                    onClick={() => {
-                        if (shouldLetUserWriteOwnDescription) {
-                            data.title = title;
-                        }
-                        data.description = form.getValues().popis;
-                        const issue = constructIssueFromData(data);
-                        addIssue(JSON.stringify(issue)).then(async (id) => {
-                            const obj = {
-                                issueID: id,
-                                issueJSON: issue,
-                            };
-                            console.log(data)
-                            console.log(JSON.stringify(obj));
-                            fetch("/api/resolve/", {
-                                method: "POST",
-                                body: JSON.stringify(obj),
-                            });
-                            router.push(`/issues/${id}`);
-                        });
-                    }}
+                    onClick={handleIssueUpload}
                     className="w-full h-12 bg-black text-white font-bold rounded-md hover:bg-gray-800"
+                    disabled={!data.readyToUpload}
                 >
                     Upload Images!
                 </Button>
