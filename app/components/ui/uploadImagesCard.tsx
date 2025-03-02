@@ -10,13 +10,11 @@ import {
 import {
   MdChevronLeft,
   MdChevronRight,
-  MdMailOutline,
-  MdOutlinePerson,
+  MdOutlinePhotoLibrary,
+  MdClose,
   MdOutlinePhotoCamera,
 } from "react-icons/md";
-import { Button } from "@/components/ui/button";
 import WarningModal from "@/app/components/ui/warningModal";
-import ImageCarousel from "@/app/components/ui/imagesCarousel";
 import getIssue, { getAllIssues } from "@/lib/firebase/issueGet";
 import { Data, formProgress, Issue } from "@/lib/globals";
 import imageCompression, { Options } from "browser-image-compression";
@@ -275,40 +273,44 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
               id="galleryInput"
             />
 
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-2">
               {!isMobile ? (
-                <Button
-                  variant="outline"
+                <button
+                  className="form-button"
                   onClick={() =>
                     document.getElementById("imageUpload")?.click()
                   }
                 >
-                  Choose Image
-                </Button>
+                  <MdOutlinePhotoLibrary />
+                  Vybrať
+                </button>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <Button
-                    variant="outline"
+                  <button
+                    className="form-button"
                     onClick={() =>
                       document.getElementById("cameraInput")?.click()
                     }
                   >
-                    Use Camera
-                  </Button>
-                  <Button
-                    variant="outline"
+                    <MdOutlinePhotoCamera />
+                    Odfotiť
+                  </button>
+                  <button
+                    className="form-button"
                     onClick={() =>
                       document.getElementById("galleryInput")?.click()
                     }
                   >
-                    Choose from Gallery
-                  </Button>
+                    <MdOutlinePhotoLibrary />
+                    Galéria
+                  </button>
                 </div>
               )}
               {images.length ? (
-                <Button variant="destructive" onClick={handleImageRemove}>
-                  Remove Image
-                </Button>
+                <button className="form-button" onClick={handleImageRemove}>
+                  <MdClose />
+                  Odstrániť
+                </button>
               ) : null}
             </div>
 

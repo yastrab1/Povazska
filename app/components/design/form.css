@@ -30,7 +30,7 @@
 }
 
 .form-content {
-    @apply px-6 py-4 space-y-4;
+    @apply px-6 pt-4 space-y-4;
 }
 
 .form-tip {
