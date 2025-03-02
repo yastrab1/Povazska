@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.design-form {
+    @apply grid mx-auto;
+    @apply w-full max-w-96;
+    @apply text-white bg-transparent;
+}
+
+.full-overlap {
+    @apply col-start-1 row-start-1 w-full h-full;
+}
+
+.form-shadow {
+    @apply bg-black/20 blur-[8px];
+    @apply rounded-[10px];
+    @apply -z-10;
+}
+
+.form-fill {
+    @apply overflow-hidden rounded-[10px];
+    @apply bg-white;
+}
+
+.form-title {
+    @apply px-6 py-2;
+    @apply bg-[#00A84E];
+    @apply text-center;
+}
+
+.form-content {
+    @apply px-6 py-4 space-y-4;
+}
+
+.form-tip {
+    @apply flex flex-row items-center gap-4;
+    @apply px-4 py-4;
+    @apply bg-[#CDEEDC] rounded-[10px];
+    @apply text-[#333333] text-sm;
+}
+
+.form-tip-title {
+    @apply font-bold text-base;
+}
+
+.form-input {
+    @apply text-[#333333] space-y-2;
+}
+
+.form-label {
+    @apply text-sm font-bold;
+    @apply flex items-center gap-1;
+}
+
+.form-field {
+    @apply bg-gray-50;
+    @apply border-[3px] border-gray-200;
+    @apply rounded-[10px];
+    @apply text-[#333333];
+}
+
+.form-foot {
+    @apply flex justify-between gap-y-4;
+    @apply px-6 py-4;
+}
+
+.form-button {
+    @apply w-28 h-10;
+    @apply px-4;
+    @apply flex flex-row items-center gap-2;
+    @apply bg-[#33BA72];
+    @apply text-white font-bold;
+    @apply rounded-[10px];
+    @apply duration-100;
+}
+
+.form-button:hover {
+    @apply bg-[#00A94F];
+}
+
+.form-completion {
+    @apply w-full h-2;
+    @apply bg-[#CDCDCD];
+}
+
+.form-completion-bar {
+    @apply w-1/5 h-2;
+    @apply bg-blue-600;
+}
+
+.other {
+    @apply bg-[#00A84E];
+}
