@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import { formProgress } from "@/lib/globals";
 import { Input } from "@/components/ui/input";
-import "./form.css";
+import "@/app/components/design/form.css";
 
 interface Props {
   setState: Dispatch<SetStateAction<formProgress>>;

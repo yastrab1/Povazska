@@ -1,8 +1,7 @@
 "use client";
-//adding missing incompe file
 
 import { useState } from "react";
-// import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
+import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
 import DescriptionCard from "@/app/components/ui/uploadIssueCard";
 import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
 import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
@@ -10,7 +9,6 @@ import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
 import { Data, formProgress } from "@/lib/globals";
 import CustomTagsChooseCard from "@/app/components/ui/CustomTagsChooseCard";
 import MapPickerModal from "@/app/components/maps/map";
-import DesignForm from "./components/design/form";
 
 export default function MainPage() {
     const [state, setState] = useState<formProgress>("personal info");
@@ -31,7 +29,7 @@ export default function MainPage() {
   const activeCard = (activeState: formProgress) => {
     if (activeState === "personal info") {
       return (
-        <DesignForm
+        <PersonalInfoCard
           nameSet={setName}
           emailSet={setEmail}
           setState={setState}

@@ -34,7 +34,7 @@
 }
 
 .form-tip {
-    @apply flex flex-row items-center gap-4;
+    @apply flex flex-row justify-between items-center gap-4;
     @apply px-4 py-4;
     @apply bg-[#CDEEDC] rounded-[10px];
     @apply text-[#333333] text-sm;
@@ -85,8 +85,22 @@
 }
 
 .form-completion-bar {
-    @apply w-1/5 h-2;
+    @apply h-2;
     @apply bg-blue-600;
+}
+
+.form-image {
+    @apply row-start-1 col-start-1;
+    @apply w-full h-40;
+    @apply rounded-[10px];
+    @apply z-20;
+}
+
+.form-image-shadow {
+    @apply w-full h-full row-start-1 col-start-1;
+    @apply bg-black/20 z-10;
+    @apply rounded-[10px];
+    @apply blur-[8px];
 }
 
 .other {
