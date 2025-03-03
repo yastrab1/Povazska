@@ -13,6 +13,10 @@ import {
   MdOutlinePhotoLibrary,
   MdClose,
   MdOutlinePhotoCamera,
+  MdDelete,
+  MdFileUpload,
+  MdPhotoLibrary,
+  MdCamera,
 } from "react-icons/md";
 import WarningModal from "@/app/components/ui/warningModal";
 import getIssue, { getAllIssues } from "@/lib/firebase/issueGet";
@@ -220,58 +224,138 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
             <p className="text-[#CDEEDC]">Pridaj alebo odfoť fotku problému.</p>
           </div>
           <div className="form-content">
-            <Carousel className="mx-10">
-              <CarouselContent
-                onClick={() =>
-                  isMobile
-                    ? document.getElementById("galleryInput")?.click()
-                    : document.getElementById("imageUpload")?.click()
-                }
-              >
-                {images.map((item) => (
-                  <CarouselItem key={item}>
-                    <div className="grid p-4">
-                      <img src={item} className="form-image" />
-                      <div className="form-image-shadow" />
+            <div className="form-field p-4 w-full">
+              {/* File inputs (hidden) */}
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileChange}
+                className="hidden"
+                id="imageUpload"
+              />
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                capture="environment"
+                onChange={handleFileChange}
+                className="hidden"
+                id="cameraInput"
+              />
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileChange}
+                className="hidden"
+                id="galleryInput"
+              />
+
+              {/* Upload instructions */}
+              {images.length === 0 ? (
+                <div className="text-center py-6">
+                  <div className="flex justify-center mb-2">
+                    <MdFileUpload className="text-gray-500 w-10 h-10" />
+                  </div>
+                  <p className="text-gray-600 mb-4">
+                    Upload photos of your item
+                  </p>
+
+                  {isMobile ? (
+                    <div className="flex justify-center space-x-4">
+                      <button
+                        onClick={() =>
+                          document.getElementById("galleryInput")?.click()
+                        }
+                        className="flex items-center px-3 py-2 bg-white border rounded-md text-sm"
+                      >
+                        <MdPhotoLibrary className="mr-2" /> Gallery
+                      </button>
+                      <button
+                        onClick={() =>
+                          document.getElementById("cameraInput")?.click()
+                        }
+                        className="flex items-center px-3 py-2 bg-white border rounded-md text-sm"
+                      >
+                        <MdCamera className="mr-2" /> Camera
+                      </button>
                     </div>
-                  </CarouselItem>
-                ))}
-                <CarouselItem>
-                  <div className="form-field h-40 m-4"></div>
-                </CarouselItem>
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        document.getElementById("imageUpload")?.click()
+                      }
+                      className="px-4 py-2 bg-white border rounded-md text-sm"
+                    >
+                      Select Files
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {/* Display uploaded images in a 3-column grid */}
+                  <div className="grid grid-cols-3 gap-3 mb-3">
+                    {images.map((item) => (
+                      <div key={item} className="relative">
+                        <div className="grid">
+                          <div className="w-full h-20 row-start-1 col-start-1 grid overflow-hidden">
+                            <img
+                              src={item}
+                              className="w-full h-full object-cover form-image"
+                              alt="Uploaded"
+                            />
+                          </div>
+                          <div className="form-image-shadow" />
+                        </div>
+                        <button
+                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 z-30 p-1 rounded-[5px] text-white"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // Add your delete handler here (e.g., handleDeleteImage(item))
+                          }}
+                        >
+                          <MdDelete />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
 
-            {/* File Input for PC */}
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileChange}
-              className="hidden"
-              id="imageUpload"
-            />
-
-            {/* Hidden Inputs for Mobile */}
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              capture="environment"
-              onChange={handleFileChange}
-              className="hidden"
-              id="cameraInput"
-            />
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileChange}
-              className="hidden"
-              id="galleryInput"
-            />
+                  {/* Add more images button */}
+                  <div className="text-center">
+                    {isMobile ? (
+                      <div className="flex justify-center space-x-3">
+                        <button
+                          onClick={() =>
+                            document.getElementById("galleryInput")?.click()
+                          }
+                          className="flex items-center px-3 py-1.5 bg-white border rounded-md text-xs"
+                        >
+                          <MdPhotoLibrary className="mr-1 text-sm" /> Add More
+                        </button>
+                        <button
+                          onClick={() =>
+                            document.getElementById("cameraInput")?.click()
+                          }
+                          className="flex items-center px-3 py-1.5 bg-white border rounded-md text-xs"
+                        >
+                          <MdCamera className="mr-1 text-sm" /> Take Photo
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          document.getElementById("imageUpload")?.click()
+                        }
+                        className="px-3 py-1.5 bg-white border rounded-md text-xs"
+                      >
+                        Add More Photos
+                      </button>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
 
             <div className="flex flex-row gap-2">
               {!isMobile ? (
@@ -318,7 +402,7 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
               <div className="w-9 h-full">
                 <MdOutlinePhotoCamera className="w-full h-full" />
               </div>
-              <div>
+              <div className="flex-grow">
                 <div className="form-tip-title">
                   Viac fotiek nám pomáha riešiť
                 </div>

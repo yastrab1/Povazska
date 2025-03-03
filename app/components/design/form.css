@@ -91,7 +91,7 @@
 
 .form-image {
     @apply row-start-1 col-start-1;
-    @apply w-full h-40;
+    @apply w-full h-20;
     @apply rounded-[10px];
     @apply z-20;
 }

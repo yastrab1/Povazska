@@ -38,7 +38,7 @@ export default function PersonalInfoCard({
             <div className="w-16 h-full">
               <MdOutlineLibraryAddCheck className="w-full h-full"/>
             </div>
-            <div>
+            <div className="flex-grow">
               <div className="form-tip-title">
                 Pozoruj svoje podnety s účtom
               </div>
