@@ -220,8 +220,6 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
                   : () => {
                       document.getElementById("imageUpload")?.click();
                     }
-                //document.getElementById("cameraInput")?.click()
-                //document.getElementById("galleryInput")?.click()
               }
             >
               {/* File inputs (hidden) */}
@@ -253,8 +251,12 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
               <PhotoInputChoiceModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onCameraChoose={() => {}}
-                onGalleryChoose={() => {}}
+                onCameraChoose={() => {
+                  document.getElementById("cameraInput")?.click();
+                }}
+                onGalleryChoose={() => {
+                  document.getElementById("galleryInput")?.click();
+                }}
               />
 
               <div className="flex flex-col gap-2">
