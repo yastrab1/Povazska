@@ -209,6 +209,19 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
             <p className="text-xl font-bold">Nahraj obrázok</p>
             <p className="text-[#CDEEDC]">Pridaj alebo odfoť fotku problému.</p>
           </div>
+          {isModalOpen && (
+            <PhotoInputChoiceModal
+              onClose={() => setIsModalOpen(false)}
+              onCameraChoose={() => {
+                document.getElementById("cameraInput")?.click();
+                setIsModalOpen(false);
+              }}
+              onGalleryChoose={() => {
+                document.getElementById("galleryInput")?.click();
+                setIsModalOpen(false);
+              }}
+            />
+          )}
           <div className="form-content">
             <div
               className="form-field p-2 w-full"
@@ -247,16 +260,6 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
                 onChange={handleFileChange}
                 className="hidden"
                 id="galleryInput"
-              />
-              <PhotoInputChoiceModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onCameraChoose={() => {
-                  document.getElementById("cameraInput")?.click();
-                }}
-                onGalleryChoose={() => {
-                  document.getElementById("galleryInput")?.click();
-                }}
               />
 
               <div className="flex flex-col gap-2">

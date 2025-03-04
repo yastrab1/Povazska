@@ -2,20 +2,16 @@ import React from "react";
 import { MdCamera, MdPhotoLibrary, MdClose } from "react-icons/md";
 
 interface PhotoInputChoiceModalProps {
-  isOpen: boolean;
   onClose: () => void;
   onGalleryChoose: () => void;
   onCameraChoose: () => void;
 }
 
 export default function PhotoInputChoiceModal({
-  isOpen,
   onClose,
   onGalleryChoose,
   onCameraChoose,
 }: PhotoInputChoiceModalProps) {
-  if (!isOpen) return null;
-
   return (
     <div
       className="fixed inset-0 z-50 bg-black bg-opacity-50 
