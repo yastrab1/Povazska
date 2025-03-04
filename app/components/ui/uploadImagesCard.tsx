@@ -6,8 +6,8 @@ import {
   MdOutlinePhotoCamera,
   MdDelete,
   MdFileUpload,
-  MdPhotoLibrary,
-  MdCamera,
+  //MdPhotoLibrary,
+  //MdCamera,
 } from "react-icons/md";
 import WarningModal from "@/app/components/ui/warningModal";
 import getIssue, { getAllIssues } from "@/lib/firebase/issueGet";
