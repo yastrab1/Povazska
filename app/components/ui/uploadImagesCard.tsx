@@ -3,8 +3,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   MdChevronLeft,
   MdChevronRight,
-  MdOutlinePhotoLibrary,
-  MdClose,
   MdOutlinePhotoCamera,
   MdDelete,
   MdFileUpload,
@@ -17,6 +15,7 @@ import { Data, formProgress, Issue } from "@/lib/globals";
 import imageCompression, { Options } from "browser-image-compression";
 import uploadImages from "@/lib/firebase/imageUpload";
 import "@/app/components/design/form.css";
+import PhotoInputChoiceModal from "@/app/components/ui/photoInputChoiceModal";
 
 // type State =
 //     | "guest upload"
@@ -79,8 +78,8 @@ function haversineDistance(
 export default function ImageUploadCard({ setState, dataSet, data }: Props) {
   const [images, setImages] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
-  const [index, setIndex] = useState(0);
   const [warningModalOpen, setWarningModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Detect if the device is mobile
@@ -92,18 +91,13 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
     if (event.target.files) {
       const fileArray = event.target.files;
       const imagesCopy = images.slice();
-      let validImagesCount = 0;
       for (let fileIndex = 0; fileIndex < fileArray.length; fileIndex++) {
         const file = fileArray[fileIndex];
         if (file) {
           const imageUrl = URL.createObjectURL(file);
           imagesCopy.push(imageUrl);
-          validImagesCount++;
         }
       }
-      setIndex(
-        images.length === 0 ? validImagesCount - 1 : index + validImagesCount
-      );
       setImages(imagesCopy);
     }
   };
@@ -201,10 +195,9 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
     console.timeEnd("upload to firebase");
   };
 
-  const handleImageRemove = () => {
+  const handleImageRemove = (index: number) => {
     const imageCopy = images.slice();
     imageCopy.splice(index, 1);
-    setIndex(index === 0 ? index : index - 1);
     setImages(imageCopy);
   };
   return (
@@ -217,7 +210,20 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
             <p className="text-[#CDEEDC]">Pridaj alebo odfoť fotku problému.</p>
           </div>
           <div className="form-content">
-            <div className="form-field p-4 w-full">
+            <div
+              className="form-field p-2 w-full"
+              onClick={
+                isMobile
+                  ? () => {
+                      setIsModalOpen(true);
+                    }
+                  : () => {
+                      document.getElementById("imageUpload")?.click();
+                    }
+                //document.getElementById("cameraInput")?.click()
+                //document.getElementById("galleryInput")?.click()
+              }
+            >
               {/* File inputs (hidden) */}
               <input
                 type="file"
@@ -244,58 +250,31 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
                 className="hidden"
                 id="galleryInput"
               />
+              <PhotoInputChoiceModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onCameraChoose={() => {}}
+                onGalleryChoose={() => {}}
+              />
 
-              {/* Upload instructions */}
-              {images.length === 0 ? (
-                <div className="text-center py-6">
-                  <div className="flex justify-center mb-2">
-                    <MdFileUpload className="text-gray-500 w-10 h-10" />
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-row items-center gap-4 rounded-[10px] text-[#333333] text-sm p-2">
+                  <MdFileUpload className="w-9 h-full" />
+                  <div className="flex-grow">
+                    <div className="form-tip-title">Nahraj fotku</div>
+                    Nahraj fotku z galérie alebo urob fotku.
                   </div>
-                  <p className="text-gray-600 mb-4">
-                    Upload photos of your item
-                  </p>
-
-                  {isMobile ? (
-                    <div className="flex justify-center space-x-4">
-                      <button
-                        onClick={() =>
-                          document.getElementById("galleryInput")?.click()
-                        }
-                        className="flex items-center px-3 py-2 bg-white border rounded-md text-sm"
-                      >
-                        <MdPhotoLibrary className="mr-2" /> Gallery
-                      </button>
-                      <button
-                        onClick={() =>
-                          document.getElementById("cameraInput")?.click()
-                        }
-                        className="flex items-center px-3 py-2 bg-white border rounded-md text-sm"
-                      >
-                        <MdCamera className="mr-2" /> Camera
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() =>
-                        document.getElementById("imageUpload")?.click()
-                      }
-                      className="px-4 py-2 bg-white border rounded-md text-sm"
-                    >
-                      Select Files
-                    </button>
-                  )}
                 </div>
-              ) : (
-                <>
-                  {/* Display uploaded images in a 3-column grid */}
+
+                {images.length !== 0 && (
                   <div className="grid grid-cols-3 gap-3 mb-3">
-                    {images.map((item) => (
+                    {images.map((item, index) => (
                       <div key={item} className="relative">
                         <div className="grid">
                           <div className="w-full h-20 row-start-1 col-start-1 grid overflow-hidden">
                             <img
                               src={item}
-                              className="w-full h-full object-cover form-image"
+                              className="w-full h-full object-cover form-image blur-[0.5px] overflow-hidden"
                               alt="Uploaded"
                             />
                           </div>
@@ -305,7 +284,7 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
                           className="absolute top-1 right-1 w-6 h-6 bg-red-500 z-30 p-1 rounded-[5px] text-white"
                           onClick={(e) => {
                             e.stopPropagation();
-                            // Add your delete handler here (e.g., handleDeleteImage(item))
+                            handleImageRemove(index);
                           }}
                         >
                           <MdDelete />
@@ -313,82 +292,8 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
                       </div>
                     ))}
                   </div>
-
-                  {/* Add more images button */}
-                  <div className="text-center">
-                    {isMobile ? (
-                      <div className="flex justify-center space-x-3">
-                        <button
-                          onClick={() =>
-                            document.getElementById("galleryInput")?.click()
-                          }
-                          className="flex items-center px-3 py-1.5 bg-white border rounded-md text-xs"
-                        >
-                          <MdPhotoLibrary className="mr-1 text-sm" /> Add More
-                        </button>
-                        <button
-                          onClick={() =>
-                            document.getElementById("cameraInput")?.click()
-                          }
-                          className="flex items-center px-3 py-1.5 bg-white border rounded-md text-xs"
-                        >
-                          <MdCamera className="mr-1 text-sm" /> Take Photo
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() =>
-                          document.getElementById("imageUpload")?.click()
-                        }
-                        className="px-3 py-1.5 bg-white border rounded-md text-xs"
-                      >
-                        Add More Photos
-                      </button>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="flex flex-row gap-2">
-              {!isMobile ? (
-                <button
-                  className="form-button"
-                  onClick={() =>
-                    document.getElementById("imageUpload")?.click()
-                  }
-                >
-                  <MdOutlinePhotoLibrary />
-                  Vybrať
-                </button>
-              ) : (
-                <div className="flex flex-col gap-2">
-                  <button
-                    className="form-button"
-                    onClick={() =>
-                      document.getElementById("cameraInput")?.click()
-                    }
-                  >
-                    <MdOutlinePhotoCamera />
-                    Odfotiť
-                  </button>
-                  <button
-                    className="form-button"
-                    onClick={() =>
-                      document.getElementById("galleryInput")?.click()
-                    }
-                  >
-                    <MdOutlinePhotoLibrary />
-                    Galéria
-                  </button>
-                </div>
-              )}
-              {images.length ? (
-                <button className="form-button" onClick={handleImageRemove}>
-                  <MdClose />
-                  Odstrániť
-                </button>
-              ) : null}
+                )}
+              </div>
             </div>
 
             <div className="form-tip">
