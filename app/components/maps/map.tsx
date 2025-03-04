@@ -1,10 +1,21 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
-import { GoogleMap, StandaloneSearchBox, useLoadScript } from "@react-google-maps/api";
-import { 
-  MdChevronLeft, 
-  MdChevronRight, 
-  MdLocationOn, 
-  MdSearch 
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  GoogleMap,
+  StandaloneSearchBox,
+  useLoadScript,
+} from "@react-google-maps/api";
+import {
+  MdChevronLeft,
+  MdChevronRight,
+  MdLocationOn,
+  MdSearch,
 } from "react-icons/md";
 import Image from "next/image";
 import { Data, formProgress } from "@/lib/globals";
@@ -14,6 +25,20 @@ interface Props {
   setState: Dispatch<SetStateAction<formProgress>>;
   setData: Dispatch<SetStateAction<Data>>;
 }
+
+export type Library =
+  | "core"
+  | "maps"
+  | "places"
+  | "geocoding"
+  | "routes"
+  | "marker"
+  | "geometry"
+  | "elevation"
+  | "streetView"
+  | "journeySharing"
+  | "drawing"
+  | "visualization";
 
 const libraries: Library[] = ["places"];
 
@@ -100,7 +125,7 @@ export default function MapPickerForm({ setState, setData }: Props) {
 
   const handleConfirm = () => {
     if (coordinates) {
-      setData(data => ({
+      setData((data) => ({
         ...data,
         lat: coordinates.lat,
         lng: coordinates.lng,
@@ -123,16 +148,14 @@ export default function MapPickerForm({ setState, setData }: Props) {
           <p className="text-xl font-bold">Lokácia</p>
           <p className="text-[#CDEEDC]">Vyber lokáciu pre svoj podnet</p>
         </div>
-        
+
         <div className="form-content">
           <div className="form-tip">
             <div className="w-16 h-full">
-              <MdLocationOn className="w-full h-full"/>
+              <MdLocationOn className="w-full h-full" />
             </div>
             <div className="flex-grow">
-              <div className="form-tip-title">
-                Presná lokácia
-              </div>
+              <div className="form-tip-title">Presná lokácia</div>
               Pomôž nám presne identifikovať miesto tvojho podnetu.
             </div>
           </div>
@@ -174,14 +197,14 @@ export default function MapPickerForm({ setState, setData }: Props) {
                   pointerEvents: "none",
                 }}
               >
-                <Image src="/marker.png" alt="Pointer" width={40} height={40}/>
+                <Image src="/marker.png" alt="Pointer" width={40} height={40} />
               </div>
             </GoogleMap>
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           </div>
 
-          <button 
-            onClick={getUserLocation} 
+          <button
+            onClick={getUserLocation}
             className="w-full text-sm px-4 py-2 bg-[#CDEEDC] text-[#333333] rounded-[10px] mb-4"
           >
             Použiť moju aktuálnu polohu
@@ -196,10 +219,7 @@ export default function MapPickerForm({ setState, setData }: Props) {
             <MdChevronLeft className="text-2xl" />
             Späť
           </button>
-          <button
-            className="form-button justify-end"
-            onClick={handleConfirm}
-          >
+          <button className="form-button justify-end" onClick={handleConfirm}>
             Ďalej
             <MdChevronRight className="text-2xl" />
           </button>
