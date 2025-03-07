@@ -17,6 +17,7 @@ import {Timestamp} from "firebase/firestore";
 import {Separator} from "@/components/ui/separator";
 import DuplicateCard from "@/app/components/ui/duplicateCard";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
+import styles from "../design/styles";
 
 interface Props {
     data: Data;
@@ -85,65 +86,98 @@ export default function PersonalInfoCard({data}: Props) {
     }
 
     return (
-        <Card className="max-w-md mx-auto mt-8 shadow-lg border border-black bg-[#00A84E] text-white font-petrzalka">
-            <CardHeader>
-                {shouldLetUserWriteOwnDescription ? (
-                    <Input
-                        alt="Zadaj krátky popis tvojho problému"
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
-                        className="w-full h-12 rounded-md border border-black px-4 py-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-[#00A84E] focus:outline-none"
-                    />
-                ) : (
-                    <CardTitle>{"#" + data.userSelectedTags.join(" #")}</CardTitle>
-                )}
-                <CardDescription>{name + " --- " + email}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Form {...form}>
-                    <FormField
-                        control={form.control}
-                        name="popis"
-                        render={({field}) => (
-                            <FormItem>
-                                <FormLabel className="text-lg font-semibold">Popis</FormLabel>
-                                <FormControl>
-                                    <Textarea
-                                        {...field}
-                                        className="w-full h-24 rounded-md border border-black px-4 py-2 text-black placeholder-gray-500 focus:ring-2 focus:ring-[#00A84E] focus:outline-none"
-                                    />
-                                </FormControl>
-                                <FormDescription className="text-sm text-gray-300">Zadaj popis k
-                                    podnetu.</FormDescription>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
-                </Form>
-                <ImageCarousel images={data.images}/>
-                <Separator/>
-                <h1 className="text-lg font-semibold">Potential duplicates</h1>
-                <Carousel>
-                    <CarouselContent>
-                        {data.duplicates.map((duplicate, index) => (
-                            <CarouselItem key={index}>
-                                <DuplicateCard issue={duplicate}/>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious/>
-                    <CarouselNext/>
-                </Carousel>
-            </CardContent>
-            <CardFooter>
-                <Button
-                    onClick={handleIssueUpload}
-                    className="w-full h-12 bg-black text-white font-bold rounded-md hover:bg-gray-800"
-                    disabled={!data.readyToUpload}
-                >
-                    Upload Images!
-                </Button>
-            </CardFooter>
-        </Card>
+        <div className={styles.container}>
+
+      <CardHeader className={styles.cardHeader}>
+        {/* User Info Section */}
+        <div className={styles.userInfoContainer}>
+            <p className={styles.userName}>{name}</p>
+            <p className={styles.userEmail}>{email}</p>
+        </div>
+
+        {/* Tag Selection */}
+        {shouldLetUserWriteOwnDescription ? (
+            <Input
+            alt="Zadaj krátky popis tvojho problému"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
+            className={styles.inputField}
+            placeholder="Napíš vlastné tagy..."
+            />
+        ) : data.userSelectedTags.length > 0 ? (
+            <div className={styles.tagContainer}>
+            {data.userSelectedTags.map((tag) => (
+                <span key={tag} className={styles.tagPill}>#{tag}</span>
+            ))}
+            </div>
+        ) : (
+            <p className={styles.noTagsText}>Žiadne tagy neboli vybrané.</p>
+        )}
+
+<Separator className={styles.separator} />
+
+        </CardHeader>
+
+
+
+      <CardContent>
+            <Form {...form}>
+    <div className={styles.formHeader}>
+        <h2 className={styles.formTitle}>Chcete podrobnejšie vysvetliť váš problém?</h2>
+        <p className={styles.formSubtitle}>
+        Ak je to potrebné, môžete sem pridať dodatočný popis.
+        </p>
+    </div>
+
+    <FormField
+        control={form.control}
+        name="popis"
+        render={({ field }) => (
+        <FormItem>
+            <FormLabel className={styles.formLabel}>Podrobný Popis</FormLabel>
+            <FormControl>
+            <Textarea
+                {...field}
+                className={styles.textarea}
+                placeholder="Tu môžete podrobnejšie opísať váš problém..."
+            />
+            </FormControl>
+            
+            <FormMessage />
+        </FormItem>
+        )}
+    />
+    </Form>
+
+    <Separator className={styles.separator} />
+
+        <ImageCarousel images={data.images} />
+        <Separator className={styles.separator} />
+
+        <h1 className={styles.sectionTitle}>Potential duplicates</h1>
+        <Carousel>
+          <CarouselContent>
+            {data.duplicates.map((duplicate, index) => (
+              <CarouselItem key={index}>
+                <DuplicateCard issue={duplicate} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </CardContent>
+
+      <CardFooter>
+        <Button
+          onClick={handleIssueUpload}
+          className={styles.buttonPrimary}
+          disabled={!data.readyToUpload}
+        >
+          Upload Images!
+        </Button>
+      </CardFooter>
+    </div>
+    
     );
 }

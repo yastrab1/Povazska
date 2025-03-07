@@ -50,6 +50,7 @@ export default function MainPage() {
     }
 
     if (activeState === "ai tag selection") {
+      console.log(data)
       return (
         <TagSelectionCard
           tags={data.rankings

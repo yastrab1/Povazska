@@ -4,7 +4,7 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,
 
 export default function ImageCarousel({images, onClick}: { images: string[] | undefined, onClick?: () => void }) {
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center h-auto py-10 px-6">
             {images?.length !== 0 ? (
                 <div className="relative w-48 h-48 mb-4 flex items-center justify-center">
 

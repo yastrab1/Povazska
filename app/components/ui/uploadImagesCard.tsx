@@ -16,6 +16,7 @@ import imageCompression, { Options } from "browser-image-compression";
 import uploadImages from "@/lib/firebase/imageUpload";
 import "@/app/components/design/form.css";
 import PhotoInputChoiceModal from "@/app/components/ui/photoInputChoiceModal";
+import styles from "@/app/components/design/styles";
 
 // type State =
 //     | "guest upload"
@@ -80,6 +81,8 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
   const [isMobile, setIsMobile] = useState(false);
   const [warningModalOpen, setWarningModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  
 
   useEffect(() => {
     // Detect if the device is mobile
@@ -201,137 +204,94 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
     setImages(imageCopy);
   };
   return (
-    <>
-      <div className="design-form">
-        <div className="full-overlap form-shadow">{/* Blur shaddow */}</div>
-        <div className="full-overlap form-fill">
-          <div className="form-title">
-            <p className="text-xl font-bold">Nahraj obrázok</p>
-            <p className="text-[#CDEEDC]">Pridaj alebo odfoť fotku problému.</p>
-          </div>
-          {isModalOpen && (
-            <PhotoInputChoiceModal
-              onClose={() => setIsModalOpen(false)}
-              onCameraChoose={() => {
-                document.getElementById("cameraInput")?.click();
-                setIsModalOpen(false);
-              }}
-              onGalleryChoose={() => {
-                document.getElementById("galleryInput")?.click();
-                setIsModalOpen(false);
-              }}
-            />
-          )}
-          <div className="form-content">
-            <div
-              className="form-field p-2 w-full"
-              onClick={
-                isMobile
-                  ? () => {
-                      setIsModalOpen(true);
-                    }
-                  : () => {
-                      document.getElementById("imageUpload")?.click();
-                    }
-              }
-            >
-              {/* File inputs (hidden) */}
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFileChange}
-                className="hidden"
-                id="imageUpload"
-              />
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                capture="environment"
-                onChange={handleFileChange}
-                className="hidden"
-                id="cameraInput"
-              />
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleFileChange}
-                className="hidden"
-                id="galleryInput"
-              />
+    <div className={styles.container}>
+    <div className={styles.backgroundOverlay}></div>
+    <div className="relative z-10">
+      {isModalOpen && (
+        <PhotoInputChoiceModal
+          onClose={() => setIsModalOpen(false)}
+          onCameraChoose={() => {
+            document.getElementById("cameraInput")?.click();
+            setIsModalOpen(false);
+          }}
+          onGalleryChoose={() => {
+            document.getElementById("galleryInput")?.click();
+            setIsModalOpen(false);
+          }}
+        />
+      )}
 
-              <div className="flex flex-col gap-2">
-                <div className="flex flex-row items-center gap-4 rounded-[10px] text-[#333333] text-sm p-2">
-                  <MdFileUpload className="w-9 h-full" />
-                  <div className="flex-grow">
-                    <div className="form-tip-title">Nahraj fotku</div>
-                    Nahraj fotku z galérie alebo urob fotku.
-                  </div>
-                </div>
+      {/* Title Section */}
+      <div className={styles.titleSection}>
+        <h2 className={styles.title}>Nahraj obrázok</h2>
+        <p className={styles.subtitle}>Pridaj alebo odfoť fotku problému.</p>
+      </div>
 
-                {images.length !== 0 && (
-                  <div className="grid grid-cols-3 gap-3 mb-3">
-                    {images.map((item, index) => (
-                      <div key={item} className="relative">
-                        <div className="grid">
-                          <div className="w-full h-20 row-start-1 col-start-1 grid overflow-hidden">
-                            <img
-                              src={item}
-                              className="w-full h-full object-cover form-image blur-[0.5px] overflow-hidden"
-                              alt="Uploaded"
-                            />
-                          </div>
-                          <div className="form-image-shadow" />
-                        </div>
-                        <button
-                          className="absolute top-1 right-1 w-6 h-6 bg-red-500 z-30 p-1 rounded-[5px] text-white"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleImageRemove(index);
-                          }}
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+      {/* Upload Field */}
+      <div
+        className={styles.uploadField}
+        onClick={
+          isMobile
+            ? () => setIsModalOpen(true)
+            : () => document.getElementById("imageUpload")?.click()
+        }
+      >
+        {/* Hidden Inputs */}
+        <input type="file" accept="image/*" multiple onChange={handleFileChange} className="hidden" id="imageUpload" />
+        <input type="file" accept="image/*" multiple capture="environment" onChange={handleFileChange} className="hidden" id="cameraInput" />
+        <input type="file" accept="image/*" multiple onChange={handleFileChange} className="hidden" id="galleryInput" />
+        
+        <MdFileUpload className={styles.uploadIcon} />
+        <p className={styles.uploadText}>Nahraj fotku</p>
+        <p className={styles.uploadSubtext}>Nahraj fotku z galérie alebo urob fotku.</p>
+      </div>
+
+      {/* Uploaded Images Preview */}
+      {images.length > 0 && (
+        <div className={styles.imageGrid}>
+          {images.map((item, index) => (
+            <div key={item} className={styles.imageWrapper}>
+              <img src={item} className={styles.image} alt="Uploaded" />
+              <button
+                className={styles.deleteButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleImageRemove(index);
+                }}
+              >
+                <MdDelete className="w-4 h-4" />
+              </button>
             </div>
+          ))}
+        </div>
+      )}
 
-            <div className="form-tip">
-              <div className="w-9 h-full">
-                <MdOutlinePhotoCamera className="w-full h-full" />
-              </div>
-              <div className="flex-grow">
-                <div className="form-tip-title">
-                  Viac fotiek nám pomáha riešiť
-                </div>
-                1. fotka: z blízka ukazujúca detaily <br /> 2. fotka: z dialky
-                pre ľahšiu lokalizáciu
-              </div>
-            </div>
-          </div>
-          <div className="form-foot">
-            <button
-              className="form-button justify-start"
-              onClick={() => setState("personal info")}
-            >
-              <MdChevronLeft className="text-2xl" />
-              Späť
-            </button>
-            <button className="form-button justify-end" onClick={handleUpload}>
-              Ďalej
-              <MdChevronRight className="text-2xl" />
-            </button>
-          </div>
-          <div className="form-completion">
-            <div className="form-completion-bar w-2/5"></div>
-          </div>
+      {/* Photo Tips */}
+      <div className={styles.photoTip}>
+        <MdOutlinePhotoCamera className={styles.tipIcon} />
+        <div>
+          <p className={styles.tipText}>Viac fotiek nám pomáha riešiť</p>
+          <p className={styles.tipDetail}>1. fotka: z blízka ukazujúca detaily</p>
+          <p className={styles.tipDetail}>2. fotka: z dialky pre ľahšiu lokalizáciu</p>
         </div>
       </div>
+
+      {/* Navigation Buttons */}
+      <div className={styles.buttonContainer}>
+        <button className={styles.backButton} onClick={() => setState("personal info")}>
+          <MdChevronLeft className="text-2xl" /> Späť
+        </button>
+        <button className={styles.nextButton} onClick={handleUpload}>
+          Ďalej <MdChevronRight className="text-2xl" />
+        </button>
+      </div>
+
+      {/* Progress Indicator */}
+      <div className={styles.progressBarContainer}>
+        <div className={styles.progressBar} style={{ width: "40%" }}></div>
+      </div>
+
+      {/* Warning Modal */}
       <WarningModal
         open={warningModalOpen}
         onClose={(pass) => {
@@ -341,7 +301,10 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
             setWarningModalOpen(false);
           }
         }}
-      ></WarningModal>
-    </>
-  );
+      />
+    </div>
+  </div>
+);
+  
+
 }
