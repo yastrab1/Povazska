@@ -36,7 +36,7 @@ export default function CompactIssueDisplayCard({id}: Props) {
                 <ImCheckmark/>
                 </Link>
 
-                <ImCross onClick={()=>updateIssue({status:"rejected"},"/podnety/",id)}/>
+                <ImCross onClick={()=>updateIssue({status:"rejected"} as never,"/podnety/",id)}/>
             </div>
         </div>
 

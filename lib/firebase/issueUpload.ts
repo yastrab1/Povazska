@@ -10,6 +10,6 @@ export async function addIssue<Type extends WithFieldValue<DocumentData>>(issueJ
     return docRef.id;
 }
 
-export async function updateIssue(updateObject, destination: string, id: string){
+export async function updateIssue(updateObject:never, destination: string, id: string){
     await updateDoc(doc(collection(db,destination),id),updateObject)
 }
