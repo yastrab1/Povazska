@@ -40,9 +40,9 @@ export default function PersonalInfoCard({
             </div>
             <div>
               <div className="form-tip-title">
-                Pozoruj svoje getIssue<Issue>(y s účtom
+                Pozoruj svoje issues s účtom
               </div>
-              Založenie účtu umožnuje sledovanie proces riešenia podaných getIssue<Issue>(ov.
+              Založenie účtu umožnuje sledovanie proces riešenia podaných issuesov.
             </div>
           </div>
           <div className="form-input">
