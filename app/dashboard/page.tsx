@@ -5,7 +5,7 @@ import DashboardIssueCard from "@/app/components/ui/CompactIssueDisplayCard";
 import {ChartAreaInteractive} from "@/components/chart-area-interactive"
 import {SectionCards} from "@/components/section-cards"
 import DashboardMap from "@/app/components/maps/dashboardMap";
-import {Challange, Issue, LocationMarker} from "@/lib/globals";
+import {Issue, LocationMarker} from "@/lib/globals";
 
 
 export default function Page() {

@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import {
-  GoogleMap, Marker,
+  GoogleMap,
   StandaloneSearchBox,
   useLoadScript,
 } from "@react-google-maps/api";
@@ -20,27 +20,12 @@ import Image from "next/image";
 import { Data, formProgress } from "@/lib/globals";
 import "@/app/components/design/form.css";
 import styles from "../design/styles";
-import {InfoWindow} from "@react-google-maps/api";
 
 interface Props {
   setState: Dispatch<SetStateAction<formProgress>>;
   setData: Dispatch<SetStateAction<Data>>;
 }
 
-const locations = [
-  {
-    id: 1,
-    position: { lat: 40.785091, lng: -73.968285 },
-    title: "Central Park",
-    content: "A large city park in NYC.",
-  },
-  {
-    id: 2,
-    position: { lat: 40.748817, lng: -73.985428 },
-    title: "Empire State Building",
-    content: "102-story skyscraper in Midtown Manhattan.",
-  },
-];
 
 export type Library =
   | "core"

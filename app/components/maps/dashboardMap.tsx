@@ -1,6 +1,4 @@
 import React, {
-    Dispatch,
-    SetStateAction,
     useCallback,
     useEffect,
     useRef,
@@ -11,7 +9,7 @@ import {
     useLoadScript,
 } from "@react-google-maps/api";
 import Image from "next/image";
-import {Data, formProgress, LocationMarker} from "@/lib/globals";
+import {LocationMarker} from "@/lib/globals";
 import "@/app/components/design/form.css";
 import styles from "../design/styles";
 import {InfoWindow} from "@react-google-maps/api";
@@ -37,9 +35,6 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
         lat: 48.1221, // Petržalka's latitude
         lng: 17.105, // Petržalka's longitude
     });
-
-    const [error, setError] = useState<string | null>(null);
-    const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
 
     const {isLoaded} = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
@@ -72,11 +67,10 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
 
     const getUserLocation = () => {
         if (!navigator.geolocation) {
-            setError("Geolocation is not supported by your browser.");
+
             return;
         }
 
-        setError(null);
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const {latitude, longitude} = position.coords;
@@ -86,14 +80,14 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
                     mapRef.current.setZoom(14);
                 }
             },
-            (err) => {
-                setError(err.message || "Unable to retrieve your location.");
+            () => {
+
             }
         );
     };
 
 
-    const infoWindowRef = useRef(null);
+
     const [activeMarker, setActiveMarker] = React.useState<string>();
 
     const handleMouseOver = useCallback((id: string) => {
@@ -101,7 +95,7 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
     }, []);
 
     const handleMouseOut = useCallback(() => {
-        setActiveMarker(null);
+        setActiveMarker(undefined);
     }, []);
 
     useEffect(() => {
@@ -137,7 +131,7 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
                         {activeMarker === loc.id && (
                             <InfoWindow
                                 position={loc.position}
-                                onCloseClick={() => setActiveMarker(null)}
+                                onCloseClick={() => setActiveMarker(undefined)}
                                 options={{pixelOffset: new window.google.maps.Size(0, -30)}}
                             >
                                 <div style={{fontSize: "14px"}}>
