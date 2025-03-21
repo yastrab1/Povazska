@@ -15,7 +15,6 @@ import {
   MdChevronLeft,
   MdChevronRight,
   MdLocationOn,
-  MdSearch,
 } from "react-icons/md";
 import Image from "next/image";
 import { Data, formProgress } from "@/lib/globals";

@@ -3,9 +3,9 @@
 import React, {useEffect, useState} from "react";
 import {auth} from "@/app/config/firebase";
 import {onAuthStateChanged} from "firebase/auth";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {useForm} from "react-hook-form";
 import {Textarea} from "@/components/ui/textarea";
 import {addIssue} from "@/lib/firebase/issueUpload";

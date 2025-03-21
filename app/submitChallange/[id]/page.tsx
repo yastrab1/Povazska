@@ -1,8 +1,6 @@
 'use client'
 import IssueDisplayCard from "@/app/components/ui/issueDisplayCard";
-import {Textarea} from "@/components/ui/textarea";
 import {CardTitle} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {addIssue} from "@/lib/firebase/issueUpload";
 import {Challange, Issue} from "@/lib/globals";
