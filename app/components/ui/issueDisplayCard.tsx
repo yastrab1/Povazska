@@ -15,7 +15,7 @@ export default function IssueDisplayCard({id,children}: Props) {
 
     const [data,setData] = useState<Issue>();
     useEffect(() => {
-        getIssue(id).then((data) => setData(data as Issue))
+        getIssue<Issue>(id).then((data) => setData(data as Issue))
     }, []);
 
 

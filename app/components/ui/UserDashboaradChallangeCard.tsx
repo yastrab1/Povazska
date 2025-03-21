@@ -2,7 +2,7 @@
 
 import {Issue} from "@/lib/globals";
 import getIssue from "@/lib/firebase/issueGet";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {CardTitle} from "@/components/ui/card";
 import {ImCheckmark, ImCross} from "react-icons/im";
 import Link from "next/link";
@@ -12,15 +12,11 @@ interface Props {
     id: string;
 }
 
-export default function CompactIssueDisplayCard({id}: Props) {
+export default function CompactChallangeCard({id}: Props) {
 
     const [data, setData] = useState<Issue>();
 
-    useEffect(() => {
-        console.log(id)
-        getIssue<Issue>(id).then((data) => setData(data as Issue))
-    },[id])
-
+    getIssue<Issue>(id,"/challanges/").then((data) => setData(data as Issue))
 
 
     return (
@@ -28,11 +24,12 @@ export default function CompactIssueDisplayCard({id}: Props) {
         <div className="rounded px-5 w-full max-h-10 mx-auto mt-8 shadow-lg flex flex-row border-black border">
             <div className={"text-black py-1 flex flex-row items-center"}>
                 <Link href={"/issues/" + id} className={"flex flex-row items-center"}>
-                    <CardTitle>{"#" + data?.tags.join(" #")}</CardTitle>
+                    <CardTitle>{data?.title}</CardTitle>
+                    <p>{data?.description}</p>
                     <p className={"ml-10"}>Milana rastislava štefánika 10</p>
                 </Link>
                 <Link href={"/submitChallange/" + id}>
-                <ImCheckmark/>
+                    <ImCheckmark/>
                 </Link>
                 <ImCross/>
             </div>

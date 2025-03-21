@@ -1,4 +1,4 @@
-import IssueDisplayCard from "@/app/components/ui/issueDisplayCard";
+import ChallangeDisplayCard from "@/app/components/ui/ChallangeDisplayCard";
 
 export default async function Page({
                                        params,
@@ -6,5 +6,5 @@ export default async function Page({
     params: Promise<{ id: string }>
 }) {
     const slug = (await params).id
-    return <IssueDisplayCard id={slug}/>
+    return <ChallangeDisplayCard id={slug}/>
 }

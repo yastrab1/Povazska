@@ -38,7 +38,7 @@ export default function RootLayout({
         <Header></Header>
         {children}
       <div className={"fixed bottom-0 w-full overflow-hidden bg-secondary flex justify-center"}>
-          <Button>+</Button>
+          <Button><Link href={"/"}>+</Link></Button>
           <Button><Link href={"/dashboard"}>Dashboard</Link></Button>
       </div>
       </body>

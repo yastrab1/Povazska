@@ -10,7 +10,7 @@ import {
   //MdCamera,
 } from "react-icons/md";
 import WarningModal from "@/app/components/ui/warningModal";
-import getIssue, { getAllIssues } from "@/lib/firebase/issueGet";
+import getIssue, { getAllChildren } from "@/lib/firebase/issueGet";
 import { Data, formProgress, Issue } from "@/lib/globals";
 import imageCompression, { Options } from "browser-image-compression";
 import uploadImages from "@/lib/firebase/imageUpload";
@@ -111,9 +111,9 @@ export default function ImageUploadCard({ setState, dataSet, data }: Props) {
 
     const duplicates: Issue[] = [];
 
-    const issues = await getAllIssues();
+    const issues = await getAllChildren();
     for (const iss of issues) {
-      const issue = await getIssue(iss.id);
+      const issue = await getIssue<Issue>(iss.id);
       const distKM = haversineDistance(
         { longitude: issue.lng, latitude: issue.lat },
         { longitude: data.lng, latitude: data.lat },
