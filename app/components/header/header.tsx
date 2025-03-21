@@ -20,7 +20,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-[#00A84E]  p-4 flex justify-between items-center shadow-lg">
+    <header className="bg-secondary  p-4 flex justify-between items-center shadow-lg">
       {/* App Logo */}
       <h1 className="text-lg font-bold text-white">Podnety</h1>
 

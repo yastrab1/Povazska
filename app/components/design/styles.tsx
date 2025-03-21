@@ -28,7 +28,7 @@ const styles = {
   // Location Section
   locationContainer: "relative w-full max-w-lg mx-auto bg-white rounded-2xl shadow-lg overflow-hidden p-6",
   locationBox: "flex items-center p-4 bg-gray-100 rounded-lg shadow-sm",
-  locationIcon: "text-3xl text-green-500",
+  locationIcon: "text-3xl text-secondary",
   locationInfo: "ml-3",
   locationTitle: "text-lg font-semibold",
   locationDescription: "text-sm text-gray-600",
@@ -38,7 +38,7 @@ const styles = {
   searchLabel: "flex items-center px-4 py-3 bg-gray-200 rounded-lg shadow-sm",
   searchIcon: "text-xl text-gray-500",
   searchText: "ml-2 text-gray-600",
-  searchInput: "w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500",
+  searchInput: "w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary",
 
   // Map
   mapContainer: "relative w-full h-64 rounded-lg overflow-hidden shadow-md",
@@ -48,21 +48,21 @@ const styles = {
   // Buttons
   buttonContainer: "mt-6 flex justify-between",
   backButton: "flex items-center text-gray-600 hover:text-gray-900 transition",
-  nextButton: "flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition",
-  fullWidthButton: "w-full py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition",
+  nextButton: "flex items-center bg-secondary text-white px-4 py-2 rounded-lg hover:bg-secondary transition",
+  fullWidthButton: "w-full py-3 bg-secondary text-white font-semibold rounded-lg hover:bg-secondary transition",
 
   // Progress Bar
   progressBarContainer: "w-full bg-gray-200 h-2 rounded-full mt-4 relative",
-  progressBar: "bg-green-500 h-2 rounded-full w-3/5",
+  progressBar: "bg-secondary h-2 rounded-full w-3/5",
 
   formTip: "flex items-start p-4 bg-gray-100 rounded-lg shadow-sm mb-5",
-  formTipIcon: "text-4xl text-green-500",
+  formTipIcon: "text-4xl text-secondary",
   formTipTitle: "text-lg font-semibold",
   formTipText: "text-sm text-gray-600",
 
   formLabel: "flex items-center text-gray-700 font-semibold",
   formIcon: "text-xl mr-2",
-  formField: "mt-1 w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500",
+  formField: "mt-1 w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary",
 
  
   footer: "mt-5 text-sm text-gray-600 text-center",
@@ -72,7 +72,7 @@ const styles = {
   // Category Selection
   categoryContainer: "flex flex-wrap gap-2 justify-center",
   categoryButton: "px-4 py-2 rounded-lg text-sm font-medium border transition-all duration-200 shadow-sm",
-  categorySelected: "bg-green-500 text-white border-green-500 shadow-md scale-105",
+  categorySelected: "bg-secondary text-white border-secondary shadow-md scale-105",
   categoryUnselected: "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 hover:shadow-md",
 
 
@@ -113,7 +113,7 @@ const styles = {
     carouselItem: "p-2",
     
     // Button Styles
-    buttonPrimary: "w-full h-12 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed",
+    buttonPrimary: "w-full h-12 bg-secondary text-white font-bold rounded-md hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed",
 
 
   // User Info Box
@@ -123,7 +123,7 @@ const styles = {
 
   // Tag Styling
   tagContainer: "flex flex-wrap gap-2 mt-3",
-  tagPill: "bg-green-500 text-white text-sm font-medium px-3 py-1 rounded-full shadow-md",
+  tagPill: "bg-secondary text-white text-sm font-medium px-3 py-1 rounded-full shadow-md",
   noTagsText: "text-sm text-gray-500 italic",
 
   formContainer: "bg-white p-5 rounded-lg shadow-md",

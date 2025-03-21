@@ -56,3 +56,16 @@ export interface Issue {
     timestamp: Timestamp;
     resolve: string;
 }
+
+export interface Challange {
+    title: string | null
+    description: string | null;
+    images: string[]
+    tags: string[]
+    lat: number
+    lng: number
+    status: string
+    timestamp: Timestamp;
+    resolve: string;
+    //Possibly more in the future
+}
