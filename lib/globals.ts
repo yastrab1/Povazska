@@ -69,3 +69,12 @@ export interface Challange {
     resolve: string;
     //Possibly more in the future
 }
+export interface LocationMarker{
+    id: string;
+    position:{
+        lng:number
+        lat:number
+    }
+    title:string
+    content:string
+}

@@ -29,19 +29,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <SpeedInsights />
-      <Analytics />
+      <html lang="en">
+      <SpeedInsights/>
+      <Analytics/>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header></Header>
-        {children}
+      <Header></Header>
+      {children}
       <div className={"fixed bottom-0 w-full overflow-hidden bg-secondary flex justify-center"}>
           <Button><Link href={"/"}>+</Link></Button>
           <Button><Link href={"/dashboard"}>Dashboard</Link></Button>
       </div>
       </body>
-    </html>
+      </html>
   );
 }
