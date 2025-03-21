@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {CardTitle} from "@/components/ui/card";
 import {ImCheckmark, ImCross} from "react-icons/im";
 import Link from "next/link";
+import {updateIssue} from "@/lib/firebase/issueUpload";
 
 
 interface Props {
@@ -34,7 +35,8 @@ export default function CompactIssueDisplayCard({id}: Props) {
                 <Link href={"/submitChallange/" + id}>
                 <ImCheckmark/>
                 </Link>
-                <ImCross/>
+
+                <ImCross onClick={()=>updateIssue({status:"rejected"},"/podnety/",id)}/>
             </div>
         </div>
 

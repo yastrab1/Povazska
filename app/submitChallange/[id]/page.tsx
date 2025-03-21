@@ -54,6 +54,7 @@ export default function SubmitChallange({
             <input name={"title"}></input>
             <h1>Zadajte popis</h1>
             <textarea name={"description"}></textarea>
+            <Button>Link to issue</Button>
             ...
             <Button type={"submit"} className={styles.buttonPrimary}>Submit</Button>
         </IssueDisplayCard> : null}

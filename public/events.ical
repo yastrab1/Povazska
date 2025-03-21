@@ -1,0 +1,106 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mockup Voluntary Events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+
+BEGIN:VEVENT
+UID:event1@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250405T090000Z
+DTEND:20250405T120000Z
+SUMMARY:Park Cleanup Drive
+DESCRIPTION:Join fellow volunteers in cleaning up the city park near Dom kultúry. Gloves and trash bags will be provided.
+LOCATION:City Park, Považská Bystrica, Slovakia
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event2@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250412T150000Z
+DTEND:20250412T180000Z
+SUMMARY:Community Soup Kitchen
+DESCRIPTION:Help prepare and serve warm meals for those in need at the community center.
+LOCATION:Komunitné centrum, Centrum 3/5, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event3@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250420T070000Z
+DTEND:20250420T110000Z
+SUMMARY:Charity Run Coordination
+DESCRIPTION:Volunteer to assist with organizing and managing the local charity run for youth programs.
+LOCATION:Športový areál, Stredná odborná škola, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event4@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250425T100000Z
+DTEND:20250425T130000Z
+SUMMARY:Riverbank Restoration
+DESCRIPTION:Help us restore the Váh riverbank—removing litter and planting native vegetation.
+LOCATION:Váh Riverbank near Lánska, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event5@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250428T140000Z
+DTEND:20250428T170000Z
+SUMMARY:Senior Tech Help Day
+DESCRIPTION:Assist seniors in learning how to use smartphones and the internet.
+LOCATION:Senior Center, SNP Street, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event6@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250503T160000Z
+DTEND:20250503T190000Z
+SUMMARY:Book Donation Sorting
+DESCRIPTION:Sort and pack donated books for local libraries and schools.
+LOCATION:Mládežnícke centrum, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event7@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250510T090000Z
+DTEND:20250510T130000Z
+SUMMARY:Urban Garden Planting
+DESCRIPTION:Help plant and prepare community gardens for the spring season.
+LOCATION:Mestská záhrada, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event8@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250515T100000Z
+DTEND:20250515T130000Z
+SUMMARY:Youth Mentorship Workshop
+DESCRIPTION:Join us to inspire young minds—volunteer as a mentor or speaker.
+LOCATION:Gymnázium, Považská Bystrica
+STATUS:CONFIRMED
+END:VEVENT
+
+BEGIN:VEVENT
+UID:event9@povazska-volunteers.local
+DTSTAMP:20250321T080000Z
+DTSTART:20250520T130000Z
+DTEND:20250520T170000Z
+SUMMARY:Local Animal Shelter Support
+DESCRIPTION:Spend time helping staff with pet care and shelter maintenance.
+LOCATION:Zvierací útulok, Považská Bystrica outskirts
+STATUS:CONFIRMED
+END:VEVENT
+
+END:VCALENDAR

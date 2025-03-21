@@ -20,10 +20,10 @@ export default function Page() {
                 const challange = await getIssue<Issue>(id.id);
                 return {
                     id: id.id,
-                    title: challange.title || "",
+                    title: "#"+ challange.tags.join("#"),
                     content: challange.description || "",
                     position: {lng: challange.lng, lat: challange.lat},
-
+                    images:challange.images || {},
                 } as LocationMarker
 
 

@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <header className="bg-secondary  p-4 flex justify-between items-center shadow-lg">
       {/* App Logo */}
-      <h1 className="text-lg font-bold text-white">Podnety</h1>
+      <h1 className="text-lg font-bold text-white">getIssue<Issue>(y</h1>
 
       {/* Sign In/Out Section */}
       <div className="flex items-center space-x-4">

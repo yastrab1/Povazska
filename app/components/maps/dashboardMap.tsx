@@ -43,7 +43,7 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
 
     const mapContainerStyle: React.CSSProperties = {
         width: "100%",
-        height: "300px",
+        height: "100%",
         borderRadius: "10px",
         gridRowStart: 1,
         gridColumnStart: 1,
@@ -132,12 +132,14 @@ export default function DashboardMap({locations}:{locations:LocationMarker[]}) {
                             <InfoWindow
                                 position={loc.position}
                                 onCloseClick={() => setActiveMarker(undefined)}
-                                options={{pixelOffset: new window.google.maps.Size(0, -30)}}
                             >
                                 <div style={{fontSize: "14px"}}>
                                     <strong>{loc.title}</strong>
-                                    <br/>
                                     {loc.content}
+
+                                    {loc.images.map((img,key)=>
+                                        <img key={key} src={img} alt={""} width={"100px"}/>
+                                    )}
                                 </div>
                             </InfoWindow>
                         )}

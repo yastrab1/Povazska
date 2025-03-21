@@ -40,9 +40,9 @@ export default function PersonalInfoCard({
             </div>
             <div>
               <div className="form-tip-title">
-                Pozoruj svoje podnety s účtom
+                Pozoruj svoje getIssue<Issue>(y s účtom
               </div>
-              Založenie účtu umožnuje sledovanie proces riešenia podaných podnetov.
+              Založenie účtu umožnuje sledovanie proces riešenia podaných getIssue<Issue>(ov.
             </div>
           </div>
           <div className="form-input">

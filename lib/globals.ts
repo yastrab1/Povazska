@@ -77,4 +77,5 @@ export interface LocationMarker{
     }
     title:string
     content:string
+    images:string[]
 }
