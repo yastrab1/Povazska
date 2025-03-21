@@ -1,6 +1,6 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Mockup Voluntary Events//EN
+PRODID:-//Mockup Dobrovoľnícke Podujatia//SK
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 
@@ -9,9 +9,9 @@ UID:event1@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250405T090000Z
 DTEND:20250405T120000Z
-SUMMARY:Park Cleanup Drive
-DESCRIPTION:Join fellow volunteers in cleaning up the city park near Dom kultúry. Gloves and trash bags will be provided.
-LOCATION:City Park, Považská Bystrica, Slovakia
+SUMMARY:Čistenie mestského parku
+DESCRIPTION:Pridaj sa k dobrovoľníkom pri čistení mestského parku pri Dome kultúry. Rukavice a vrecia na odpad budú zabezpečené.
+LOCATION:Mestský park, Považská Bystrica, Slovensko
 STATUS:CONFIRMED
 END:VEVENT
 
@@ -20,8 +20,8 @@ UID:event2@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250412T150000Z
 DTEND:20250412T180000Z
-SUMMARY:Community Soup Kitchen
-DESCRIPTION:Help prepare and serve warm meals for those in need at the community center.
+SUMMARY:Komunitná výdajňa jedla
+DESCRIPTION:Pomôž s prípravou a výdajom teplých jedál pre ľudí v núdzi v komunitnom centre.
 LOCATION:Komunitné centrum, Centrum 3/5, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
@@ -31,9 +31,9 @@ UID:event3@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250420T070000Z
 DTEND:20250420T110000Z
-SUMMARY:Charity Run Coordination
-DESCRIPTION:Volunteer to assist with organizing and managing the local charity run for youth programs.
-LOCATION:Športový areál, Stredná odborná škola, Považská Bystrica
+SUMMARY:Koordinácia charitatívneho behu
+DESCRIPTION:Zapoj sa do organizácie miestneho charitatívneho behu na podporu mládežníckych programov.
+LOCATION:Športový areál, SOŠ, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
 
@@ -42,9 +42,9 @@ UID:event4@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250425T100000Z
 DTEND:20250425T130000Z
-SUMMARY:Riverbank Restoration
-DESCRIPTION:Help us restore the Váh riverbank—removing litter and planting native vegetation.
-LOCATION:Váh Riverbank near Lánska, Považská Bystrica
+SUMMARY:Obnova brehu rieky
+DESCRIPTION:Pomôž s čistením a výsadbou pôvodnej vegetácie pri rieke Váh.
+LOCATION:Breh rieky Váh pri Lánskej, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
 
@@ -53,9 +53,9 @@ UID:event5@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250428T140000Z
 DTEND:20250428T170000Z
-SUMMARY:Senior Tech Help Day
-DESCRIPTION:Assist seniors in learning how to use smartphones and the internet.
-LOCATION:Senior Center, SNP Street, Považská Bystrica
+SUMMARY:Deň pomoci seniorom s technológiami
+DESCRIPTION:Pomáhaj seniorom naučiť sa používať smartfóny a internet.
+LOCATION:Centrum seniorov, ul. SNP, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
 
@@ -64,8 +64,8 @@ UID:event6@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250503T160000Z
 DTEND:20250503T190000Z
-SUMMARY:Book Donation Sorting
-DESCRIPTION:Sort and pack donated books for local libraries and schools.
+SUMMARY:Triedenie darovaných kníh
+DESCRIPTION:Pomôž triediť a baliť darované knihy pre miestne knižnice a školy.
 LOCATION:Mládežnícke centrum, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
@@ -75,8 +75,8 @@ UID:event7@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250510T090000Z
 DTEND:20250510T130000Z
-SUMMARY:Urban Garden Planting
-DESCRIPTION:Help plant and prepare community gardens for the spring season.
+SUMMARY:Výsadba komunitnej záhrady
+DESCRIPTION:Pridaj sa k výsadbe a úprave komunitnej záhrady na jar.
 LOCATION:Mestská záhrada, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
@@ -86,8 +86,8 @@ UID:event8@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250515T100000Z
 DTEND:20250515T130000Z
-SUMMARY:Youth Mentorship Workshop
-DESCRIPTION:Join us to inspire young minds—volunteer as a mentor or speaker.
+SUMMARY:Mentorský workshop pre mládež
+DESCRIPTION:Inšpiruj mladých ako mentor alebo rečník v interaktívnom workshope.
 LOCATION:Gymnázium, Považská Bystrica
 STATUS:CONFIRMED
 END:VEVENT
@@ -97,9 +97,9 @@ UID:event9@povazska-volunteers.local
 DTSTAMP:20250321T080000Z
 DTSTART:20250520T130000Z
 DTEND:20250520T170000Z
-SUMMARY:Local Animal Shelter Support
-DESCRIPTION:Spend time helping staff with pet care and shelter maintenance.
-LOCATION:Zvierací útulok, Považská Bystrica outskirts
+SUMMARY:Pomoc v útulku pre zvieratá
+DESCRIPTION:Pomôž s opaterou zvierat a údržbou priestorov útulku.
+LOCATION:Zvierací útulok, okraj Považskej Bystrice
 STATUS:CONFIRMED
 END:VEVENT
 
