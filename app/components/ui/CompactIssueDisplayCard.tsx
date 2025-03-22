@@ -26,7 +26,7 @@ export default function CompactIssueDisplayCard({id}: Props) {
 
     return (
 
-        <div className="rounded px-5 w-full max-h-10 mx-auto mt-8 shadow-lg flex flex-row border-black border">
+        <div className="rounded px-5 w-full max-h-20 mx-auto mt-2 shadow-lg flex flex-row border-black border">
             <div className={"text-black py-1 flex flex-row items-center"}>
                 <Link href={"/issues/" + id} className={"flex flex-row items-center"}>
                     <CardTitle>{"#" + data?.tags.join(" #")}</CardTitle>

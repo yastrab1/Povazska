@@ -1,77 +1,74 @@
-"use client";
+'use client'
+import { Progress } from "@/components/ui/progress";
+import { Bell, Search } from "lucide-react";
+import React, {JSX, useState} from "react";
+import CompactIssueDisplayCard from "@/app/components/ui/CompactIssueDisplayCard";
+import {getAllChildren} from "@/lib/firebase/issueGet";
 
-import { useState } from "react";
-import PersonalInfoCard from "@/app/components/personalinfo/personalinfocard";
-import DescriptionCard from "@/app/components/ui/uploadIssueCard";
-import useIsLoggedIn from "@/app/hooks/useIsLoggedIn";
-import TagSelectionCard from "@/app/components/ui/tagSelectionCard";
-import ImageUploadCard from "@/app/components/ui/uploadImagesCard";
-import { Data, formProgress } from "@/lib/globals";
-import CustomTagsChooseCard from "@/app/components/ui/CustomTagsChooseCard";
-import MapPickerModal from "@/app/components/maps/map";
+export default function Domov(): JSX.Element {
+    // Challenge data for mapping
+    const [challenges,setChallenges] = useState<{id:string}[]>()
+    getAllChildren().then(data => setChallenges(data))
 
-export default function MainPage() {
-    const [state, setState] = useState<formProgress>("personal info");
-    const [data, setData] = useState<Data>({
-        title: "",
-        description: "",
-        rankings: [],
-        images: [],
-        lat: 0,
-        lng: 0,
-        userSelectedTags: [],
-        duplicates: [],
-        readyToUpload: false,
-    });
+    return (
+        <div className="bg-[#a13129] flex flex-row justify-center w-full">
+            <div className="bg-[#a13129] overflow-hidden w-[390px] h-[999px]">
+                <div className="relative w-[391px] h-[998px] top-px">
+                    {/* Main content area with rounded top corners */}
+                    <div className="absolute w-[390px] h-[613px] top-[230px] left-0 bg-neutrlna-paletan90 rounded-[50px_50px_0px_0px]" />
 
-  const { name, email, setEmail, setName } = useIsLoggedIn();
+                    {/* Header greeting */}
+                    <div className="absolute top-[62px] left-[25px] [font-family:'Inter-Bold',Helvetica] font-bold text-white text-2xl tracking-[0] leading-[25.2px] whitespace-nowrap">
+                        Vitaj, Adam
+                    </div>
 
-  const activeCard = (activeState: formProgress) => {
-    if (activeState === "personal info") {
-      return (
-        <PersonalInfoCard
-          nameSet={setName}
-          emailSet={setEmail}
-          setState={setState}
-          logname={name}
-          logemail={email}
-        />
-      );
-    }
+                    {/* Challenges heading */}
+                    <div className="absolute top-[261px] left-[25px] [font-family:'Inter-Bold',Helvetica] font-bold text-black text-2xl tracking-[0] leading-[25.2px] whitespace-nowrap">
+                        Aktuálne výzvy
+                    </div>
 
-    if (activeState === "image upload") {
-      return (
-        <ImageUploadCard setState={setState} dataSet={setData} data={data} />
-      );
-    }
+                    {/* Search button */}
+                    <div className="flex w-[27px] h-[27px] items-center justify-center absolute top-[261px] left-[337px] bg-[#0000001a] rounded-[100px]">
+                        <Search className="w-[13px] h-[13px]" />
+                    </div>
 
-    if (activeState === "map selection") {
-      return <MapPickerModal setData={setData} setState={setState} />;
-    }
+                    {/* Notification button */}
+                    <div className="flex w-8 h-8 items-center justify-center absolute top-[60px] left-[333px] bg-[#ffffff33] rounded-[100px]">
+                        <Bell className="w-[13px] h-[13px] text-white" />
+                    </div>
 
-    if (activeState === "ai tag selection") {
-      console.log(data)
-      return (
-        <TagSelectionCard
-          tags={data.rankings
-            .filter((ranking) => ranking[1] > 0)
-            .map((ranking) => ranking[0])
-            .slice(0, 5)}
-          setState={setState}
-          setData={setData}
-        />
-      );
-    }
-    if (activeState === "custom tag selection") {
-      return <CustomTagsChooseCard setState={setState} setData={setData} />;
-    }
+                    {/* Status bar */}
+                    <div className="absolute w-[70%] h-[998px] top-0 left-0">
 
-    if (activeState === "finalization") {
-      return <DescriptionCard data={data}></DescriptionCard>;
-    }
+                        {/* Home indicator */}
+                        <div className="absolute w-[390px] h-[30px] top-[968px] left-0">
+                            <div className="absolute w-[138px] h-1 top-[19px] left-[126px] bg-black rounded-full" />
+                        </div>
+                    </div>
 
-    return <p>Bad active state!</p>; // Ensure tsconfig.json is correctly configured ---
-  };
+                    {/* Progress bar */}
+                    <div className="absolute w-[261px] h-[21px] top-[99px] left-[26px]">
+                        <Progress
+                            value={48}
+                            className="w-48 h-[21px] rounded-[66px] bg-[rgba(255,255,255,0.2)]"
+                        />
+                    </div>
 
-  return <div className="p-4 relative">{activeCard(state)}</div>;
+                    {/* Level indicator */}
+                    <div className="absolute top-[101px] left-[293px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-white text-xs tracking-[0] leading-[normal]">
+                        15B → Level 2
+                    </div>
+
+                    {/* Challenge cards container */}
+                    <div className="flex w-[339px] h-[460px] gap-2 absolute top-[314px] left-[26px] flex-col items-start">
+                        {challenges?.map((challenge) => (
+                            <CompactIssueDisplayCard id={challenge.id} key={challenge.id}/>
+                        ))}
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    );
 }
